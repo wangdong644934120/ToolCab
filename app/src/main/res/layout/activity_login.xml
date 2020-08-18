@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="1366px"
+    android:layout_height="768px"
+    android:background="@drawable/loginbg"
+    tools:context="com.stit.toolcab.activity.LoginActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="366px"
+            android:layout_height="wrap_content"
+            android:background="@drawable/loginedit_bg"
+            android:drawableLeft="@drawable/zhanghao"
+            android:hint="输入用户名"
+            android:text="cc"
+            android:singleLine="true"
+            android:textSize="30px"
+            android:layout_marginLeft="500px"
+            android:layout_marginTop="250px"/>
+
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="366px"
+            android:layout_height="wrap_content"
+            android:background="@drawable/loginedit_bg"
+            android:drawableLeft="@drawable/mima"
+            android:hint="请输入登录密码"
+            android:text="dd"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textSize="30px"
+            android:layout_marginLeft="500px"
+            android:layout_marginTop="350px"
+            />
+
+        <RadioGroup
+            android:id="@+id/RadioGroup1"
+            android:layout_width="366px"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="500px"
+            android:layout_marginTop="450px">
+            <RadioButton
+                android:id="@+id/putong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#0713f1"
+                android:textSize="20px"
+                android:text="普通用户"/>
+            <RadioButton
+                android:id="@+id/weixiu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#0713f1"
+                android:textSize="20px"
+                android:text="维修用户"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:text="登录"
+            android:textSize="30px"
+            android:layout_marginTop="510px"
+            android:layout_marginLeft="500px"
+            android:background="#0026fa"
+            android:textColor="#FFFFFF"
+             />
+
+
+
+        <ImageButton
+            android:id="@+id/face"
+            android:layout_width="118px"
+            android:layout_height="122px"
+            app:srcCompat="@drawable/renlian"
+            android:layout_marginTop="250px"
+            android:layout_marginLeft="900px"/>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
+

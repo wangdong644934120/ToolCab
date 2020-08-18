@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.stit.toolcab.activity.PZActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60px"
+        android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_weight="2"
+                    android:gravity="right"
+                    android:text="系统名称："
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/xtmc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="300dp"
+                    android:background="@drawable/edit_bg"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_weight="2"
+                    android:gravity="right"
+                    android:text="设备编号："
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/sbbh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="300dp"
+                    android:background="@drawable/edit_bg"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:text="服务器地址："
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/fwqdz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="300dp"
+                android:background="@drawable/edit_bg"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:textSize="20dp"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:text="服务器端口号："
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/fwqdkh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="300dp"
+                android:background="@drawable/edit_bg"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnsave"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="30dp"
+                android:text="保存配置"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="10dp"
+            android:background="#a7aba9" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:text="盘存次数："
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/pccs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="300dp"
+                android:background="@drawable/edit_bg"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:text="盘存间隔："
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/pcjg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="300dp"
+                android:background="@drawable/edit_bg"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:textSize="20dp"
+                android:digits="0123456789"
+                android:maxLength="3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnsavedown"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="30dp"
+                android:text="保存并下传配置"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

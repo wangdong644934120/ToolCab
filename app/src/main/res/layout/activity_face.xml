@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context="com.stit.toolcab.activity.FaceActivity">
+    <!--<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60px"-->
+        <!--android:background="?attr/qmui_config_color_background">-->
+
+        <!--<com.qmuiteam.qmui.widget.QMUITopBarLayout-->
+            <!--android:id="@+id/topbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="60px"-->
+            <!--android:fitsSystemWindows="true">-->
+        <!--</com.qmuiteam.qmui.widget.QMUITopBarLayout>-->
+
+    <!--</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60px"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20px"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/fl_surface"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center">
+
+                <com.cloudwalk.gldisplay.GLFrameSurface
+                    android:id="@+id/sr_vis_view"
+                    android:layout_width="480px"
+                    android:layout_height="640px"
+                    android:layout_gravity="center" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/djs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fl_surface"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:layout_weight="1"
+                android:text="10秒"
+                android:textColor="@color/qmui_config_color_black"
+                android:textSize="80px" />
+            <TextView
+                android:id="@+id/tv_liveness_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fl_surface"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_weight="1"
+                android:textColor="@color/qmui_config_color_black"
+                android:textSize="60px" />
+            <TextView
+                android:id="@+id/jieguo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fl_surface"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:layout_weight="1"
+                android:textColor="@color/qmui_config_color_black"
+                android:textSize="80px" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

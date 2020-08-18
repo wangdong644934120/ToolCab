@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.stit.toolcab.activity.KZActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="60px"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/km1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:text="开门1"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite" />
+        <Button
+            android:id="@+id/km2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:text="开门2"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite" />
+        <Button
+            android:id="@+id/km3"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:text="开门3"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite" />
+        <Button
+            android:id="@+id/km4"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:text="开门4"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite" />
+        <Button
+            android:id="@+id/km5"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:text="开门5"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite" />
+        <Button
+            android:id="@+id/km6"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:text="开门6"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite" />
+        <Button
+            android:id="@+id/km7"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:text="开门7"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="50dp"
+            android:background="#a7aba9" />
+
+        <Button
+            android:id="@+id/scsyzw"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:text="删除所有指纹"
+            android:textSize="20dp"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

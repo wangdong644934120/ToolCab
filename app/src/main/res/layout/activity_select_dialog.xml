@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.stit.toolcab.activity.SelectDialog">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@color/black_overlay">
+        <Button android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:layout_width="fill_parent"
+            android:text="人员管理"
+            android:textSize="25dp"
+            android:textColor="@color/colorWhite"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:gravity="left|center_vertical"
+            android:id="@+id/btnRY"></Button>
+        <View
+            android:id="@+id/btnRYView"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#a7aba9" />
+        <Button android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:text="工具管理"
+            android:textSize="25dp"
+            android:textColor="@color/colorWhite"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:gravity="left|center_vertical"
+            android:paddingRight="10dp"
+            android:layout_width="fill_parent"
+            android:id="@+id/btnGJ"></Button>
+        <View
+            android:id="@+id/btnHCView"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#a7aba9" />
+        <Button android:background="#00000000"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="控制管理"
+            android:textSize="25dp"
+            android:textColor="@color/colorWhite"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:gravity="left|center_vertical"
+            android:id="@+id/btnKZ"></Button>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#a7aba9" />
+        <Button android:background="#00000000"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="配置管理"
+            android:textSize="25dp"
+            android:textColor="@color/colorWhite"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:gravity="left|center_vertical"
+            android:id="@+id/btnPZ"></Button>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#a7aba9" />
+        <Button android:background="#00000000"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="设备信息"
+            android:textSize="25dp"
+            android:textColor="@color/colorWhite"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:gravity="left|center_vertical"
+            android:id="@+id/btnSBXX"></Button>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#a7aba9" />
+        <Button android:background="#00000000"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="退出程序"
+            android:textSize="25dp"
+            android:textColor="@color/colorWhite"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:gravity="left|center_vertical"
+            android:id="@+id/btnTCCX"></Button>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

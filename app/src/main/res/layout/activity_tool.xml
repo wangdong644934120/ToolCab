@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.stit.toolcab.activity.ToolActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50px"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:textSize="20dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="把Excel文件命名为1.xls，复制到STIT->1.xls，点击“上传耗材库”按钮，上传前系统会先将耗材库清空" />
+
+        <Button
+            android:id="@+id/up"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="60dp"
+            android:text="上传耗材库"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="60dp"
+            android:background="#a7aba9" />
+        <Button
+            android:id="@+id/down"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:textSize="20dp"
+            android:text="下载工具库"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="60dp"
+            android:background="#a7aba9" />
+        <Button
+            android:id="@+id/cs"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="20dp"
+            android:text="初始柜内工具"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
