@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,13 +19,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.core.TableConfig;
 import com.bin.david.form.data.CellInfo;
@@ -36,21 +33,17 @@ import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.table.TableData;
 import com.bin.david.form.listener.OnColumnItemClickListener;
 import com.cloudwalk.cwlivenesscamera.Camera.Size;
-import com.cloudwalk.gldisplay.GLFrameSurface;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.stit.toolcab.R;
-import com.stit.toolcab.dao.MyPersonDao;
+import com.stit.toolcab.camera.CWGLDisplay;
+import com.stit.toolcab.camera.GLFrameSurface;
+import com.stit.toolcab.dao.PersonDao;
 import com.stit.toolcab.device.HCProtocol;
 import com.stit.toolcab.entity.Person;
 import com.stit.toolcab.manager.CacheManager;
 import com.stit.toolcab.manager.ThreadManager;
 import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.MyTextToSpeech;
-import com.stit.toolcab.utils.YCCamera;
-
 import org.apache.log4j.Logger;
-
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -58,7 +51,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import cn.cloudwalk.component.liveness.entity.face.CWLiveFaceDetectInfo;
 import cn.cloudwalk.component.liveness.entity.face.CWLiveFaceLivenessInfo;
 import cn.cloudwalk.component.liveness.entity.face.CWLiveFaceParam;
@@ -131,7 +123,7 @@ public class PersonActivity extends Activity {
     byte[] feacture=null;
     private int selectPosition=-1;
     private CWLiveImage lastLiveImage=null;
-
+    CWGLDisplay mVisGlDiaplay= new CWGLDisplay();
     private Logger logger = Logger.getLogger(this.getClass());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,8 +229,8 @@ public class PersonActivity extends Activity {
                 updateTableUI(i);
             }
         });
-        Column<String> password = new Column<>("密码", "password");
-        password.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
+        Column<String> role = new Column<>("角色", "role");
+        role.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
             @Override
             public void onClick(Column<String> column, String s, String s2, int i) {
                 updateTableUI(i);
@@ -252,9 +244,9 @@ public class PersonActivity extends Activity {
             }
         });
         //list= DBManager.getInstance().getPersonDao().loadAll();
-        MyPersonDao myPersonDao = new MyPersonDao();
-        list =myPersonDao.getAllPerson();
-        TableData<Person> tableData = new TableData<Person>("",list,  name,code, username,password,tzz);
+        PersonDao personDao = new PersonDao();
+        list = personDao.getAllPerson();
+        TableData<Person> tableData = new TableData<Person>("",list,  name,code, username,role,tzz);
         //设置数据
         table = findViewById(R.id.table);
         table.setTableData(tableData);
@@ -301,16 +293,16 @@ public class PersonActivity extends Activity {
         etusername.setText(list.get(i).getUsername());
         etpassword.setText(list.get(i).getPassword());
         //ettzz.setText(list.get(i).getTzz());
-        File file = new File(list.get(i).getPath());
-        if(file.exists()){
-            Bitmap bitmap=BitmapFactory.decodeFile(list.get(i).getPath());
-            imgzhaopian.setImageBitmap(bitmap);
+        if(list.get(i).getPath()!=null){
+            File file = new File(list.get(i).getPath());
+            if(file.exists()){
+                Bitmap bitmap=BitmapFactory.decodeFile(list.get(i).getPath());
+                imgzhaopian.setImageBitmap(bitmap);
+            }
+        }else {
+            imgzhaopian.setBackgroundColor(Color.BLACK);
+
         }
-//        if(list.get(i).getTzz().equals("已录入")){
-//            btnZWLR.setEnabled(false);
-//        }else{
-//            btnZWLR.setEnabled(true);
-//        }
 
     }
 
@@ -326,9 +318,27 @@ public class PersonActivity extends Activity {
                     if(!cameraStatus){
                         cameraStatus=true;
                         btnSPBF.setText("关闭视频");
-                        YCCamera.cwVisPreivewConfig.setSurfaceView(mSrVisView);
+                        //YCCamera.cwVisPreivewConfig.setSurfaceView(mSrVisView);
                         updatePreview(true);
                         updateDetect(true);
+                        CWEngine.getInstance().cwSetFrameCallback(new CWFrameCallback() {
+                            @Override
+                            public void onBgrFrame(byte[] data) {
+                                System.out.println("222222222222222-----");
+                                mVisGlDiaplay.render(mSrVisView,90,true,data,640,480,0);
+                            }
+
+                            @Override
+                            public void onIrFrame(byte[] data) {
+
+                            }
+
+                            @Override
+                            public void onDepthFrame(byte[] data) {
+
+
+                            }
+                        });
                     }else {
                         btnSPBF.setText("打开视频");
                         cameraStatus=false;
@@ -448,8 +458,8 @@ public class PersonActivity extends Activity {
                         }
                     }
 
-                    MyPersonDao myPersonDao = new MyPersonDao();
-                    myPersonDao.addPerson(person);
+                    PersonDao personDao = new PersonDao();
+                    personDao.addPerson(person);
                     feacture=null;
                     pathTuPian="";
                     zwzt="0";
@@ -482,6 +492,7 @@ public class PersonActivity extends Activity {
                         File file = new File(pathTuPian);
                         if(file.exists()){
                             try{
+                                personupdate.setPath(pathTuPian);
                                 personupdate.setFeaturedata(feacture);
                             }catch (Exception e){
                                 logger.error("读取抓拍照片出错",e);
@@ -498,8 +509,9 @@ public class PersonActivity extends Activity {
                     }else if(zwzt.equals("2")){
                         personupdate.setTzz("已录入");
                     }
-                    MyPersonDao myPersonDaoupdate = new MyPersonDao();
-                    myPersonDaoupdate.updatePerson(personupdate);
+                    PersonDao personDaoupdate = new PersonDao();
+                    personDaoupdate.updatePerson(personupdate);
+                    initColums();
                     MyTextToSpeech.getInstance().speak("修改成功");
                     showToast("修改成功");
                     break;
@@ -512,27 +524,13 @@ public class PersonActivity extends Activity {
                                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        MyPersonDao myPersonDao = new MyPersonDao();
-                                        if(list.get(selectPosition).getTzz().equals("未录入")){
-                                            myPersonDao.deletePersonById(list.get(selectPosition).getId());
-                                            initColums();
-                                            MyTextToSpeech.getInstance().speak("删除成功");
-                                            showToast("删除成功");
-
-                                        }else{
-                                            boolean blzw=HCProtocol.ST_DeleteZW(0,Integer.valueOf(list.get(selectPosition).getCode()));
-                                            if(blzw){
-                                                initColums();
-                                                MyTextToSpeech.getInstance().speak("删除成功");
-                                                showToast("删除成功");
-                                            }else{
-                                                MyTextToSpeech.getInstance().speak("指纹删除失败");
-                                                showToast("指纹删除失败");
-                                            }
-                                        }
-
-
-
+                                        boolean blzw=HCProtocol.ST_DeleteZW(0,Integer.valueOf(list.get(selectPosition).getCode()));
+                                        PersonDao personDao = new PersonDao();
+                                        logger.info("删除["+list.get(selectPosition).getName()+"]指纹返回结果:"+blzw);
+                                        personDao.deletePersonById(list.get(selectPosition).getId());
+                                        initColums();
+                                        MyTextToSpeech.getInstance().speak("删除成功");
+                                        showToast("删除成功");
                                     }
                                 })
 
@@ -578,17 +576,17 @@ public class PersonActivity extends Activity {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //先删除指纹
                                         boolean blzw=HCProtocol.ST_DeleteZW(0,Integer.valueOf(list.get(selectPosition).getCode()));
-                                        if(blzw){
-                                            MyTextToSpeech.getInstance().speak("请录入指纹");
-                                            showToast( "请录入指纹");
-                                            boolean bl= HCProtocol.ST_AddSaveZW(Integer.valueOf(etcode.getText().toString()));
-                                            if(bl){
-                                                Cache.zwlrNow=true;
-                                                new ZWLR().start();
-                                            }else{
-                                                MyTextToSpeech.getInstance().speak("指纹录入失败");
-                                                showToast("指纹录入失败");
-                                            }
+                                        logger.info("更新["+list.get(selectPosition).getName()+"]信息时删除指纹返回:"+blzw);
+
+                                        MyTextToSpeech.getInstance().speak("请录入指纹");
+                                        showToast( "请录入指纹");
+                                        boolean bl= HCProtocol.ST_AddSaveZW(Integer.valueOf(etcode.getText().toString()));
+                                        if(bl){
+                                            Cache.zwlrNow=true;
+                                            new ZWLR().start();
+                                        }else{
+                                            MyTextToSpeech.getInstance().speak("指纹录入失败");
+                                            showToast("指纹录入失败");
                                         }
 
                                     }
@@ -647,10 +645,10 @@ public class PersonActivity extends Activity {
     }
 
     private boolean updateCFCode(){
-        MyPersonDao myPersonDao = new MyPersonDao();
+        PersonDao personDao = new PersonDao();
         int codei=Integer.valueOf(etcode.getText().toString().trim());
         String codep=String.valueOf(codei);
-        List<Person> listCF=myPersonDao.getSameCodeForUpdate(list.get(selectPosition).getId(),codep);
+        List<Person> listCF= personDao.getSameCodeForUpdate(list.get(selectPosition).getId(),codep);
         if(listCF==null || listCF.isEmpty()){
             return true;
         }else {
@@ -816,14 +814,17 @@ public class PersonActivity extends Activity {
         CWEngine.getInstance().cwSetFrameCallback(new CWFrameCallback() {
             @Override
             public void onBgrFrame(byte[] data) {
+                System.out.println("personactivity bgr:"+System.currentTimeMillis()+"  "+data.length);
             }
 
             @Override
             public void onIrFrame(byte[] data) {
+                System.out.println("personactivity ir:"+System.currentTimeMillis()+"  "+data.length);
             }
 
             @Override
             public void onDepthFrame(byte[] data) {
+                System.out.println("personactivity depth:"+System.currentTimeMillis()+"  "+data.length);
             }
         });
 
@@ -956,7 +957,6 @@ public class PersonActivity extends Activity {
                 isResetLastImage = false;
                 lastLiveRect = faceDetectInfoList.get(0).getRect();
                 lastLiveImage = image;
-                System.out.println("fuzhi1");
                 if (lastLiveImage.getTimestamp() <= 0 && timestamp != 0) {
                     lastLiveImage.setTimestamp(timestamp);
                 }
@@ -1002,32 +1002,8 @@ public class PersonActivity extends Activity {
                         isResetLastImage = false;
                         lastLiveRect = detectInfo.getRect();
                         lastLiveImage = bgrImage;
-                        System.out.println("fuzhi2");
-//                        Message msg = new Message();
-//                        msg.what = MSG_SEND_IMAGE_FEATURE;
-//                        msg.obj = bgrImage;
-//                        handler.sendMessage(msg);
-//                        if (startFaceCompare) {
-//                            ThreadManager.getThreadPool().execute(compareRunable);
-////                            compareWithLib(lastLiveImage, lastLiveRect);
-//                        }
                     }
 
-                    //最佳人脸及全景图存图
-//                    if (livenessInfo.getCode() == CW_FACE_LIV_IS_LIVE) {
-//                        if (bestface != null) {
-//                            Message msg = Message.obtain();
-//                            msg.what = MSG_SAVE_BESTFACE;
-//                            msg.obj = bestface;
-//                            handler.sendMessage(msg);
-//                        }
-//                        if (bgrImage != null) {
-//                            Message msg = Message.obtain();
-//                            msg.what = MSG_SAVE_BGRIMAGE;
-//                            msg.obj = bgrImage;
-//                            handler.sendMessage(msg);
-//                        }
-//                    }
                 }
             }
 
@@ -1136,11 +1112,11 @@ public class PersonActivity extends Activity {
             if(!checkAddZWCF()){
                 return;
             }
-
             //先将指纹模块中该人员编号指纹删除
             MyTextToSpeech.getInstance().speak("请录入指纹");
             Toast.makeText(this, "请录入指纹", Toast.LENGTH_SHORT).show();
             boolean bl= HCProtocol.ST_AddSaveZW(Integer.valueOf(etcode.getText().toString()));
+            logger.info("添加人员编号为"+etcode.getText()+"指纹录入返回结果:"+bl);
             if(bl){
                 Cache.zwlrNow=true;
                 new ZWLR().start();
@@ -1160,8 +1136,8 @@ public class PersonActivity extends Activity {
             int codei=Integer.valueOf(etcode.getText().toString().trim());
             String codep=String.valueOf(codei);
             System.out.println(codep);
-            MyPersonDao myPersonDao = new MyPersonDao();
-            List<HashMap<String,String>> listCF = myPersonDao.getSameCodeForAdd(codep);
+            PersonDao personDao = new PersonDao();
+            List<HashMap<String,String>> listCF = personDao.getSameCodeForAdd(codep);
             if(!listCF.isEmpty()){
                 Toast.makeText(this, "工号重复", Toast.LENGTH_SHORT).show();
                 MyTextToSpeech.getInstance().speak("工号重复");

@@ -5,34 +5,26 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cloudwalk.gldisplay.GLFrameRenderer;
-import com.cloudwalk.gldisplay.GLFrameSurface;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.stit.toolcab.R;
-import com.stit.toolcab.dao.MyPersonDao;
+import com.stit.toolcab.camera.CWGLDisplay;
+import com.stit.toolcab.camera.GLFrameSurface;
+import com.stit.toolcab.dao.PersonDao;
 import com.stit.toolcab.entity.Person;
 import com.stit.toolcab.manager.CacheManager;
 import com.stit.toolcab.manager.ThreadManager;
 import com.stit.toolcab.utils.Cache;
-import com.stit.toolcab.utils.YCCamera;
 
 import org.apache.log4j.Logger;
 
@@ -40,9 +32,6 @@ import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
 
 import cn.cloudwalk.component.liveness.entity.face.CWLiveFaceDetectInfo;
 import cn.cloudwalk.component.liveness.entity.face.CWLiveFaceLivenessInfo;
@@ -121,6 +110,8 @@ public class FaceActivity extends Activity {
     private boolean timeFlag=true;
     private TextView tvJG;
     private boolean success=false;//识别成功标志
+    CWGLDisplay mVisGlDiaplay= new CWGLDisplay();
+
 
 
     private Logger logger;
@@ -191,7 +182,7 @@ public class FaceActivity extends Activity {
             case 1:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    initConfig();
+                    //initConfig();
                 }
                 break;
         }
@@ -210,9 +201,31 @@ public class FaceActivity extends Activity {
             }
         } else {
             //initConfig();
-            YCCamera.cwVisPreivewConfig.setSurfaceView(mSrVisView);
+            //YCCamera.cwVisPreivewConfig.setSurfaceView(mSrVisView);
             updatePreview(true);
             updateDetect(true);
+            CWEngine.getInstance().cwSetFrameCallback(new CWFrameCallback() {
+                @Override
+                public void onBgrFrame(byte[] data) {
+
+                    if(data.length>0){
+                        System.out.println("111111111111111111111-----");
+                        mVisGlDiaplay.render(mSrVisView,90,true,data,640,480,0);
+                    }
+
+                }
+
+                @Override
+                public void onIrFrame(byte[] data) {
+
+                }
+
+                @Override
+                public void onDepthFrame(byte[] data) {
+
+                    System.out.println("personactivity depth:"+System.currentTimeMillis()+"  "+data.length);
+                }
+            });
         }
     }
 
@@ -440,7 +453,8 @@ public class FaceActivity extends Activity {
         CWEngine.getInstance().cwSetFrameCallback(new CWFrameCallback() {
             @Override
             public void onBgrFrame(byte[] data) {
-                //System.out.println(data.length);
+
+                System.out.println("personactivity bgr:"+System.currentTimeMillis()+"  "+data.length);
 
 
                 //mSrVisView.setRenderer();
@@ -449,11 +463,13 @@ public class FaceActivity extends Activity {
             @Override
             public void onIrFrame(byte[] data) {
                 //System.out.println("222");
+                System.out.println("personactivity irframe:"+System.currentTimeMillis()+"  "+data.length);
             }
 
             @Override
             public void onDepthFrame(byte[] data) {
-                System.out.println("333");
+                //System.out.println("333");
+                System.out.println("personactivity depth:"+System.currentTimeMillis()+"  "+data.length);
             }
         });
         cwVisPreivewConfig.setSurfaceView(mSrVisView);
@@ -714,10 +730,10 @@ public class FaceActivity extends Activity {
         public void run() {
             long tmp;
             isCompare = true;
-            MyPersonDao myPersonDao = new MyPersonDao();
-            List<Person> featureModels =myPersonDao.getAllPerson();
+            PersonDao personDao = new PersonDao();
+            List<Person> featureModels = personDao.getAllPerson();
             //Logger.i("loadLib", "featureLibCount: " + DBManager.getInstance().getPersonFeatureModelDao().count());
-            featureModels =myPersonDao.getAllPerson();
+            featureModels = personDao.getAllPerson();
                 if (featureModels == null || featureModels.size() < 1) {
                     showToast("当前特征库没有数据");
                     isCompare = false;
@@ -793,21 +809,26 @@ public class FaceActivity extends Activity {
                             data.putString("czy","1");
                             message.setData(data);
                             Cache.mainHandle.sendMessage(message);
-                            System.out.println("分支:"+String.format("%.1f", score[finalIndex] * 100));
-                            System.out.println("姓名："+m.getName());
-                            System.out.println("开始关闭预览界面");
+                            logger.info("分值:"+String.format("%.1f", score[finalIndex] * 100));
+                            logger.info("姓名："+m.getName());
+                            //logger.info("开始关闭预览界面");
                             updatePreview(false);
-
-                            System.out.println("开始释放资源");
-                            try{
-                                CWEngine.getInstance().cwUninit();
+                            updateDetect(false);
+                            try {
                                 Thread.sleep(1000);
-                            }catch (Exception e){
-                                logger.error("释放视频资源出错",e);
+                            } catch (InterruptedException e) {
                             }
-                            System.out.println("开始关闭界面");
+
+//                            System.out.println("开始释放资源");
+//                            try{
+//                                //CWEngine.getInstance().cwUninit();
+//                                Thread.sleep(1000);
+//                            }catch (Exception e){
+//                                logger.error("释放视频资源出错",e);
+//                            }
+//                            System.out.println("开始关闭界面");
                             FaceActivity.this.finish();
-                            System.out.println("界面关闭完成");
+                            //System.out.println("界面关闭完成");
                         }
                     });
                 }

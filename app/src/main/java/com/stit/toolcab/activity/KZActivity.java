@@ -3,22 +3,16 @@ package com.stit.toolcab.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.stit.toolcab.R;
-import com.stit.toolcab.dao.MyPersonDao;
+import com.stit.toolcab.dao.PersonDao;
 import com.stit.toolcab.device.HCProtocol;
 import com.stit.toolcab.utils.MyTextToSpeech;
 
@@ -157,8 +151,8 @@ public class KZActivity extends Activity {
                                     boolean bl=HCProtocol.ST_DeleteZW(1,0);
                                     if(bl){
                                         //将人员表数据库中的所有指纹清空
-                                        MyPersonDao myPersonDao = new MyPersonDao();
-                                        myPersonDao.deleteAllZW();
+                                        PersonDao personDao = new PersonDao();
+                                        personDao.deleteAllZW();
                                         sendTS("删除所有指纹完成");
                                     }else{
                                         sendTS("删除所有指纹失败");

@@ -1,43 +1,26 @@
 package com.stit.toolcab.activity;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.net.Uri;
 import android.os.Message;
-import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.stit.toolcab.R;
-import com.stit.toolcab.dao.MyPZDao;
+import com.stit.toolcab.dao.PZDao;
 import com.stit.toolcab.entity.PeiZhi;
 import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.MyTextToSpeech;
 
 import org.apache.log4j.Logger;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import cn.cloudwalk.midware.engine.CWEngine;
 
 public class PZActivity extends Activity {
 
@@ -65,6 +48,7 @@ public class PZActivity extends Activity {
         setContentView(R.layout.activity_pz);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置全屏
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.othertitle);
         initView();
         initData();
 
@@ -202,12 +186,12 @@ public class PZActivity extends Activity {
                         peiZhi.setAppcode(tvsbbh.getText().toString().trim());
                         peiZhi.setServerip(edfwqdz.getText().toString().trim());
                         peiZhi.setServerport(edfwqdkh.getText().toString().trim());
-                        MyPZDao myPZDao = new MyPZDao();
-                        PeiZhi peiZhiHave = myPZDao.getPZ();
+                        PZDao PZDao = new PZDao();
+                        PeiZhi peiZhiHave = PZDao.getPZ();
                         if(peiZhiHave==null){
-                            myPZDao.addPZ(peiZhi);
+                            PZDao.addPZ(peiZhi);
                         }else{
-                            myPZDao.updatePZ(peiZhi);
+                            PZDao.updatePZ(peiZhi);
                         }
                         Cache.peiZhi=peiZhi;
                         Toast.makeText(PZActivity.this, "保存配置完成", Toast.LENGTH_LONG).show();

@@ -18,6 +18,12 @@ public class Tools {
 
     private String wz;
 
+    private String zt;
+
+    private String personid;
+
+    private String timepoke;
+
 
     public String getId() {
         return id;
@@ -57,5 +63,29 @@ public class Tools {
 
     public void setWz(String wz) {
         this.wz = wz;
+    }
+
+    public String getZt() {
+        return zt;
+    }
+
+    public void setZt(String zt) {
+        this.zt = zt;
+    }
+
+    public String getPersonid() {
+        return personid;
+    }
+
+    public void setPersonid(String personid) {
+        this.personid = personid;
+    }
+
+    public String getTimepoke() {
+        return timepoke;
+    }
+
+    public void setTimepoke(String timepoke) {
+        this.timepoke = timepoke;
     }
 }

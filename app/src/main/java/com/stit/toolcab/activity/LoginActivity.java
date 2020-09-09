@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -15,8 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.stit.toolcab.R;
-import com.stit.toolcab.dao.MyPersonDao;
-import com.stit.toolcab.device.HCProtocol;
+import com.stit.toolcab.dao.PersonDao;
 import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.MyTextToSpeech;
 
@@ -73,21 +71,8 @@ public class LoginActivity extends Activity {
                         LoginActivity.this.finish();
                         return;
                     }
-                    MyPersonDao myPersonDao = new MyPersonDao();
-//                    List<Person> liste=myPersonDao.getAllPerson();
-//
-//                    Person person = new Person();
-//                    person.setId(UUID.randomUUID().toString());
-//                    person.setCode("123");
-//                    person.setUsername("123");
-//                    person.setPath(liste.get(0).getPath());
-//                    person.setName("张三");
-//                    person.setFeaturedata(liste.get(0).getFeaturedata());
-//                    person.setTzz("222");
-//                    person.setPassword("123");
-//                    myPersonDao.addPerson(person);
-
-                    Cache.operator=myPersonDao.getPersonByUserNamePassword(txtUserName.getText().toString().trim(),txtPassword.getText().toString().trim());
+                    PersonDao personDao = new PersonDao();
+                    Cache.operator= personDao.getPersonByUserNamePassword(txtUserName.getText().toString().trim(),txtPassword.getText().toString().trim());
                     if(Cache.operator!=null){
                         Message message = Message.obtain(Cache.mainHandle);
                         Bundle data = new Bundle();
@@ -95,7 +80,6 @@ public class LoginActivity extends Activity {
                         message.setData(data);
                         Cache.mainHandle.sendMessage(message);
                         LoginActivity.this.finish();
-                        HCProtocol.ST_OpenDoor();
                     }else{
                         Toast.makeText(LoginActivity.this, "账号和密码不匹配", Toast.LENGTH_SHORT).show();
                         MyTextToSpeech.getInstance().speak("账号和密码不匹配");

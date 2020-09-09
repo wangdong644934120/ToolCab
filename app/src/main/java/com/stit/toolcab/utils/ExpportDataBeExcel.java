@@ -1,7 +1,8 @@
 package com.stit.toolcab.utils;
 
 
-import com.stit.toolcab.dao.MyToolsDao;
+import com.stit.toolcab.dao.ToolsDao;
+import com.stit.toolcab.dao.ToolsStoreDao;
 import com.stit.toolcab.entity.Tools;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -32,8 +33,8 @@ public  class ExpportDataBeExcel {
     public static  int ImportExcelData(File file) {
         int count=-1;
         //先将库中信息全部清空
-        MyToolsDao myToolsDao = new MyToolsDao();
-        myToolsDao.deleteAllTools();
+        ToolsStoreDao toolsStoreDao = new ToolsStoreDao();
+        toolsStoreDao.deleteAllTools();
 
         FileInputStream inFile = null;
         try {
@@ -60,14 +61,14 @@ public  class ExpportDataBeExcel {
                 tool.setMc(oneRow.getCell((short)0)==null?"":oneRow.getCell((short)0).toString().trim());
                 tool.setGg(oneRow.getCell((short)1)==null?"":oneRow.getCell((short)1).toString().trim());
                 tool.setEpc(oneRow.getCell((short)2)==null?"":oneRow.getCell((short)2).toString().trim().toUpperCase());
-                tool.setWz(oneRow.getCell((short)3)==null?"":oneRow.getCell((short)3).toString().trim());
+                tool.setWz("");
                 if(tool.getMc().equals("") || tool.getGg().equals("") || tool.getEpc().equals("")){
                     break;
                 }
                 list.add(tool);
 
             }
-            myToolsDao.addTools(list);
+            toolsStoreDao.addTools(list);
             count=list.size();
             logger.info("上传工具成功，个数："+list.size());
             return list.size();
@@ -94,8 +95,8 @@ public  class ExpportDataBeExcel {
             if(!file.exists()){
                 file.createNewFile();
             }
-            MyToolsDao myToolsDao = new MyToolsDao();
-            List<Tools> list =myToolsDao.getAllTools();
+            ToolsDao toolsDao = new ToolsDao();
+            List<Tools> list = toolsDao.getAllTools();
             // 第一步，创建一个HSSFWorkbook，对应一个Excel文件
             HSSFWorkbook wb=null;
             if(wb == null){

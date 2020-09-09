@@ -6,7 +6,7 @@ package com.stit.toolcab.entity;
  */
 
 
-public class CurrentRecord {
+public class Record {
     public static String BAOXIAO="0";//报销状态
     public static String ZAIGUI="1"; //在柜状态
     public static String JIEYONG="2";//借用状态

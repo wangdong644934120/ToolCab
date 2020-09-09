@@ -1,6 +1,6 @@
 package com.stit.toolcab.dao;
 
-import com.stit.toolcab.entity.CurrentRecord;
+import com.stit.toolcab.entity.Record;
 import com.stit.toolcab.db.DataBaseExec;
 import com.stit.toolcab.entity.ToolZT;
 import com.stit.toolcab.utils.Cache;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Administrator on 2020-08-03.
  */
 
-public class MyCurrentRecordDao {
+public class RecordDao {
     private Logger logger = Logger.getLogger(this.getClass());
     /**
      * 初始化借用报修维修信息
@@ -32,7 +32,7 @@ public class MyCurrentRecordDao {
 
     private void initJY(){
         List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg,t.epc,p.code,p.name,cr.time from tools t ,person p,currentrecord cr where cr.personid=p.id and cr.toolsid=t.id and cr.zt="+ CurrentRecord.JIEYONG;
+        String sql="select t.mc,t.gg,t.epc,t.wz, p.code,p.name,t.timepoke from tools t ,person p where t.personid=p.id  and t.zt="+ Record.JIEYONG;
         List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
         for(HashMap map : listmap){
@@ -48,7 +48,7 @@ public class MyCurrentRecordDao {
             }catch (Exception e){
                 logger.error("时间转换出错",e);
             }
-            tool.setTime(time);
+            tool.setTimepoke(time);
             tool.setZt("借出");
             list.add(tool);
         }
@@ -56,7 +56,7 @@ public class MyCurrentRecordDao {
     }
     private void initBX(){
         List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg,t.epc,p.code,p.name,cr.time from tools t ,person p,currentrecord cr where cr.personid=p.id and cr.toolsid=t.id and cr.zt="+ CurrentRecord.BAOXIU;
+        String sql="select t.mc,t.gg,t.epc,t.wz, p.code,p.name,t.timepoke from tools t ,person p where t.personid=p.id  and t.zt="+ Record.BAOXIU;
         List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
         for(HashMap map : listmap){
@@ -72,7 +72,7 @@ public class MyCurrentRecordDao {
             }catch (Exception e){
                 logger.error("时间转换出错",e);
             }
-            tool.setTime(time);
+            tool.setTimepoke(time);
             tool.setZt("报修");
             list.add(tool);
         }
@@ -80,7 +80,7 @@ public class MyCurrentRecordDao {
     }
     private void initWX(){
         List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg,t.epc,p.code,p.name,cr.time from tools t ,person p,currentrecord cr where cr.personid=p.id and cr.toolsid=t.id and cr.zt="+ CurrentRecord.WEIXIU;
+        String sql="select t.mc,t.gg,t.epc,t.wz, p.code,p.name,t.timepoke from tools t ,person p where t.personid=p.id  and t.zt="+ Record.WEIXIU;
         List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
         for(HashMap map : listmap){
@@ -96,7 +96,7 @@ public class MyCurrentRecordDao {
             }catch (Exception e){
                 logger.error("时间转换出错",e);
             }
-            tool.setTime(time);
+            tool.setTimepoke(time);
             tool.setZt("维修");
             list.add(tool);
         }

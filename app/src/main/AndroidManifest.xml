@@ -4,6 +4,7 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.autofocus" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -31,21 +32,25 @@
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.FaceActivity" />
-        <activity android:name=".activity.LoadActivity"></activity>
+        <activity android:name=".activity.LoadActivity" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.ProgressDialog"
+        <activity
+            android:name=".activity.ProgressDialog"
             android:colorMode="default"
             android:configChanges="keyboardHidden|orientation"
             android:label="正在读取请稍后..."
             android:theme="@style/prostyle"
-            android:windowSoftInputMode="stateHidden|adjustUnspecified"
-            />
-        <activity android:name=".activity.SelectDialog"  android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".activity.PersonActivity"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified" />
+        <activity
+            android:name=".activity.SelectDialog"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".activity.PersonActivity"
             android:colorMode="default"
             android:configChanges="keyboardHidden|orientation"
             android:label="人员管理"
@@ -54,16 +59,19 @@
         <activity android:name=".activity.PermissionActivity" />
         <activity android:name=".activity.ToolActivity" />
         <activity android:name=".activity.PZActivity" />
-        <activity android:name=".activity.KZActivity"></activity>
-        <activity android:name=".activity.DeviceActivity"></activity>
+        <activity android:name=".activity.KZActivity" />
+        <activity android:name=".activity.DeviceActivity" />
+
         <receiver
-            android:name="com.stit.toolcab.utils.MyReceiver"
+            android:name=".utils.MyReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".activity.AccessConActivity"></activity>
     </application>
 
 </manifest>

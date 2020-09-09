@@ -287,11 +287,16 @@
                     android:layout_marginRight="5px"
                     android:layout_weight="1"
                     android:orientation="vertical">
-                    <com.cloudwalk.gldisplay.GLFrameSurface
+                    <com.stit.toolcab.camera.GLFrameSurface
                         android:id="@+id/sr_vis_view"
                         android:layout_width="300px"
                         android:layout_height="400px"
                         android:layout_gravity="center" />
+                    <!--<com.cloudwalk.gldisplay.GLFrameSurface-->
+                        <!--android:id="@+id/sr_vis_view"-->
+                        <!--android:layout_width="300px"-->
+                        <!--android:layout_height="400px"-->
+                        <!--android:layout_gravity="center" />-->
                     <Button
                         android:id="@+id/dakaishipin"
                         android:layout_width="match_parent"

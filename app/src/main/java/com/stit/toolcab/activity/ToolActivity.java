@@ -1,26 +1,30 @@
 package com.stit.toolcab.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Environment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.stit.toolcab.R;
+import com.stit.toolcab.dao.ToolsDao;
+import com.stit.toolcab.dao.ToolsStoreDao;
+import com.stit.toolcab.device.HCProtocol;
+import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.ExpportDataBeExcel;
 
+import org.apache.log4j.Logger;
+
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 public class ToolActivity extends Activity {
 
@@ -28,6 +32,9 @@ public class ToolActivity extends Activity {
     private TextView tvtitle;
     private Button btnUp;
     private Button btnDown;
+    private Button btnCS;
+    private Logger logger = Logger.getLogger(this.getClass());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +44,44 @@ public class ToolActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置全屏
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.othertitle);
         initView();
+        Cache.myHandleHCCS = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                Bundle bundle = msg.getData();
+                //提示信息
+                if (bundle.getString("cshc") != null) {
+                    logger.info("初始工具获取标签原始个数："+Cache.HCCSMap.size());
+                    //先删除原有标签
+                    ToolsDao toolsDao = new ToolsDao();
+                    toolsDao.deleteAllTools();
+                    //根据标签EPC更新位置
+                    ToolsStoreDao toolsStoreDao = new ToolsStoreDao();
 
+                    if(!Cache.HCCSMap.isEmpty()){
+                        Set<String> cards = Cache.HCCSMap.keySet();
+                        List<HashMap<String,String>> list=toolsStoreDao.getAllToolsByHCCS(cards);
+                        if(list!=null && !list.isEmpty()){
+                            for(String card : cards){
+                                for(HashMap<String,String> map : list){
+                                    if(card.toUpperCase().equals(map.get("epc").toString().toUpperCase())){
+                                        map.put("wz",Cache.HCCSMap.get(card).toString());
+                                        break;
+                                    }
+                                }
+                            }
+                            toolsDao.updateAllToolsWZ(list);
+                        }
+
+                    }
+                    sendTotal();
+                    Toast.makeText(ToolActivity.this, "初始柜内工具完成,个数："+Cache.HCCSMap.size(), Toast.LENGTH_SHORT).show();
+                    Cache.HCCSMap.clear();
+                    Cache.getHCCS=0;
+                }
+
+            }
+        };
     }
     private void initView(){
         tvfh=(TextView)findViewById(R.id.fh);
@@ -48,6 +92,8 @@ public class ToolActivity extends Activity {
         btnUp.setOnClickListener(new onClickListener());
         btnDown=(Button)findViewById(R.id.down);
         btnDown.setOnClickListener(new onClickListener());
+        btnCS=(Button)findViewById(R.id.cs);
+        btnCS.setOnClickListener(new onClickListener());
     }
 
     /**
@@ -84,6 +130,17 @@ public class ToolActivity extends Activity {
                         Toast.makeText(ToolActivity.this, "下载耗材库失败", Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case R.id.cs:
+                    Cache.getHCCS=1;
+
+                    //下发盘点指令
+                    if(HCProtocol.ST_GetAllCard()){
+                        logger.info("下发指令盘存所有成功");
+                    }else{
+                        Cache.getHCCS=0;
+                        logger.info("下发指令盘存所有失败");
+                    }
+                    break;
                 case R.id.fh:
                     ToolActivity.this.finish();
                     break;
@@ -92,5 +149,14 @@ public class ToolActivity extends Activity {
             }
         }
 
+    }
+
+    private  void sendTotal(){
+        Message message = Message.obtain(Cache.mainHandle);
+        Bundle data = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
+
+        data.putString("initTotal","1");
+        message.setData(data);
+        Cache.mainHandle.sendMessage(message);
     }
 }

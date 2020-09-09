@@ -1,36 +1,21 @@
 package com.stit.toolcab.utils;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cloudwalk.gldisplay.GLFrameSurface;
 import com.stit.toolcab.activity.FaceActivity;
-import com.stit.toolcab.dao.MyPersonDao;
-import com.stit.toolcab.entity.Person;
 import com.stit.toolcab.manager.CacheManager;
-import com.stit.toolcab.manager.ThreadManager;
 
 import org.apache.log4j.Logger;
 
 import java.lang.ref.WeakReference;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.List;
 
-import cn.cloudwalk.component.liveness.entity.face.CWLiveFaceDetectInfo;
-import cn.cloudwalk.component.liveness.entity.face.CWLiveFaceLivenessInfo;
 import cn.cloudwalk.component.liveness.entity.face.CWLiveFaceParam;
-import cn.cloudwalk.component.liveness.entity.face.CWLiveFaceRecogInfo;
 import cn.cloudwalk.component.liveness.entity.face.CWLiveFaceRect;
 import cn.cloudwalk.component.liveness.entity.face.CWLiveImage;
 import cn.cloudwalk.midware.camera.entity.CWCameraInfos;
@@ -39,32 +24,7 @@ import cn.cloudwalk.midware.engine.CWEngine;
 import cn.cloudwalk.midware.engine.CWGeneralApi;
 import cn.cloudwalk.midware.engine.CWLivenessConfig;
 import cn.cloudwalk.midware.engine.CWPreivewConfig;
-import cn.cloudwalk.midware.engine.callback.CWFrameCallback;
-import cn.cloudwalk.midware.engine.callback.CWLiveinfoCallback;
 import cn.cloudwalk.midware.engine.utils.FileUtil;
-
-import static cn.cloudwalk.midware.engine.CWEngine.CW_CAMERA_STATE_OPENED;
-import static cn.cloudwalk.midware.engine.CWEngine.CW_FUNC_MULTI_FACES;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_COLOR_PASS;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_DIST_TOO_CLOSE_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_DIST_TOO_FAR_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_FACE_CLARITY_DET_FAIL_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_IS_LIVE;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_IS_UNLIVE_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_NO_PAIR_FACE_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_POSE_DET_FAIL_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_SKIN_FAILED_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_VIS_BLACKSPEC_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_VIS_BRIGHTNESS_EXC_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_VIS_BRIGHTNESS_INS_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_VIS_EYE_CLOSE_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_VIS_FACE_LOW_CONF_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_VIS_MOUTH_OPEN_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_VIS_NO_FACE_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_VIS_OCCLUSION_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_VIS_PROCEDUREMASK_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_LIV_VIS_SUNGLASS_ERR;
-import static cn.cloudwalk.midware.live.user.CWLiveness.CW_FACE_NO_FACE;
 
 /**
  * Created by Administrator on 2020-08-12.
@@ -224,20 +184,23 @@ public class YCCamera {
 
         CWEngine.getInstance().setLogLevel(cn.cloudwalk.midware.engine.utils.Logger.WARN, ",");
 
-        CWEngine.getInstance().cwSetFrameCallback(new CWFrameCallback() {
-            @Override
-            public void onBgrFrame(byte[] data) {
-            }
-
-            @Override
-            public void onIrFrame(byte[] data) {
-            }
-
-            @Override
-            public void onDepthFrame(byte[] data) {
-                System.out.println("333");
-            }
-        });
+//        CWEngine.getInstance().cwSetFrameCallback(new CWFrameCallback() {
+//            @Override
+//            public void onBgrFrame(byte[] data) {
+//                System.out.println("personactivity bgr:"+System.currentTimeMillis()+"  "+data.length);
+//            }
+//
+//            @Override
+//            public void onIrFrame(byte[] data) {
+//                System.out.println("personactivity irframe:"+System.currentTimeMillis()+"  "+data.length);
+//            }
+//
+//            @Override
+//            public void onDepthFrame(byte[] data) {
+//
+//                System.out.println("personactivity depth:"+System.currentTimeMillis()+"  "+data.length);
+//            }
+//        });
     }
 
 

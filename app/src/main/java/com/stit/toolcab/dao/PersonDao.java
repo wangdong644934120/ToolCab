@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Administrator on 2020-08-05.
  */
 
-public class MyPersonDao {
+public class PersonDao {
     public Person getPersonByUserNamePassword(String username,String password){
         String sql="select * from person where username=? and password=?";
         String[] args = new String[]{username,password};

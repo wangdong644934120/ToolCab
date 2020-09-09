@@ -1,18 +1,14 @@
 package com.stit.toolcab.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -22,18 +18,18 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.Column;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.table.TableData;
 import com.stit.toolcab.R;
-import com.stit.toolcab.dao.MyCurrentRecordDao;
-import com.stit.toolcab.dao.MyPZDao;
+import com.stit.toolcab.dao.RecordDao;
+import com.stit.toolcab.dao.PZDao;
 import com.stit.toolcab.db.DatabaseManager;
 import com.stit.toolcab.db.UpdateDB;
 import com.stit.toolcab.device.DeviceCom;
+import com.stit.toolcab.device.HCProtocol;
 import com.stit.toolcab.entity.ToolZT;
 import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.CrashHandler;
@@ -69,6 +65,8 @@ public class MainActivity extends Activity {
     Column<String> column2 = new Column<>("规格", "gg");
     Column<String> column3 = new Column<>("人员", "name");
     Column<String> column4 = new Column<>("时间", "time");
+
+    private Button btnLoginOut;
 
     private Logger logger = Logger.getLogger(this.getClass());
 
@@ -205,6 +203,15 @@ public class MainActivity extends Activity {
             }
         });
 
+        btnLoginOut=(Button)findViewById(R.id.loginout);
+        btnLoginOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 //    private void requestPermission() {
@@ -222,8 +229,8 @@ public class MainActivity extends Activity {
 //    }
 
     private void initTJ(){
-        MyCurrentRecordDao myCurrentRecordDao=new MyCurrentRecordDao();
-        myCurrentRecordDao.initJYBXWX();
+        RecordDao recordDao =new RecordDao();
+        recordDao.initJYBXWX();
         tvjcgs.setText("（"+Cache.listJY.size()+"）");
         tvbxgs.setText("（"+Cache.listBX.size()+"）");
         tvwxgs.setText("("+Cache.listWX.size()+")");
@@ -231,8 +238,8 @@ public class MainActivity extends Activity {
     }
 
     private void initPZ(){
-        MyPZDao myPZDao = new MyPZDao();
-        Cache.peiZhi = myPZDao.getPZ();
+        PZDao PZDao = new PZDao();
+        Cache.peiZhi = PZDao.getPZ();
         tvappcode.setText(Cache.peiZhi==null?"":Cache.peiZhi.getAppcode());
         tvappname.setText(Cache.peiZhi==null?"":Cache.peiZhi.getAppname());
     }
@@ -285,9 +292,10 @@ public class MainActivity extends Activity {
                 return;
             switch (v.getId()) {
                 case R.id.pandian:
-                    MyTextToSpeech.getInstance().speak("大家好");
+                    //MyTextToSpeech.getInstance().speak("大家好");
 //                    Intent intent = new Intent(MainActivity.this, ProgressDialog.class);
 //                    startActivity(intent);
+                    HCProtocol.ST_GetAllCard();
                     break;
                 case R.id.lljc:
                     params = new LinearLayout.LayoutParams(60,140);
@@ -403,14 +411,16 @@ public class MainActivity extends Activity {
                                 Intent intent = new Intent(MainActivity.this, KZActivity.class);
                                 startActivity(intent);
                             }
-                            if (bundle.getString("ui").toString().equals("kz")) {
-                                Intent intent = new Intent(MainActivity.this, KZActivity.class);
-                                startActivity(intent);
-                            }
                             if(bundle.getString("ui").toString().equals("sbxx")){
                                 Intent intent = new Intent(MainActivity.this, DeviceActivity.class);
                                 startActivity(intent);
                             }
+                            if(bundle.getString("ui").toString().equals("access")){
+                                //打开存取操作确认界面
+//                                Intent intent = new Intent(MainActivity.this, AccessConActivity.class);
+//                                startActivity(intent);
+                            }
+
                             if(bundle.getString("ui").toString().equals("tccx")){
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                 builder.setIcon(android.R.drawable.ic_dialog_info);
@@ -440,6 +450,9 @@ public class MainActivity extends Activity {
                                 Intent intent = new Intent(MainActivity.this, ProgressDialog.class);
                                 startActivity(intent);
                             }
+                        }
+                        if(bundle.getString("initTotal")!=null){
+                            initTJ();
                         }
                         //更新界面操作员
                         if(bundle.getString("czy")!=null){

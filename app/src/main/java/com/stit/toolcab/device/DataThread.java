@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Message;
 
 
-import com.stit.toolcab.dao.MyPersonDao;
+import com.stit.toolcab.dao.PersonDao;
 import com.stit.toolcab.entity.Person;
 import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.MyTextToSpeech;
@@ -105,8 +105,8 @@ public class DataThread extends Thread {
                 return;
             }
             logger.info("单机使用");
-            MyPersonDao myPersonDao = new MyPersonDao();
-            Person person=myPersonDao.getPersonByCode(card1,card2);
+            PersonDao personDao = new PersonDao();
+            Person person= personDao.getPersonByCode(card1,card2);
             if(person!=null){
                 Cache.operator=person;
                 sendCZY(person.getName());
@@ -347,56 +347,57 @@ public class DataThread extends Thread {
                 updateJD(jd,false);
                 //关闭盘存进度
                 closeJD();
+
                 logger.info("获取标签个数："+map.size());
 
                 //对标签数据进行处理
-//                if(Cache.getHCCS==0){
-//                    //0--关门盘存
-//                    if(Cache.external){
-//                        Cache.listOperaOut.clear();
-//                        Cache.listOperaSave.clear();
-//                        //打开耗材确认界面
-//                        Message message = Message.obtain(Cache.myHandle);
-//                        Bundle bund = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
-//                        bund.putString("ui","access");
-//                        message.setData(bund);
-//                        Cache.myHandle.sendMessage(message);
-//                        sendExternalProduct("product");
-//                    }else{
-//                        HashMap<String,String> mapBQ= (HashMap<String,String>)map.clone();
-//                        map.clear();
-//                        new DataDeal(mapBQ).start();
-//                    }
-//                }else if(Cache.getHCCS==1){
-//                    //1-耗材初始时要数据线
-//                    Cache.HCCSMap=(HashMap<String,String>)map.clone();
-//                    map.clear();
-//                    sendHCCS();
-//                    Cache.getHCCS=0;
-//                }else if(Cache.getHCCS==2){
-//                    //2-主界面盘点要数据
-//                    if(Cache.external){
-//                        //打开耗材统计界面
-//                        Message message = Message.obtain(Cache.myHandle);
-//                        Bundle bund = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
-//                        bund.putString("ui","access");
-//                        message.setData(bund);
-//                        Cache.myHandle.sendMessage(message);
-//                        //连接第三方平台
-//                        sendExternalProduct("product");
-//                    }else{
-//                        //从本地数据库读取数据进行处理
-//                        Cache.HCCSMap=(HashMap<String,String>)map.clone();
-//                        map.clear();
-//                        sendPDZJM();
-//                    }
-//                    Cache.getHCCS=0;
-//                } else if(Cache.getHCCS==3){
-//                    //加载界面盘点所有耗材
-//                    if(Cache.external){
-//                        sendExternalProduct("total");
-//                    }
-//                    Cache.getHCCS=0;
+                if(Cache.getHCCS==0){
+                    //0--关门盘存
+                    if(Cache.external){
+                        Cache.listOperaOut.clear();
+                        Cache.listOperaSave.clear();
+                        //打开耗材确认界面
+                        Message message = Message.obtain(Cache.mainHandle);
+                        Bundle bund = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
+                        bund.putString("ui","access");
+                        message.setData(bund);
+                        Cache.mainHandle.sendMessage(message);
+                        //sendExternalProduct("product");
+                    }else{
+                        HashMap<String,String> mapBQ= (HashMap<String,String>)map.clone();
+                        map.clear();
+                        //new DataDeal(mapBQ).start();
+                    }
+                }else if(Cache.getHCCS==1){
+                    //1-耗材初始时要数据
+                    Cache.HCCSMap=(HashMap<String,String>)map.clone();
+                    map.clear();
+                    sendHCCS();
+                    Cache.getHCCS=0;
+                }else if(Cache.getHCCS==2){
+                    //2-主界面盘点要数据
+                    if(Cache.external){
+                        //打开耗材统计界面
+                        Message message = Message.obtain(Cache.mainHandle);
+                        Bundle bund = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
+                        bund.putString("ui","access");
+                        message.setData(bund);
+                        Cache.mainHandle.sendMessage(message);
+                        //连接第三方平台
+                        //sendExternalProduct("product");
+                    }else{
+                        //从本地数据库读取数据进行处理
+                        Cache.HCCSMap=(HashMap<String,String>)map.clone();
+                        map.clear();
+                        //sendPDZJM();
+                    }
+                    Cache.getHCCS=0;
+                } else if(Cache.getHCCS==3){
+                    //加载界面盘点所有耗材
+                    if(Cache.external){
+                        //sendExternalProduct("total");
+                    }
+                    Cache.getHCCS=0;
 //                    if(Cache.lockScreen.equals("0")){
 //                        logger.info("未配置锁屏");
 //                        return;
@@ -412,7 +413,7 @@ public class DataThread extends Thread {
 //                        message.setData(bund);
 //                        Cache.myHandle.sendMessage(message);
 //                    }
-//                }
+                }
 
             }
         }
@@ -573,12 +574,12 @@ public class DataThread extends Thread {
 //
 //    }
 
-    /**
-     * 更新界面控件
-     * @param type  类型 men deng  hwxc
-     * @param wz  针对红外、行程开关
-     * @param zt  1 触发，0关闭触发
-     */
+//    /**
+//     * 更新界面控件
+//     * @param type  类型 men deng  hwxc
+//     * @param wz  针对红外、行程开关
+//     * @param zt  1 触发，0关闭触发
+//     */
 //    private  void updateUI(String type, String wz, String zt){
 //        Message message = Message.obtain(Cache.myHandle);
 //        Bundle data = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
@@ -700,18 +701,18 @@ public class DataThread extends Thread {
 //        Cache.myHandlePerson.sendMessage(message);
 //    }
 //
-//    private  void sendHCCS(){
-//        if(Cache.myHandleHCCS==null){
-//            logger.info("初始耗材发送失败");
-//            return;
-//        }
-//        Message message = Message.obtain(Cache.myHandleHCCS);
-//        Bundle data = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
-//
-//        data.putString("cshc","1");
-//        message.setData(data);
-//        Cache.myHandleHCCS.sendMessage(message);
-//    }
+    private  void sendHCCS(){
+        if(Cache.myHandleHCCS==null){
+            logger.info("初始工具发送失败");
+            return;
+        }
+        Message message = Message.obtain(Cache.myHandleHCCS);
+        Bundle data = new Bundle();
+
+        data.putString("cshc","1");
+        message.setData(data);
+        Cache.myHandleHCCS.sendMessage(message);
+    }
 //
 //    private boolean sendExternal(String sendValue){
 //        boolean bl=false;

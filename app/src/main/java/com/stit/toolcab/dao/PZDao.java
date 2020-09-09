@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Administrator on 2020-08-05.
  */
 
-public class MyPZDao {
+public class PZDao {
 
     public PeiZhi getPZ(){
         String sql = "select * from peizhi";
