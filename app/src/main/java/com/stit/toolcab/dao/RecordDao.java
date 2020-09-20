@@ -32,7 +32,8 @@ public class RecordDao {
 
     private void initJY(){
         List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg,t.epc,t.wz, p.code,p.name,t.timepoke from tools t ,person p where t.personid=p.id  and t.zt="+ Record.JIEYONG;
+        String sql="select t.mc,t.gg,t.epc,t.wz,t.wxzt,t.jyzt, p.code,p.name,t.timepoke  from tools t ,person p where t.personid=p.id  and t.jyzt="+ Record.JIEYONG;
+
         List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
         for(HashMap map : listmap){
@@ -42,21 +43,16 @@ public class RecordDao {
             tool.setEpc(map.get("epc")==null?"":map.get("epc").toString());
             tool.setCode(map.get("code")==null?"":map.get("code").toString());
             tool.setName(map.get("name")==null?"":map.get("name").toString());
-            String time ="";
-            try{
-                time=sdf.format(new Date(Long.valueOf(map.get("time")==null?"":map.get("time").toString())));
-            }catch (Exception e){
-                logger.error("时间转换出错",e);
-            }
-            tool.setTimepoke(time);
-            tool.setZt("借出");
+
+            tool.setTimepoke(map.get("timepoke")==null?"":map.get("timepoke").toString());
+            tool.setJyzt("借出");
             list.add(tool);
         }
         Cache.listJY=list;
     }
-    private void initBX(){
+    public void initBX(){
         List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg,t.epc,t.wz, p.code,p.name,t.timepoke from tools t ,person p where t.personid=p.id  and t.zt="+ Record.BAOXIU;
+        String sql="select t.mc,t.gg,t.epc,t.wz,t.jyzt,t.wxzt, p.code,p.name,t.bxtimepoke  from tools t left join person p on t.personid=p.id where  t.wxzt="+ Record.BAOXIU;
         List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
         for(HashMap map : listmap){
@@ -66,21 +62,21 @@ public class RecordDao {
             tool.setEpc(map.get("epc")==null?"":map.get("epc").toString());
             tool.setCode(map.get("code")==null?"":map.get("code").toString());
             tool.setName(map.get("name")==null?"":map.get("name").toString());
-            String time ="";
-            try{
-                time=sdf.format(new Date(Long.valueOf(map.get("time")==null?"":map.get("time").toString())));
-            }catch (Exception e){
-                logger.error("时间转换出错",e);
-            }
-            tool.setTimepoke(time);
-            tool.setZt("报修");
+//            String time ="";
+//            try{
+//                time=sdf.format(new Date(Long.valueOf(map.get("bxtimepoke")==null?"":map.get("bxtimepoke").toString())));
+//            }catch (Exception e){
+//                logger.error("时间转换出错",e);
+//            }
+            tool.setBxtimepoke(map.get("bxtimepoke")==null?"":map.get("bxtimepoke").toString());
+            tool.setWxzt("报修");
             list.add(tool);
         }
         Cache.listBX=list;
     }
     private void initWX(){
         List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg,t.epc,t.wz, p.code,p.name,t.timepoke from tools t ,person p where t.personid=p.id  and t.zt="+ Record.WEIXIU;
+        String sql="select t.mc,t.gg,t.epc,t.wz,t.jyzt,t.wxzt, p.code,p.name,t.wxtimepoke  from tools t left join person p on t.wxpersonid=p.id  where t.wxzt="+ Record.WEIXIU;
         List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
         for(HashMap map : listmap){
@@ -90,14 +86,14 @@ public class RecordDao {
             tool.setEpc(map.get("epc")==null?"":map.get("epc").toString());
             tool.setCode(map.get("code")==null?"":map.get("code").toString());
             tool.setName(map.get("name")==null?"":map.get("name").toString());
-            String time ="";
-            try{
-                time=sdf.format(new Date(Long.valueOf(map.get("time")==null?"":map.get("time").toString())));
-            }catch (Exception e){
-                logger.error("时间转换出错",e);
-            }
-            tool.setTimepoke(time);
-            tool.setZt("维修");
+//            String time ="";
+//            try{
+//                time=sdf.format(new Date(Long.valueOf(map.get("wxtimepoke")==null?"":map.get("wxtimepoke").toString())));
+//            }catch (Exception e){
+//                logger.error("时间转换出错",e);
+//            }
+            tool.setWxtimepoke(map.get("wxtimepoke")==null?"":map.get("wxtimepoke").toString());
+            tool.setWxzt("维修");
             list.add(tool);
         }
         Cache.listWX=list;

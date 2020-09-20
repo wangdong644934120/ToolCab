@@ -1,6 +1,9 @@
 package com.stit.toolcab.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,10 +23,14 @@ import com.bin.david.form.core.TableConfig;
 import com.bin.david.form.data.CellInfo;
 import com.bin.david.form.data.Column;
 import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat;
+import com.bin.david.form.data.format.draw.ImageResDrawFormat;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.table.TableData;
 import com.bin.david.form.listener.OnColumnItemClickListener;
 import com.stit.toolcab.R;
+import com.stit.toolcab.dao.RecordDao;
+import com.stit.toolcab.dao.ToolsDao;
+import com.stit.toolcab.entity.ToolZT;
 import com.stit.toolcab.entity.Tools;
 import com.stit.toolcab.utils.Cache;
 
@@ -74,6 +81,8 @@ public class AccessConActivity extends Activity {
             //使用布局文件来定义标题栏
             getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.othertitle);
             initView();
+            initData();
+            showData();
         }catch (Exception e){
             logger.error("界面初始化出错",e);
         }
@@ -95,17 +104,16 @@ public class AccessConActivity extends Activity {
             btnCancle.setEnabled(false);
             /*btnCancle.setVisibility(View.INVISIBLE);*/
             btnCancle.setOnClickListener(new onClickListener());
-            btnSaveSC=(Button)findViewById(R.id.btnsaveSC);
-            btnSaveSC.setOnClickListener(new onClickListener());
-            btnSaveHF=(Button)findViewById(R.id.btnsaveHF);
-            btnSaveHF.setOnClickListener(new onClickListener());
-            btnOutSC=(Button)findViewById(R.id.btnOutSC);
-            btnOutSC.setOnClickListener(new onClickListener());
-            btnOutHF=(Button)findViewById(R.id.btnOutHF);
+//            btnSaveSC=(Button)findViewById(R.id.btnsaveSC);
+//            btnSaveSC.setOnClickListener(new onClickListener());
+//            btnSaveHF=(Button)findViewById(R.id.btnsaveHF);
+//            btnSaveHF.setOnClickListener(new onClickListener());
+//            btnOutSC=(Button)findViewById(R.id.btnOutSC);
+//            btnOutSC.setOnClickListener(new onClickListener());
+//            btnOutHF=(Button)findViewById(R.id.btnOutHF);
             btnOutHF.setOnClickListener(new onClickListener());
-            ivGif=(ImageView)findViewById(R.id.imageview1);
             linearLayout=(LinearLayout)findViewById(R.id.linnerLayouttxl);
-            layoutLoad=(LinearLayout)findViewById(R.id.loadaccesstxl);
+
 //            RequestOptions options = new RequestOptions()
 //                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
 //            Glide.with(this).load(R.drawable.loadtongyong).apply(options).into(ivGif);
@@ -180,6 +188,18 @@ public class AccessConActivity extends Activity {
         }
     }
 
+    private void initData(){
+        RecordDao recordDao = new RecordDao();
+        recordDao.initBX();
+    }
+
+    private void showData(){
+        tvSaveCount.setText("共存放"+Cache.listOperaSave.size()+"个");
+        tvOutCount.setText("共取出"+Cache.listOperaOut.size()+"个");
+        initSave();
+        initOut();
+    }
+
     /**
      * 初始化存操作耗材
      */
@@ -202,7 +222,7 @@ public class AccessConActivity extends Activity {
                     updateSaveUI(i);
                 }
             });
-            Column<String> column3 = new Column<>("位置", "location");
+            Column<String> column3 = new Column<>("位置", "wz");
             column3.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
                 @Override
                 public void onClick(Column<String> column, String s, String s2, int i) {
@@ -260,11 +280,6 @@ public class AccessConActivity extends Activity {
 
     private void updateOutUI(int i){
         try{
-            if(listSelectOut.contains(Cache.listOperaOut.get(i))){
-                listSelectOut.remove(Cache.listOperaOut.get(i));
-            }else{
-                listSelectOut.add(Cache.listOperaOut.get(i));
-            }
             tableOut.refreshDrawableState();
             tableOut.invalidate();
         }catch (Exception e){
@@ -282,27 +297,122 @@ public class AccessConActivity extends Activity {
             column1.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
                 @Override
                 public void onClick(Column<String> column, String s, String s2, int i) {
-                    updateOutUI(i);
+                    //updateOutUI(i);
                 }
             });
             Column<String> column2 = new Column<>("规格", "gg");
             column2.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
                 @Override
                 public void onClick(Column<String> column, String s, String s2, int i) {
-                    updateOutUI(i);
+                    //updateOutUI(i);
                 }
             });
 
-            Column<String> column3 = new Column<>("位置", "location");
+            Column<String> column3 = new Column<>("位置", "wz");
             column3.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
                 @Override
                 public void onClick(Column<String> column, String s, String s2, int i) {
-                    updateOutUI(i);
+                    //updateOutUI(i);
                 }
             });
+            Column<String> baoxiu=new Column<String>("报修", "id", new ImageResDrawFormat<String>(32,32) {
+                @Override
+                protected Context getContext() {
+                    return AccessConActivity.this;
+                }
+
+                @Override
+                protected int getResourceID(String s, String s2, int i) {
+                    return R.drawable.baoxiuqr;
+                }
+            });
+            baoxiu.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
+                @Override
+                public void onClick(Column<String> column, String s, String s2, int i) {
+                    final String sbx=s;
+                    final int ii=i;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AccessConActivity.this);
+                    builder.setIcon(android.R.drawable.ic_dialog_info);
+                    builder.setTitle("提示");
+                    builder.setMessage("确认报修？");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            logger.info("点击确认报修");
+                            ToolsDao toolsDao = new ToolsDao();
+                            toolsDao.updateBX(sbx);
+                            System.out.println(sbx+"报修");
+                            RecordDao recordDao = new RecordDao();
+                            recordDao.initBX();
+                            //Cache.initBXGJ();//重新初始化报修工具
+                            updateOutUI(ii);
+                        }
+                    });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    builder.create().show();
+                }
+            });
+            //Column<String> youwu=new Column<String>("有误");
+            Column<String> youwu=new Column<String>("有误", "id", new ImageResDrawFormat<String>(32,32) {
+                @Override
+                protected Context getContext() {
+                    return AccessConActivity.this;
+                }
+
+                @Override
+                protected int getResourceID(String s, String s2, int i) {
+                    return R.drawable.cuowuqr;
+                }
+            });
+            youwu.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
+                @Override
+                public void onClick(Column<String> column, String s, String s2, int i) {
+                    final String sbx=s;
+                    final int ii=i;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AccessConActivity.this);
+                    builder.setIcon(android.R.drawable.ic_dialog_info);
+                    builder.setTitle("提示");
+                    builder.setMessage("确认有误？");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            logger.info("点击确认有误");
+                            Cache.listOperaOut.remove(ii);
+                            initOut();
+                            System.out.println(sbx+"有误");
+                            //updateOutUI(ii);
+                        }
+                    });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    builder.create().show();
+                }
+            });
+            //Column<String> column4=new Column<String>("操作",baoxiu,youwu);
+
+
 
             //表格数据 datas是需要填充的数据
-            TableData<Tools> tableData = new TableData<Tools>("", Cache.listOperaOut, column1, column2, column3);
+            TableData<Tools> tableData = new TableData<Tools>("", Cache.listOperaOut, column1, column2, column3,baoxiu,youwu);
+
+//            tableData.setOnItemClickListener(new ArrayTableData.OnItemClickListener<Integer>() {
+//                @Override
+//                public void onClick(Column column, String value, Integer o, int col, int row) {
+//                    tableData.getArrayColumns().get(col).getDatas().get(row);
+//                    Toast.makeText(ArrayModeActivity.this,"列:"+col+ " 行："+row + "数据："+value,Toast.LENGTH_SHORT).show();
+//                }
+//            });
             //设置数据
             tableOut = findViewById(R.id.tableout);
             tableOut.setTableData(tableData);
@@ -317,7 +427,14 @@ public class AccessConActivity extends Activity {
                 @Override
                 public int getBackGroundColor(CellInfo cellInfo) {
                     try{
-                        if (listSelectOut.contains(Cache.listOperaOut.get(cellInfo.position))) {
+                        int flagXR=0;//渲染标志
+                        for(ToolZT toolZT : Cache.listBX){
+                            if(toolZT.getEpc().equals(Cache.listOperaOut.get(cellInfo.position).getEpc())){
+                                flagXR=1;
+                                break;
+                            }
+                        }
+                        if (flagXR==1) {
                             return ContextCompat.getColor(AccessConActivity.this, R.color.jxqyellow);
                         } else {
                             return TableConfig.INVALID_COLOR;
@@ -373,55 +490,56 @@ public class AccessConActivity extends Activity {
                     break;
                 case R.id.fh:
                     try{
-                        blThread=false;
-                        pressFlag=2;//相当于单击取消按钮
+//                        blThread=false;
+//                        pressFlag=2;//相当于单击取消按钮
+                        AccessConActivity.this.finish();
 
                     }catch (Exception e){
                         logger.error("点击返回出错",e);
                     }
 
                     break;
-                case R.id.btnsaveSC:
-                    for(Tools tools : listSelectSave){
-                        if(Cache.listOperaSave.contains(tools)){
-                            Cache.listOperaSave.remove(tools);
-                            listRecordSave.add(tools);
-                        }
-                    }
-                    tvSaveCount.setText("共存放"+Cache.listOperaSave.size()+"个");
-                    initSave();
-                    break;
-                case R.id.btnsaveHF:
-                    for(Tools tools : listSelectSave){
-                        if(!Cache.listOperaSave.contains(tools)){
-                            Cache.listOperaSave.add(tools);
-                            listRecordSave.remove(tools);
-                        }
-                    }
-                    tvSaveCount.setText("共存放"+Cache.listOperaSave.size()+"个");
-                    initSave();
-
-                    break;
-                case R.id.btnOutSC:
-                    for(Tools tools : listSelectOut){
-                        if(Cache.listOperaOut.contains(tools)){
-                            Cache.listOperaOut.remove(tools);
-                            listRecordOut.add(tools);
-                        }
-                    }
-                    tvOutCount.setText("共取出"+Cache.listOperaOut.size()+"个");
-                    initOut();
-                    break;
-                case R.id.btnOutHF:
-                    for(Tools tools : listSelectOut){
-                        if(!Cache.listOperaOut.contains(tools)){
-                            Cache.listOperaOut.add(tools);
-                            listRecordOut.remove(tools);
-                        }
-                    }
-                    tvOutCount.setText("共取出"+Cache.listOperaOut.size()+"个");
-                    initOut();
-                    break;
+//                case R.id.btnsaveSC:
+//                    for(Tools tools : listSelectSave){
+//                        if(Cache.listOperaSave.contains(tools)){
+//                            Cache.listOperaSave.remove(tools);
+//                            listRecordSave.add(tools);
+//                        }
+//                    }
+//                    tvSaveCount.setText("共存放"+Cache.listOperaSave.size()+"个");
+//                    initSave();
+//                    break;
+//                case R.id.btnsaveHF:
+//                    for(Tools tools : listSelectSave){
+//                        if(!Cache.listOperaSave.contains(tools)){
+//                            Cache.listOperaSave.add(tools);
+//                            listRecordSave.remove(tools);
+//                        }
+//                    }
+//                    tvSaveCount.setText("共存放"+Cache.listOperaSave.size()+"个");
+//                    initSave();
+//
+//                    break;
+//                case R.id.btnOutSC:
+//                    for(Tools tools : listSelectOut){
+//                        if(Cache.listOperaOut.contains(tools)){
+//                            Cache.listOperaOut.remove(tools);
+//                            listRecordOut.add(tools);
+//                        }
+//                    }
+//                    tvOutCount.setText("共取出"+Cache.listOperaOut.size()+"个");
+//                    initOut();
+//                    break;
+//                case R.id.btnOutHF:
+//                    for(Tools tools : listSelectOut){
+//                        if(!Cache.listOperaOut.contains(tools)){
+//                            Cache.listOperaOut.add(tools);
+//                            listRecordOut.remove(tools);
+//                        }
+//                    }
+//                    tvOutCount.setText("共取出"+Cache.listOperaOut.size()+"个");
+//                    initOut();
+//                    break;
                 default:
                     break;
             }

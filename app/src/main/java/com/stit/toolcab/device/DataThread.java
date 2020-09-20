@@ -5,14 +5,18 @@ import android.os.Message;
 
 
 import com.stit.toolcab.dao.PersonDao;
+import com.stit.toolcab.dao.ToolsDao;
 import com.stit.toolcab.entity.Person;
+import com.stit.toolcab.entity.Tools;
 import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.MyTextToSpeech;
 
 import org.apache.log4j.Logger;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,7 +50,7 @@ public class DataThread extends Thread {
 
                     }
                     if (mapWorkState.get("hwxckg") != null ) {
-                        //alaHWXCKG(mapWorkState.get("hwxckg").toString());
+                        alaHWXCKG(mapWorkState.get("hwxckg").toString());
                     }
                     if (mapWorkState.get("zmd") != null ) {
 
@@ -202,108 +206,109 @@ public class DataThread extends Thread {
     }
     //红外行程开关
     private void alaHWXCKG(String hwxckg){
+        String hwxc7=hwxckg.substring(1,2);
         String hwxc6=hwxckg.substring(2,3);
         String hwxc5=hwxckg.substring(3,4);
         String hwxc4=hwxckg.substring(4,5);
         String hwxc3=hwxckg.substring(5,6);
         String hwxc2=hwxckg.substring(6,7);
         String hwxc1=hwxckg.substring(7,8);
-//        if(Cache.hwxc1){
-//            //原红外触发状态，现红外关闭状态
-//            if(hwxc1.equals("0")){
-//                logger.info("设置红外1未触发");
-//                updateUI("hwxc","1","0");
-//                Cache.hwxc1=false;
-//            }
-//        }else{
-//            //元红外关闭状态，现红外触发状态
-//            if(hwxc1.equals("1")){
-//                Cache.cfpdcs.add("1");
-//                logger.info("设置红外1触发");
-//                updateUI("hwxc","1","1");
-//                Cache.hwxc1=true;
-//            }
-//        }
-//        if(Cache.hwxc2){
-//            //原红外触发状态，现红外关闭状态
-//            if(hwxc2.equals("0")){
-//                logger.info("设置红外2未触发");
-//                updateUI("hwxc","2","0");
-//                Cache.hwxc2=false;
-//            }
-//        }else{
-//            //元红外关闭状态，现红外触发状态
-//            if(hwxc2.equals("1")){
-//                Cache.cfpdcs.add("2");
-//                logger.info("设置红外2触发");
-//                updateUI("hwxc","2","1");
-//                Cache.hwxc2=true;
-//            }
-//        }
-//        if(Cache.hwxc3){
-//            //原红外触发状态，现红外关闭状态
-//            if(hwxc3.equals("0")){
-//                logger.info("设置红外3未触发");
-//                updateUI("hwxc","3","0");
-//                Cache.hwxc3=false;
-//            }
-//        }else{
-//            //元红外关闭状态，现红外触发状态
-//            if(hwxc3.equals("1")){
-//                Cache.cfpdcs.add("3");
-//                logger.info("设置红外3触发");
-//                updateUI("hwxc","3","1");
-//                Cache.hwxc3=true;
-//            }
-//        }
-//        if(Cache.hwxc4){
-//            //原红外触发状态，现红外关闭状态
-//            if(hwxc4.equals("0")){
-//                logger.info("设置红外4未触发");
-//                updateUI("hwxc","4","0");
-//                Cache.hwxc4=false;
-//            }
-//        }else{
-//            //元红外关闭状态，现红外触发状态
-//            if(hwxc4.equals("1")){
-//                Cache.cfpdcs.add("4");
-//                logger.info("设置红外4触发");
-//                updateUI("hwxc","4","1");
-//                Cache.hwxc4=true;
-//            }
-//        }
-//        if(Cache.hwxc5){
-//            //原红外触发状态，现红外关闭状态
-//            if(hwxc5.equals("0")){
-//                logger.info("设置红外5未触发");
-//                updateUI("hwxc","5","0");
-//                Cache.hwxc5=false;
-//            }
-//        }else{
-//            //元红外关闭状态，现红外触发状态
-//            if(hwxc5.equals("1")){
-//                Cache.cfpdcs.add("5");
-//                logger.info("设置红外5触发");
-//                updateUI("hwxc","5","1");
-//                Cache.hwxc5=true;
-//            }
-//        }
-//        if(Cache.hwxc6){
-//            //原红外触发状态，现红外关闭状态
-//            if(hwxc6.equals("0")){
-//                logger.info("设置红外6未触发");
-//                updateUI("hwxc","6","0");
-//                Cache.hwxc6=false;
-//            }
-//        }else{
-//            //元红外关闭状态，现红外触发状态
-//            if(hwxc6.equals("1")){
-//                Cache.cfpdcs.add("6");
-//                logger.info("设置红外6触发");
-//                updateUI("hwxc","6","1");
-//                Cache.hwxc6=true;
-//            }
-//        }
+        if(Cache.hwxc1){
+            //原红外触发状态，现红外关闭状态
+            if(hwxc1.equals("0")){
+                logger.info("设置红外1未触发");
+                updateUI("hwxc","1","0");
+                Cache.hwxc1=false;
+            }
+        }else{
+            //元红外关闭状态，现红外触发状态
+            if(hwxc1.equals("1")){
+                Cache.cfpdcs.add("1");
+                logger.info("设置红外1触发");
+                updateUI("hwxc","1","1");
+                Cache.hwxc1=true;
+            }
+        }
+        if(Cache.hwxc2){
+            //原红外触发状态，现红外关闭状态
+            if(hwxc2.equals("0")){
+                logger.info("设置红外2未触发");
+                updateUI("hwxc","2","0");
+                Cache.hwxc2=false;
+            }
+        }else{
+            //元红外关闭状态，现红外触发状态
+            if(hwxc2.equals("1")){
+                Cache.cfpdcs.add("2");
+                logger.info("设置红外2触发");
+                updateUI("hwxc","2","1");
+                Cache.hwxc2=true;
+            }
+        }
+        if(Cache.hwxc3){
+            //原红外触发状态，现红外关闭状态
+            if(hwxc3.equals("0")){
+                logger.info("设置红外3未触发");
+                updateUI("hwxc","3","0");
+                Cache.hwxc3=false;
+            }
+        }else{
+            //元红外关闭状态，现红外触发状态
+            if(hwxc3.equals("1")){
+                Cache.cfpdcs.add("3");
+                logger.info("设置红外3触发");
+                updateUI("hwxc","3","1");
+                Cache.hwxc3=true;
+            }
+        }
+        if(Cache.hwxc4){
+            //原红外触发状态，现红外关闭状态
+            if(hwxc4.equals("0")){
+                logger.info("设置红外4未触发");
+                updateUI("hwxc","4","0");
+                Cache.hwxc4=false;
+            }
+        }else{
+            //元红外关闭状态，现红外触发状态
+            if(hwxc4.equals("1")){
+                Cache.cfpdcs.add("4");
+                logger.info("设置红外4触发");
+                updateUI("hwxc","4","1");
+                Cache.hwxc4=true;
+            }
+        }
+        if(Cache.hwxc5){
+            //原红外触发状态，现红外关闭状态
+            if(hwxc5.equals("0")){
+                logger.info("设置红外5未触发");
+                updateUI("hwxc","5","0");
+                Cache.hwxc5=false;
+            }
+        }else{
+            //元红外关闭状态，现红外触发状态
+            if(hwxc5.equals("1")){
+                Cache.cfpdcs.add("5");
+                logger.info("设置红外5触发");
+                updateUI("hwxc","5","1");
+                Cache.hwxc5=true;
+            }
+        }
+        if(Cache.hwxc6){
+            //原红外触发状态，现红外关闭状态
+            if(hwxc6.equals("0")){
+                logger.info("设置红外6未触发");
+                updateUI("hwxc","6","0");
+                Cache.hwxc6=false;
+            }
+        }else{
+            //元红外关闭状态，现红外触发状态
+            if(hwxc6.equals("1")){
+                Cache.cfpdcs.add("6");
+                logger.info("设置红外6触发");
+                updateUI("hwxc","6","1");
+                Cache.hwxc6=true;
+            }
+        }
     }
     //照明灯
     private void alaZMD(String zmd){
@@ -366,7 +371,8 @@ public class DataThread extends Thread {
                     }else{
                         HashMap<String,String> mapBQ= (HashMap<String,String>)map.clone();
                         map.clear();
-                        //new DataDeal(mapBQ).start();
+
+                        new DataDeal(mapBQ).start();
                     }
                 }else if(Cache.getHCCS==1){
                     //1-耗材初始时要数据
@@ -387,9 +393,12 @@ public class DataThread extends Thread {
                         //sendExternalProduct("product");
                     }else{
                         //从本地数据库读取数据进行处理
-                        Cache.HCCSMap=(HashMap<String,String>)map.clone();
+//                        Cache.HCCSMap=(HashMap<String,String>)map.clone();
+//                        map.clear();
+                        HashMap<String,String> mapBQ= (HashMap<String,String>)map.clone();
                         map.clear();
-                        //sendPDZJM();
+
+                        new DataDeal(mapBQ).start();
                     }
                     Cache.getHCCS=0;
                 } else if(Cache.getHCCS==3){
@@ -530,6 +539,17 @@ public class DataThread extends Thread {
         message.setData(data);
         Cache.myHandleProgress.sendMessage(message);
     }
+
+    //工具确认界面
+    private void sendOpenAccess(){
+        if(Cache.mainHandle!=null){
+            Message message = Message.obtain(Cache.mainHandle);
+            Bundle data = new Bundle();
+            data.putString("ui","access");
+            message.setData(data);
+            Cache.mainHandle.sendMessage(message);
+        }
+    }
 //
 //    //盘点主界面
 //    private  void sendPDZJM(){
@@ -574,30 +594,38 @@ public class DataThread extends Thread {
 //
 //    }
 
-//    /**
-//     * 更新界面控件
-//     * @param type  类型 men deng  hwxc
-//     * @param wz  针对红外、行程开关
-//     * @param zt  1 触发，0关闭触发
-//     */
-//    private  void updateUI(String type, String wz, String zt){
-//        Message message = Message.obtain(Cache.myHandle);
-//        Bundle data = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
-//        data.putString("type",type);
-//        data.putString("wz",wz);
-//        data.putString("zt",zt);
-//        message.setData(data);
-//        Cache.myHandle.sendMessage(message);
-//    }
+    /**
+     * 更新界面控件
+     * @param type  类型 men deng  hwxc
+     * @param wz  针对红外、行程开关
+     * @param zt  1 触发，0关闭触发
+     */
+    private  void updateUI(String type, String wz, String zt){
+        Message message = Message.obtain(Cache.mainHandle);
+        Bundle data = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
+        data.putString("type",type);
+        data.putString("wz",wz);
+        data.putString("zt",zt);
+        message.setData(data);
+        Cache.mainHandle.sendMessage(message);
+    }
 //
-//    class DataDeal extends Thread {
-//        HashMap<String,String> mapDeal=null;
-//        public DataDeal(HashMap<String,String> mapDeal){
-//            this.mapDeal=mapDeal;
-//        }
-//        public void run(){
-//            Cache.listPR.clear();
-//           List<HashMap<String,String>> list =new ArrayList<HashMap<String,String>>();
+    class DataDeal extends Thread {
+        HashMap<String,String> mapDeal=null;
+        public DataDeal(HashMap<String,String> mapDeal){
+            this.mapDeal=mapDeal;
+        }
+        public void run(){
+            //Cache.listPR.clear();
+            ToolsDao toolsDao = new ToolsDao();
+           List<Tools> list =null;
+            if(Cache.pc==0){
+                //全部盘存
+                list=toolsDao.getAllTools();
+            }else if(Cache.pc==1){
+                //触发盘存
+                list=toolsDao.getToolsByCFHWXC(Cache.cfpdcs);
+            }
 //           if(Cache.sdpdcs.equals("0")){
 //               //不是手动盘点
 //               if(Cache.pc==0){
@@ -611,62 +639,58 @@ public class DataThread extends Thread {
 //               //手动盘点
 //               list=productDao.getPorductBySDHWXC(Cache.sdpdcs);
 //           }
-////           if(Cache.cfpdcs.equals("0")){
-////                list=productDao.getAllProduct();
-////           }else{
-////               list=productDao.getPorductByHWXC(Cache.cfpdcs);
-////           }
-//            Cache.sdpdcs="0";
-//            Cache.cfpdcs.clear();
-//           Set<String> dealKeys=mapDeal.keySet();
-//           HashMap<String,String> mapSave=new HashMap<String,String>();
-//           for(HashMap map : list){
-//               //取出标签
-//               if(!map.get("wz").toString().equals("0") && !dealKeys.contains(map.get("card").toString())){
-//                   //标签被取出
-//                   mapSave.put(map.get("card").toString(),"0");
-//                   Cache.listOperaOut.add(getProduct(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"取出",map.get("wz").toString()));
-//
-//               }
-//               //存放标签
-//               if(map.get("wz").toString().equals("0") && dealKeys.contains(map.get("card").toString())){
-//                   //标签被存放
-//                   mapSave.put(map.get("card").toString(),mapDeal.get(map.get("card").toString()).toString());
-//                   //Cache.listPR.add(new ProductRecord(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"存放",mapDeal.get(map.get("card").toString()).toString()));
-//                   Cache.listOperaSave.add(getProduct(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"存放",mapDeal.get(map.get("card").toString()).toString()));
-//               }
-//               //标签未动
-//               if(dealKeys.contains(map.get("card").toString())){
-//                   if(!map.get("wz").toString().equals("0") && !mapDeal.get(map.get("card").toString()).equals(map.get("wz").toString())){
-//                       //标签位置更换
-//                       mapSave.put(map.get("card").toString(),mapDeal.get(map.get("card").toString()));
-//                       Cache.listOperaOut.add(getProduct(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"取出",map.get("wz").toString()));
-//                       Cache.listOperaSave.add(getProduct(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"存放",mapDeal.get(map.get("card").toString()).toString()));
-//                   }
-//               }
+//           if(Cache.cfpdcs.equals("0")){
+//                list=productDao.getAllProduct();
+//           }else{
+//               list=productDao.getPorductByHWXC(Cache.cfpdcs);
 //           }
-//           //界面显示内容
-//            //startRecord();
-//            //数据库更新内容
+            //Cache.sdpdcs="0";
+            Cache.cfpdcs.clear();
+           Set<String> dealKeys=mapDeal.keySet();
+           HashMap<String,String> mapSave=new HashMap<String,String>();
+           for(Tools toolsdb : list){
+               //取出标签
+               if( !dealKeys.contains(toolsdb.getEpc()) && toolsdb.getPersonid().equals("")){
+                   //标签被取出
+                   //mapSave.put(map.get("card").toString(),"0");
+                   Cache.listOperaOut.add(toolsdb);
+
+               }
+               //存放标签
+               if(dealKeys.contains(toolsdb.getEpc()) && !toolsdb.getPersonid().equals("")){
+                   //标签被存放
+                   //mapSave.put(map.get("card").toString(),mapDeal.get(map.get("card").toString()).toString());
+                   //Cache.listPR.add(new ProductRecord(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"存放",mapDeal.get(map.get("card").toString()).toString()));
+                   Cache.listOperaSave.add(toolsdb);
+               }
+               //标签未动
+               if(dealKeys.contains(toolsdb.getEpc()) && toolsdb.getPersonid().equals("")){
+//                   if(!mapDeal.get(toolsdb.getEpc()).equals(toolsdb.getWz())){
+//                       //标签位置更换
+//                      // mapSave.put(map.get("card").toString(),mapDeal.get(map.get("card").toString()));
+//                       //Cache.listOperaOut.add(toolsdb);
+//                       //Cache.listOperaSave.add(getProduct(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"存放",mapDeal.get(map.get("card").toString()).toString()));
+//                   }
+               }
+           }
+           //界面显示内容
+            //startRecord();
+            //数据库更新内容
 //            Set<String> updatesKey=mapSave.keySet();
 //            for(String key : updatesKey){
 //                productDao.updateProductWZ(mapSave.get(key).toString(),key);
 //            }
-//            //初始化近效期图示
-//            sendJXQ();
-//            Message message = Message.obtain(Cache.myHandle);
-//            Bundle bund = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
-//            bund.putString("ui","accesslocal");
-//            message.setData(bund);
-//            Cache.myHandle.sendMessage(message);
-//        }
-//    }
+            //初始化近效期图示
+            //sendJXQ();
+           sendOpenAccess();
+        }
+    }
 
-    /**
-     * 添加指纹、刷卡事件记录
-     * @param code
-     * @param type
-     */
+//    /**
+//     * 添加指纹、刷卡事件记录
+//     * @param code
+//     * @param type
+//     */
 //    private void addZWSKEvent(String code, String type){
 //        Event event = new Event();
 //        event.setId(UUID.randomUUID().toString());
@@ -723,15 +747,14 @@ public class DataThread extends Thread {
 //        return bl;
 //    }
 //
-//    private Product getProduct(String pp, String zl, String gg, String oprea, String wz){
-//        Product product = new Product();
-//        product.setLocation(wz);
-//        product.setXqpc(gg);
-//        product.setMc(zl);
-//        product.setPp(pp);
-//        product.setOperation(oprea);
-//        return product;
-//    }
+    private Tools getTools(String gg, String mc, String epc, String wz){
+        Tools tools = new Tools();
+        tools.setGg(gg);
+        tools.setMc(mc);
+        tools.setEpc(epc);
+        tools.setWz(wz);
+        return tools;
+    }
 //
 //    private void colseScreen(){
 //        if(Cache.lockScreen.equals("1")){

@@ -18,11 +18,21 @@ public class Tools {
 
     private String wz;
 
-    private String zt;
+    private String jyzt;
+
+    private String wxzt;
 
     private String personid;
 
     private String timepoke;
+
+    private String bxpersonid;
+
+    private String bxtimepoke;
+
+    private String wxpersonid;
+
+    private String wxtimepoke;
 
 
     public String getId() {
@@ -65,12 +75,20 @@ public class Tools {
         this.wz = wz;
     }
 
-    public String getZt() {
-        return zt;
+    public String getJyzt() {
+        return jyzt;
     }
 
-    public void setZt(String zt) {
-        this.zt = zt;
+    public void setJyzt(String jyzt) {
+        this.jyzt = jyzt;
+    }
+
+    public String getWxzt() {
+        return wxzt;
+    }
+
+    public void setWxzt(String wxzt) {
+        this.wxzt = wxzt;
     }
 
     public String getPersonid() {
@@ -87,5 +105,37 @@ public class Tools {
 
     public void setTimepoke(String timepoke) {
         this.timepoke = timepoke;
+    }
+
+    public String getBxpersonid() {
+        return bxpersonid;
+    }
+
+    public void setBxpersonid(String bxpersonid) {
+        this.bxpersonid = bxpersonid;
+    }
+
+    public String getBxtimepoke() {
+        return bxtimepoke;
+    }
+
+    public void setBxtimepoke(String bxtimepoke) {
+        this.bxtimepoke = bxtimepoke;
+    }
+
+    public String getWxpersonid() {
+        return wxpersonid;
+    }
+
+    public void setWxpersonid(String wxpersonid) {
+        this.wxpersonid = wxpersonid;
+    }
+
+    public String getWxtimepoke() {
+        return wxtimepoke;
+    }
+
+    public void setWxtimepoke(String wxtimepoke) {
+        this.wxtimepoke = wxtimepoke;
     }
 }

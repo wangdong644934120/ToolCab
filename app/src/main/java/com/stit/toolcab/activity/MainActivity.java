@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.Column;
@@ -31,6 +32,7 @@ import com.stit.toolcab.db.UpdateDB;
 import com.stit.toolcab.device.DeviceCom;
 import com.stit.toolcab.device.HCProtocol;
 import com.stit.toolcab.entity.ToolZT;
+import com.stit.toolcab.entity.Tools;
 import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.CrashHandler;
 import com.stit.toolcab.utils.LogUtil;
@@ -39,6 +41,9 @@ import com.stit.toolcab.utils.MyTextToSpeech;
 import com.stit.toolcab.utils.YCCamera;
 
 import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends Activity {
@@ -60,11 +65,13 @@ public class MainActivity extends Activity {
     private TextView tvappcode;
     private LinearLayout.LayoutParams params=null;
     private SmartTable table;
+    Column<String> columnmc = new Column<String>("名称", "mc");
+    Column<String> columngg = new Column<String>("规格", "gg");
+    Column<String> columnry = new Column<String>("人员", "name");
+    Column<String> columnsj = new Column<String>("时间", "timepoke");
+    Column<String> columnbxsj = new Column<String>("时间", "bxtimepoke");
+    Column<String> columnwxsj = new Column<String>("时间", "wxtimepoke");
 
-    Column<String> column1 = new Column<>("名称", "mc");
-    Column<String> column2 = new Column<>("规格", "gg");
-    Column<String> column3 = new Column<>("人员", "name");
-    Column<String> column4 = new Column<>("时间", "time");
 
     private Button btnLoginOut;
 
@@ -130,7 +137,6 @@ public class MainActivity extends Activity {
         llwx.setOnClickListener(new onClickListener());
         table=(SmartTable)findViewById(R.id.table);
 
-
         table.getConfig().setShowXSequence(false);
         table.getConfig().setShowYSequence(false);
         table.getConfig().setShowTableTitle(false);
@@ -140,9 +146,6 @@ public class MainActivity extends Activity {
         table.getConfig().setMinTableWidth(700);
 
         tvczy=(TextView)findViewById(R.id.czy);
-
-
-
 
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,11 +249,17 @@ public class MainActivity extends Activity {
 
     private void initJC(){
         try{
+
             //表格数据 datas是需要填充的数据
-            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listJY, column1, column2, column3, column4);
+//            Tools tools = new Tools();
+//            tools.setMc("a");
+//            List<Tools> listTest = new ArrayList<Tools>();
+//            listTest.add(tools);
+
+            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listJY, columnmc, columngg, columnry,columnsj);
             //设置数据
             table.setTableData(tableData);
-            column1.setWidth(300);
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -260,20 +269,21 @@ public class MainActivity extends Activity {
 
     private void initBX(){
         try{
-
             //表格数据 datas是需要填充的数据
-            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listBX, column1, column2, column3, column4);
+            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listBX, columnmc, columngg, columnry, columnbxsj);
             table.setTableData(tableData);
+            int a=1;
         }catch (Exception e){
             e.printStackTrace();
 
         }
+        int b=1;
     }
 
     private void initWX(){
         try{
             //表格数据 datas是需要填充的数据
-            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listWX, column1, column2, column3, column4);
+            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listWX, columnmc, columngg, columnry, columnwxsj);
             table.setTableData(tableData);
         }catch (Exception e){
             e.printStackTrace();
@@ -292,10 +302,13 @@ public class MainActivity extends Activity {
                 return;
             switch (v.getId()) {
                 case R.id.pandian:
-                    //MyTextToSpeech.getInstance().speak("大家好");
-//                    Intent intent = new Intent(MainActivity.this, ProgressDialog.class);
-//                    startActivity(intent);
-                    HCProtocol.ST_GetAllCard();
+                    logger.info("点击盘点");
+                    Cache.getHCCS=2;
+                    if(HCProtocol.ST_GetAllCard()){
+                    }else{
+                        MyTextToSpeech.getInstance().speak("盘点失败");
+                        Toast.makeText(MainActivity.this, "盘点失败", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.lljc:
                     params = new LinearLayout.LayoutParams(60,140);
@@ -417,8 +430,8 @@ public class MainActivity extends Activity {
                             }
                             if(bundle.getString("ui").toString().equals("access")){
                                 //打开存取操作确认界面
-//                                Intent intent = new Intent(MainActivity.this, AccessConActivity.class);
-//                                startActivity(intent);
+                                Intent intent = new Intent(MainActivity.this, AccessConActivity.class);
+                                startActivity(intent);
                             }
 
                             if(bundle.getString("ui").toString().equals("tccx")){

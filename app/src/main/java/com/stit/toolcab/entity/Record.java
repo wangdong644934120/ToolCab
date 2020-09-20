@@ -10,8 +10,10 @@ public class Record {
     public static String BAOXIAO="0";//报销状态
     public static String ZAIGUI="1"; //在柜状态
     public static String JIEYONG="2";//借用状态
-    public static String BAOXIU="3";//报修状态
-    public static String WEIXIU="4";//维修状态
+
+    public static String ZHENGCHANG="3";//正常状态
+    public static String BAOXIU="4";//报修状态
+    public static String WEIXIU="5";//维修状态
 
 
     private String id;

@@ -17,9 +17,9 @@
         <LinearLayout
             android:id="@+id/linnerLayouttxl"
             android:layout_width="match_parent"
-            android:layout_height="880px"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_height="600px"
+            android:orientation="horizontal"
+            >
 
             <!--存放信息展示-->
             <LinearLayout
@@ -35,26 +35,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10px"
                     android:orientation="horizontal">
-                    <Button
-                        android:id="@+id/btnsaveSC"
-                        android:layout_width="80px"
-                        android:layout_height="35px"
-                        android:textColor="@color/colorWhite"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center|center_vertical"
-                        android:layout_gravity="center_vertical"
-                        android:text="删除"
-                        android:textSize="20dp" />
-                    <Button
-                        android:id="@+id/btnsaveHF"
-                        android:layout_width="80px"
-                        android:layout_height="35px"
-                        android:textColor="@color/colorWhite"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center|center_vertical"
-                        android:layout_gravity="center_vertical"
-                        android:text="恢复"
-                        android:textSize="20dp" />
                     <TextView
                         android:id="@+id/savecount"
                         android:layout_width="match_parent"
@@ -63,14 +43,13 @@
                         android:layout_marginRight="15dp"
                         android:gravity="right|center_vertical"
                         android:text="共存放0个"
-                        android:textColor="@color/colorWhite"
                         android:textSize="25dp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <!--存放信息内容展示-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="380px"
+                    android:layout_height="570px"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
@@ -79,7 +58,7 @@
                     <com.bin.david.form.core.SmartTable
                         android:id="@+id/tablesave"
                         android:layout_width="match_parent"
-                        android:layout_height="370px"
+                        android:layout_height="570px"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
@@ -87,6 +66,12 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="600px"
+                android:layout_marginTop="0px"
+                android:background="#a7aba9" />
 
             <!--取出信息展示-->
             <LinearLayout
@@ -102,26 +87,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10px"
                     android:orientation="horizontal">
-                    <Button
-                        android:id="@+id/btnOutSC"
-                        android:layout_width="80px"
-                        android:layout_height="35px"
-                        android:textColor="@color/colorWhite"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center|center_vertical"
-                        android:layout_gravity="center_vertical"
-                        android:text="删除"
-                        android:textSize="20dp" />
-                    <Button
-                        android:id="@+id/btnOutHF"
-                        android:layout_width="80px"
-                        android:layout_height="35px"
-                        android:textColor="@color/colorWhite"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center|center_vertical"
-                        android:layout_gravity="center_vertical"
-                        android:text="恢复"
-                        android:textSize="20dp" />
+
                     <TextView
                         android:id="@+id/outcount"
                         android:layout_width="match_parent"
@@ -130,14 +96,13 @@
                         android:layout_marginRight="15dp"
                         android:gravity="right|center_vertical"
                         android:text="共取出0个"
-                        android:textColor="@color/colorWhite"
                         android:textSize="25dp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <!--取出信息内容展示-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="380px"
+                    android:layout_height="570px"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="10dp"
@@ -146,7 +111,7 @@
                     <com.bin.david.form.core.SmartTable
                         android:id="@+id/tableout"
                         android:layout_width="match_parent"
-                        android:layout_height="370px"
+                        android:layout_height="570px"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
@@ -156,23 +121,10 @@
             </LinearLayout>
 
         </LinearLayout>
-
-        <!--界面加载图片-->
-        <LinearLayout
-            android:id="@+id/loadaccesstxl"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="880px"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <ImageView
-                android:id="@+id/imageview1"
-                android:layout_width="200px"
-                android:layout_height="200px" />
-
-        </LinearLayout>
-
+            android:layout_height="2px"
+            android:background="#a7aba9" />
         <!--确认取消按钮展示-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -189,7 +141,6 @@
                 android:layout_height="60px"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@color/colorWhite"
                 android:text="确认"
                 android:layout_marginRight="2px"
                 android:textSize="20dp" />
@@ -198,7 +149,6 @@
                 android:id="@+id/btnyw"
                 android:layout_width="80px"
                 android:layout_height="60px"
-                android:textColor="@color/colorWhite"
                 android:layout_weight="1"
                 android:layout_marginLeft="2px"
                 android:gravity="center"
