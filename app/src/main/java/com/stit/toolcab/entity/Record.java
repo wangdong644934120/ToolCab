@@ -15,19 +15,16 @@ public class Record {
     public static String BAOXIU="4";//报修状态
     public static String WEIXIU="5";//维修状态
 
-
     private String id;
-
-    private String toolsid;
-
-    private String personid;
-
-    private long time;
-
+    private String name;
+    private String code;
+    private String starttime;
     private String zt;
+    private String mc;
+    private String gg;
+    private String epc;
+    private String endtime;
 
-
-    
     public String getId() {
         return id;
     }
@@ -36,28 +33,28 @@ public class Record {
         this.id = id;
     }
 
-    public String getToolsid() {
-        return toolsid;
+    public String getName() {
+        return name;
     }
 
-    public void setToolsid(String toolsid) {
-        this.toolsid = toolsid;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPersonid() {
-        return personid;
+    public String getCode() {
+        return code;
     }
 
-    public void setPersonid(String personid) {
-        this.personid = personid;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public long getTime() {
-        return time;
+    public String getStarttime() {
+        return starttime;
     }
 
-    public void setTime(long time) {
-        this.time = time;
+    public void setStarttime(String starttime) {
+        this.starttime = starttime;
     }
 
     public String getZt() {
@@ -66,5 +63,37 @@ public class Record {
 
     public void setZt(String zt) {
         this.zt = zt;
+    }
+
+    public String getMc() {
+        return mc;
+    }
+
+    public void setMc(String mc) {
+        this.mc = mc;
+    }
+
+    public String getGg() {
+        return gg;
+    }
+
+    public void setGg(String gg) {
+        this.gg = gg;
+    }
+
+    public String getEpc() {
+        return epc;
+    }
+
+    public void setEpc(String epc) {
+        this.epc = epc;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
     }
 }

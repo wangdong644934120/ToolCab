@@ -17,7 +17,7 @@
         <LinearLayout
             android:id="@+id/linnerLayouttxl"
             android:layout_width="match_parent"
-            android:layout_height="600px"
+            android:layout_height="620px"
             android:orientation="horizontal"
             >
 
@@ -69,7 +69,7 @@
 
             <View
                 android:layout_width="2px"
-                android:layout_height="600px"
+                android:layout_height="620px"
                 android:layout_marginTop="0px"
                 android:background="#a7aba9" />
 
@@ -111,7 +111,7 @@
                     <com.bin.david.form.core.SmartTable
                         android:id="@+id/tableout"
                         android:layout_width="match_parent"
-                        android:layout_height="570px"
+                        android:layout_height="560px"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
@@ -121,6 +121,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
@@ -128,11 +129,10 @@
         <!--确认取消按钮展示-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100px"
+            android:layout_height="80px"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="0dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
             <Button

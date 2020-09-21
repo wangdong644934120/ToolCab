@@ -20,83 +20,34 @@ import java.util.List;
 
 public class RecordDao {
     private Logger logger = Logger.getLogger(this.getClass());
-    /**
-     * 初始化借用报修维修信息
-     * @return
-     */
-    public void initJYBXWX(){
-      initJY();
-      initBX();
-      initWX();
+
+    public void addRecord(){
+        StringBuilder sb = new StringBuilder("insert into record (id,name,code,starttime,zt,mc,gg,epc,endtime) values ");
+
     }
 
-    private void initJY(){
-        List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg,t.epc,t.wz,t.wxzt,t.jyzt, p.code,p.name,t.timepoke  from tools t ,person p where t.personid=p.id  and t.jyzt="+ Record.JIEYONG;
 
-        List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
-        for(HashMap map : listmap){
-            ToolZT tool = new ToolZT();
-            tool.setMc(map.get("mc")==null?"":map.get("mc").toString());
-            tool.setGg(map.get("gg")==null?"":map.get("gg").toString());
-            tool.setEpc(map.get("epc")==null?"":map.get("epc").toString());
-            tool.setCode(map.get("code")==null?"":map.get("code").toString());
-            tool.setName(map.get("name")==null?"":map.get("name").toString());
-
-            tool.setTimepoke(map.get("timepoke")==null?"":map.get("timepoke").toString());
-            tool.setJyzt("借出");
-            list.add(tool);
-        }
-        Cache.listJY=list;
-    }
-    public void initBX(){
-        List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg,t.epc,t.wz,t.jyzt,t.wxzt, p.code,p.name,t.bxtimepoke  from tools t left join person p on t.personid=p.id where  t.wxzt="+ Record.BAOXIU;
-        List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
-        for(HashMap map : listmap){
-            ToolZT tool = new ToolZT();
-            tool.setMc(map.get("mc")==null?"":map.get("mc").toString());
-            tool.setGg(map.get("gg")==null?"":map.get("gg").toString());
-            tool.setEpc(map.get("epc")==null?"":map.get("epc").toString());
-            tool.setCode(map.get("code")==null?"":map.get("code").toString());
-            tool.setName(map.get("name")==null?"":map.get("name").toString());
-//            String time ="";
-//            try{
-//                time=sdf.format(new Date(Long.valueOf(map.get("bxtimepoke")==null?"":map.get("bxtimepoke").toString())));
-//            }catch (Exception e){
-//                logger.error("时间转换出错",e);
-//            }
-            tool.setBxtimepoke(map.get("bxtimepoke")==null?"":map.get("bxtimepoke").toString());
-            tool.setWxzt("报修");
-            list.add(tool);
-        }
-        Cache.listBX=list;
-    }
-    private void initWX(){
-        List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg,t.epc,t.wz,t.jyzt,t.wxzt, p.code,p.name,t.wxtimepoke  from tools t left join person p on t.wxpersonid=p.id  where t.wxzt="+ Record.WEIXIU;
-        List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
-        for(HashMap map : listmap){
-            ToolZT tool = new ToolZT();
-            tool.setMc(map.get("mc")==null?"":map.get("mc").toString());
-            tool.setGg(map.get("gg")==null?"":map.get("gg").toString());
-            tool.setEpc(map.get("epc")==null?"":map.get("epc").toString());
-            tool.setCode(map.get("code")==null?"":map.get("code").toString());
-            tool.setName(map.get("name")==null?"":map.get("name").toString());
-//            String time ="";
-//            try{
-//                time=sdf.format(new Date(Long.valueOf(map.get("wxtimepoke")==null?"":map.get("wxtimepoke").toString())));
-//            }catch (Exception e){
-//                logger.error("时间转换出错",e);
-//            }
-            tool.setWxtimepoke(map.get("wxtimepoke")==null?"":map.get("wxtimepoke").toString());
-            tool.setWxzt("维修");
-            list.add(tool);
-        }
-        Cache.listWX=list;
-    }
+//    public void updateAllToolsWZ(List<HashMap<String,String>> list){
+//        StringBuilder sql=new StringBuilder("insert into tools (id,gg,mc,epc,wz,jyzt,wxzt,personid,timepoke,bxpersonid,bxtimepoke,wxpersonid,wxtimepoke) values ");
+//        for(HashMap<String,String> map : list){
+//            sql.append("('").append(map.get("id").toString()).append("','");
+//            sql.append(map.get("gg").toString()).append("','");
+//            sql.append(map.get("mc").toString()).append("','");
+//            sql.append(map.get("epc").toString().toUpperCase()).append("','");
+//            sql.append(map.get("wz").toString()).append("','");
+//            sql.append(Record.ZAIGUI).append("','");
+//            sql.append(Record.ZHENGCHANG).append("','");
+//            sql.append("").append("','");
+//            sql.append("").append("','");
+//            sql.append("").append("','");
+//            sql.append("").append("','");
+//            sql.append("").append("','");
+//            sql.append("").append("'),");
+//
+//        }
+//        sql.deleteCharAt(sql.length()-1);
+//
+//        DataBaseExec.execOther(sql.toString(),null);
+//    }
 
 }

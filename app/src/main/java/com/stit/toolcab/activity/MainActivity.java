@@ -27,6 +27,7 @@ import com.bin.david.form.data.table.TableData;
 import com.stit.toolcab.R;
 import com.stit.toolcab.dao.RecordDao;
 import com.stit.toolcab.dao.PZDao;
+import com.stit.toolcab.dao.ToolsDao;
 import com.stit.toolcab.db.DatabaseManager;
 import com.stit.toolcab.db.UpdateDB;
 import com.stit.toolcab.device.DeviceCom;
@@ -232,8 +233,8 @@ public class MainActivity extends Activity {
 //    }
 
     private void initTJ(){
-        RecordDao recordDao =new RecordDao();
-        recordDao.initJYBXWX();
+        ToolsDao toolsDao =new ToolsDao();
+        toolsDao.initJYBXWX();
         tvjcgs.setText("（"+Cache.listJY.size()+"）");
         tvbxgs.setText("（"+Cache.listBX.size()+"）");
         tvwxgs.setText("("+Cache.listWX.size()+")");
