@@ -15,7 +15,7 @@
 
         <EditText
             android:id="@+id/username"
-            android:layout_width="366px"
+            android:layout_width="390px"
             android:layout_height="wrap_content"
             android:background="@drawable/loginedit_bg"
             android:drawableLeft="@drawable/zhanghao"
@@ -24,12 +24,12 @@
             android:singleLine="true"
             android:textSize="30px"
             android:layout_marginLeft="500px"
-            android:layout_marginTop="250px"/>
+            android:layout_marginTop="200px"/>
 
 
         <EditText
             android:id="@+id/password"
-            android:layout_width="366px"
+            android:layout_width="390px"
             android:layout_height="wrap_content"
             android:background="@drawable/loginedit_bg"
             android:drawableLeft="@drawable/mima"
@@ -39,42 +39,19 @@
             android:singleLine="true"
             android:textSize="30px"
             android:layout_marginLeft="500px"
-            android:layout_marginTop="350px"
+            android:layout_marginTop="290px"
             />
 
-        <RadioGroup
-            android:id="@+id/RadioGroup1"
-            android:layout_width="366px"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="500px"
-            android:layout_marginTop="450px">
-            <RadioButton
-                android:id="@+id/putong"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="#0713f1"
-                android:textSize="20px"
-                android:text="普通用户"/>
-            <RadioButton
-                android:id="@+id/weixiu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="#0713f1"
-                android:textSize="20px"
-                android:text="维修用户"/>
-        </RadioGroup>
 
-        <Button
+        <ImageButton
             android:id="@+id/login"
-            android:layout_width="200px"
-            android:layout_height="wrap_content"
+            android:layout_width="390px"
+            android:layout_height="56px"
             android:text="登录"
             android:textSize="30px"
-            android:layout_marginTop="510px"
+            android:layout_marginTop="380px"
             android:layout_marginLeft="500px"
+            android:src="@drawable/denglu"
             android:background="#0026fa"
             android:textColor="#FFFFFF"
              />
@@ -83,11 +60,12 @@
 
         <ImageButton
             android:id="@+id/face"
-            android:layout_width="118px"
-            android:layout_height="122px"
-            app:srcCompat="@drawable/renlian"
-            android:layout_marginTop="250px"
-            android:layout_marginLeft="900px"/>
+            android:layout_width="390px"
+            android:layout_height="56px"
+            android:src="@drawable/renlianshibie"
+            android:layout_marginTop="500px"
+            android:layout_marginLeft="500px"
+/>
 
     </RelativeLayout>
 

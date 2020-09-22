@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
     Column<String> columnwxsj = new Column<String>("时间", "wxtimepoke");
 
 
-    private Button btnLoginOut;
+    private ImageButton btnLoginOut;
 
     private Logger logger = Logger.getLogger(this.getClass());
 
@@ -207,7 +207,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        btnLoginOut=(Button)findViewById(R.id.loginout);
+        btnLoginOut=(ImageButton)findViewById(R.id.loginout);
         btnLoginOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

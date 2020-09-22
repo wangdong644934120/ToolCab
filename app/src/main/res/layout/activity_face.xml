@@ -30,24 +30,24 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="100px"
-            android:layout_height="26px"
-            android:layout_marginLeft="926px"
-            android:layout_marginTop="270px"
+            android:layout_width="150px"
+            android:layout_height="36px"
+            android:layout_marginLeft="900px"
+            android:layout_marginTop="266px"
             android:text="人脸识别中"
             android:textColor="@color/colorWhite"
-            android:textSize="20px" />
+            android:textSize="26px" />
 
         <TextView
             android:id="@+id/djs"
-            android:layout_width="100px"
-            android:layout_height="26px"
-            android:layout_marginLeft="926px"
+            android:layout_width="150px"
+            android:layout_height="36px"
+            android:layout_marginLeft="900px"
             android:layout_marginTop="300px"
             android:text="10秒"
             android:gravity="center_horizontal"
             android:textColor="@color/colorWhite"
-            android:textSize="20px" />
+            android:textSize="26px" />
 
         <TextView
             android:id="@+id/tv_liveness_result"
@@ -57,17 +57,17 @@
             android:layout_marginTop="600px"
             android:gravity="center_horizontal"
             android:textColor="@color/qmui_config_color_black"
-            android:textSize="20px" />
+            android:textSize="26px" />
 
 
 
         <TextView
             android:id="@+id/jieguo"
-            android:layout_width="100px"
-            android:layout_height="26px"
-            android:layout_marginLeft="926px"
+            android:layout_width="150px"
+            android:layout_height="30px"
+            android:layout_marginLeft="900px"
             android:layout_marginTop="380px"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:textColor="@color/colorWhite"
             android:textSize="26px" />
 

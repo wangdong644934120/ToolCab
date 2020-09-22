@@ -25,7 +25,7 @@ public class LoginActivity extends Activity {
 
     private EditText txtUserName;
     private EditText txtPassword;
-    private Button btnLogin;
+    private ImageButton btnLogin;
     private ImageButton btnFace;
     private Logger logger = Logger.getLogger(this.getClass());
 
@@ -47,7 +47,7 @@ public class LoginActivity extends Activity {
     private void initView(){
         txtUserName=(EditText)findViewById(R.id.username);
         txtPassword=(EditText)findViewById(R.id.password);
-        btnLogin=(Button)findViewById(R.id.login);
+        btnLogin=(ImageButton)findViewById(R.id.login);
         btnLogin.setOnClickListener(new onClickListener());
         btnFace=(ImageButton)findViewById(R.id.face);
         btnFace.setOnClickListener(new onClickListener());

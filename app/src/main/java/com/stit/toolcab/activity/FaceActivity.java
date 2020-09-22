@@ -151,12 +151,15 @@ public class FaceActivity extends Activity {
                 }
                 if (bundle.getString("close") != null) {
                     timeFlag=false;
+
+
+//                    updatePreview(false);
+//                    CWEngine.getInstance().cwUninit();
+                    updatePreview(false);
+                    updateDetect(false);
                     try{
                         Thread.sleep(1000);
                     }catch (Exception e){}
-
-                    updatePreview(false);
-                    CWEngine.getInstance().cwUninit();
                     Intent intent = new Intent(FaceActivity.this, LoginActivity.class);
                     startActivity(intent);
                     FaceActivity.this.finish();
@@ -209,7 +212,6 @@ public class FaceActivity extends Activity {
                 public void onBgrFrame(byte[] data) {
 
                     if(data.length>0){
-                        System.out.println("111111111111111111111-----");
                         mVisGlDiaplay.render(mSrVisView,90,true,data,640,480,0);
                     }
 

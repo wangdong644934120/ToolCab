@@ -45,12 +45,11 @@
 
                 <ImageButton
                     android:id="@+id/menu"
-                    android:layout_width="50px"
-                    android:layout_height="50px"
-                    app:srcCompat="@drawable/menu"
-                    android:scaleType="centerInside"
-                    android:layout_marginLeft="1300px"
-                    android:layout_marginTop="20px"/>
+                    android:layout_width="93px"
+                    android:layout_height="65px"
+                    android:src="@drawable/menu"
+                    android:layout_marginLeft="1273px"
+                    android:layout_marginTop="0px"/>
 
             </RelativeLayout>
 
@@ -59,7 +58,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="30px"
+            android:layout_marginTop="10px"
             android:orientation="horizontal">
 
             <!--左侧统计部分-->
@@ -201,30 +200,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20px">
+                    <ImageButton
+                        android:id="@+id/chazhao"
+                        android:layout_width="97px"
+                        android:layout_height="51px"
+                        android:layout_marginLeft="250px"
+                        android:layout_marginTop="4px"
+                        android:src="@drawable/chazhao"/>
 
                     <TextView
                         android:id="@+id/czy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="200px"
-                        android:layout_marginTop="460px"
-                        android:textSize="40px"
+                        android:layout_marginLeft="180px"
+                        android:layout_marginTop="504px"
+                        android:textSize="30px"
                         android:textColor="@color/colorPrimary"
                         android:text="" />
-                    <Button
+                    <ImageButton
                         android:id="@+id/loginout"
-                        android:layout_width="50px"
-                        android:layout_height="64px"
-                        android:layout_marginLeft="250px"
-                        android:layout_marginTop="460px"
+                        android:layout_width="98px"
+                        android:layout_height="53px"
+                        android:layout_marginLeft="302px"
+                        android:layout_marginTop="502px"
+                        android:src="@drawable/zhuxiao"
                         android:text="注销"/>
 
                     <ImageButton
                         android:id="@+id/pandian"
                         android:layout_width="200px"
-                        android:layout_height="64px"
+                        android:layout_height="70px"
                         android:layout_marginLeft="10px"
-                        android:layout_marginTop="540px"
+                        android:layout_marginTop="560px"
                         android:background="@drawable/pandian"
                         android:scaleType="centerInside" />
 
@@ -233,7 +240,7 @@
                         android:layout_width="200px"
                         android:layout_height="64px"
                         android:layout_marginLeft="210px"
-                        android:layout_marginTop="540px"
+                        android:layout_marginTop="560px"
                         android:background="@drawable/shouchipandian"
                         android:scaleType="centerInside" />
 
