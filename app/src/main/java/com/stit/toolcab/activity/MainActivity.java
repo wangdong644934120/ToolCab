@@ -434,6 +434,19 @@ public class MainActivity extends Activity {
                                 Intent intent = new Intent(MainActivity.this, AccessConActivity.class);
                                 startActivity(intent);
                             }
+                            if(bundle.getString("ui").toString().equals("wx")){
+                                //打开维修列表界面
+                                BXDialog bxDialog = new BXDialog(MainActivity.this,R.style.roledialog);//创建Dialog并设置样式主题
+                                Window win = bxDialog.getWindow();
+                                WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+                                params.x = 20;//设置x坐标
+                                params.y = -50;//设置y坐标
+                                win.setAttributes(params);
+                                bxDialog.setCanceledOnTouchOutside(false);//设置点击Dialog外部任意区域关闭Dialog
+                                bxDialog.setTitle("操作选择");
+                                bxDialog.show();
+
+                            }
 
                             if(bundle.getString("ui").toString().equals("tccx")){
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -472,6 +485,18 @@ public class MainActivity extends Activity {
                         if(bundle.getString("czy")!=null){
                             tvczy.setText(Cache.operator.getName());
                             MyTextToSpeech.getInstance().speak("欢迎"+Cache.operator.getName());
+                            if(Cache.operator.getRole().equals("维修工人")){
+                                //维修工人
+                                RoleDialog roleDialog = new RoleDialog(MainActivity.this,R.style.roledialog);//创建Dialog并设置样式主题
+                                Window win = roleDialog.getWindow();
+                                WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+                                params.x = 20;//设置x坐标
+                                params.y = -50;//设置y坐标
+                                win.setAttributes(params);
+                                roleDialog.setCanceledOnTouchOutside(false);//设置点击Dialog外部任意区域关闭Dialog
+                                roleDialog.setTitle("操作选择");
+                                roleDialog.show();
+                            }
                         }
                         if(bundle.getString("appname")!=null){
                             tvappname.setText(Cache.peiZhi==null?"智能工具柜":Cache.peiZhi.getAppname());

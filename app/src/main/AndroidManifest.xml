@@ -71,7 +71,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.AccessConActivity"></activity>
+        <activity android:name=".activity.AccessConActivity" />
+        <activity android:name=".activity.RoleDialog" />
+        <activity android:name=".activity.BXDialog"></activity>
     </application>
 
 </manifest>

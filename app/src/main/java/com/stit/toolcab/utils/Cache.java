@@ -25,6 +25,7 @@ public class Cache {
     public static PeiZhi peiZhi;   //app名称
 
     public static Person operator;  //操作员
+    public static int operatortype=0;//操作类型，0-借用，1-维修
     public static Handler mainHandle; //主界面的handle
     public static Handler myHandleProgress;//更新进度条的handle
     public static Handler myHandleDevice;//设备信息界面显示handle
@@ -53,7 +54,6 @@ public class Cache {
     public static boolean external=false;  //是否挂接第三方平台
     public static List<Tools> listOperaSave=new ArrayList<Tools>();  //存操作缓存
     public static List<Tools> listOperaOut=new ArrayList<Tools>();  //取操作缓存
-    //public static List<Tools> listYJBX = new ArrayList<>();//报销工具缓存
     public static HashMap<String,String> HCCSMap=new HashMap<String,String>(); //key-card,value-wz
 
     public static boolean hwxc1=false;  //界面红外触发状态
