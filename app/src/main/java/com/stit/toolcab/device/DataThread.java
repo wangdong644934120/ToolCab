@@ -140,7 +140,7 @@ public class DataThread extends Thread {
     //门状态传感器 开门 监控电控锁状态   关门  监控门状态
     private void alaMZTCGQ(String mztcgq){
 
-        mztcgq=mztcgq.substring(6,8);
+//        mztcgq=mztcgq.substring(6,8);
 //        if(mztcgq.contains("1")){
 //
 //            //初始化第一次判断
@@ -648,31 +648,56 @@ public class DataThread extends Thread {
             Cache.cfpdcs.clear();
            Set<String> dealKeys=mapDeal.keySet();
            HashMap<String,String> mapSave=new HashMap<String,String>();
-           for(Tools toolsdb : list){
-               //取出标签
-               if( !dealKeys.contains(toolsdb.getEpc()) && toolsdb.getPersonid().equals("")){
-                   //标签被取出
-                   //mapSave.put(map.get("card").toString(),"0");
-                   Cache.listOperaOut.add(toolsdb);
+           if(Cache.operatortype==0){
+               for(Tools toolsdb : list){
+                   //取出标签
+                   if( !dealKeys.contains(toolsdb.getEpc()) && toolsdb.getPersonid().equals("")){
+                       //标签被取出
+                       //mapSave.put(map.get("card").toString(),"0");
+                       Cache.listOperaOut.add(toolsdb);
 
-               }
-               //存放标签
-               if(dealKeys.contains(toolsdb.getEpc()) && !toolsdb.getPersonid().equals("")){
-                   //标签被存放
-                   //mapSave.put(map.get("card").toString(),mapDeal.get(map.get("card").toString()).toString());
-                   //Cache.listPR.add(new ProductRecord(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"存放",mapDeal.get(map.get("card").toString()).toString()));
-                   Cache.listOperaSave.add(toolsdb);
-               }
-               //标签未动
-               if(dealKeys.contains(toolsdb.getEpc()) && toolsdb.getPersonid().equals("")){
+                   }
+                   //存放标签
+                   if(dealKeys.contains(toolsdb.getEpc()) && !toolsdb.getPersonid().equals("")){
+                       //标签被存放
+                       Cache.listOperaSave.add(toolsdb);
+                   }
+                   //标签未动
+                   if(dealKeys.contains(toolsdb.getEpc()) && toolsdb.getPersonid().equals("")){
 //                   if(!mapDeal.get(toolsdb.getEpc()).equals(toolsdb.getWz())){
 //                       //标签位置更换
 //                      // mapSave.put(map.get("card").toString(),mapDeal.get(map.get("card").toString()));
 //                       //Cache.listOperaOut.add(toolsdb);
 //                       //Cache.listOperaSave.add(getProduct(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"存放",mapDeal.get(map.get("card").toString()).toString()));
 //                   }
+                   }
+               }
+           }else if(Cache.operatortype==1){
+               for(Tools toolsdb : list){
+                   //取出标签
+                   if( !dealKeys.contains(toolsdb.getEpc()) && toolsdb.getWxpersonid().equals("")){
+                       //标签被取出
+                       //mapSave.put(map.get("card").toString(),"0");
+                       Cache.listOperaOut.add(toolsdb);
+
+                   }
+                   //存放标签
+                   if(dealKeys.contains(toolsdb.getEpc()) && !toolsdb.getWxpersonid().equals("")){
+                       //标签被存放
+                       Cache.listOperaSave.add(toolsdb);
+                   }
+                   //标签未动
+                   if(dealKeys.contains(toolsdb.getEpc()) && toolsdb.getWxpersonid().equals("")){
+//                   if(!mapDeal.get(toolsdb.getEpc()).equals(toolsdb.getWz())){
+//                       //标签位置更换
+//                      // mapSave.put(map.get("card").toString(),mapDeal.get(map.get("card").toString()));
+//                       //Cache.listOperaOut.add(toolsdb);
+//                       //Cache.listOperaSave.add(getProduct(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"存放",mapDeal.get(map.get("card").toString()).toString()));
+//                   }
+                   }
                }
            }
+
            //界面显示内容
             //startRecord();
             //数据库更新内容

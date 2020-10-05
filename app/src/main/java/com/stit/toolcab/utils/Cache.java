@@ -32,10 +32,12 @@ public class Cache {
     public static Handler myHandlePerson; //人员管理界面handle
     public static Handler myHandleHCCS;//耗材初始化界面handle
     public static Handler myHandleAccess;//确认界面handle
+    public static Handler myHandleBX;//报修列表handle
 
     public static List<ToolZT> listJY=null; //借用信息缓存
     public static List<ToolZT> listBX=null;//报修信息缓存
     public static List<ToolZT> listWX=null; //维修信息缓存
+
 
 
     public static String gx="Ⅰ型"; //柜型
@@ -64,11 +66,11 @@ public class Cache {
     public static boolean hwxc6=false;
     public static boolean hwxc7=false;
 
-    /**
-     * 初始化报修工具
-     */
-    public static void initBXGJ(){
-        ToolsDao toolsDao = new ToolsDao();
-        toolsDao.getBXGJ();
-    }
+//    /**
+//     * 初始化报修工具
+//     */
+//    public static void initBXGJ(){
+//        ToolsDao toolsDao = new ToolsDao();
+//        toolsDao.getBXGJ();
+//    }
 }

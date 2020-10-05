@@ -107,24 +107,13 @@ public class ToolsDao {
         DataBaseExec.execOther(sql,null);
     }
 
-    public void getBXGJ(){
-        String sql="select * from tools where wxzt="+Record.BAOXIU;
-        List<Tools> list = DataBaseExec.execQueryForBean(sql,null,Tools.class);
-        if(list!=null && !list.isEmpty()){
-            //Cache.listBX=list;
-        }else{
-            //Cache.listBX.clear();
-        }
-
-    }
-
     /**
      * 存操作，更新借用信息
      */
     public void updateSave(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         StringBuilder sb = new StringBuilder();
-        sb.append("update tools set jyzt='").append(Record.ZHENGCHANG).append("',");
+        sb.append("update tools set jyzt='").append(Record.ZAIGUI).append("',");
         sb.append("personid='',");
         sb.append("timepoke='").append(sdf.format(new Date())).append("'");
         sb.append(" where id in (");
@@ -132,6 +121,48 @@ public class ToolsDao {
             sb.append("'").append(tools.getId()).append("',");
         }
         if(!Cache.listOperaSave.isEmpty()){
+            sb.deleteCharAt(sb.length()-1);
+        }
+        sb.append(")");
+        DataBaseExec.execOther(sb.toString(),null);
+    }
+
+    /**
+     * 更新为正常状态
+     */
+    public void updateZTToZC(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        StringBuilder sb = new StringBuilder();
+        sb.append("update tools set jyzt='").append(Record.ZAIGUI).append("',");
+        sb.append("personid='',wxpersonid='',");
+        sb.append("wxzt='").append(Record.ZHENGCHANG).append("',");
+        sb.append("timepoke='").append(sdf.format(new Date())).append("'");
+        sb.append(" where id in (");
+        for(Tools tools : Cache.listOperaSave){
+            sb.append("'").append(tools.getId()).append("',");
+        }
+        if(!Cache.listOperaSave.isEmpty()){
+            sb.deleteCharAt(sb.length()-1);
+        }
+        sb.append(")");
+        DataBaseExec.execOther(sb.toString(),null);
+    }
+
+    /**
+     * 更新状态为维修
+     */
+    public void updateZTToWX(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        StringBuilder sb = new StringBuilder();
+        sb.append("update tools set jyzt='',");
+        sb.append("wxpersonid='").append(Cache.operator.getId()).append("',");
+        sb.append("wxzt='").append(Record.WEIXIU).append("',");
+        sb.append("wxtimepoke='").append(sdf.format(new Date())).append("'");
+        sb.append(" where id in (");
+        for(Tools tools : Cache.listOperaOut){
+            sb.append("'").append(tools.getId()).append("',");
+        }
+        if(!Cache.listOperaOut.isEmpty()){
             sb.deleteCharAt(sb.length()-1);
         }
         sb.append(")");
@@ -182,7 +213,7 @@ public class ToolsDao {
             tool.setEpc(map.get("epc")==null?"":map.get("epc").toString());
             tool.setCode(map.get("code")==null?"":map.get("code").toString());
             tool.setName(map.get("name")==null?"":map.get("name").toString());
-
+            tool.setWz(map.get("wz")==null?"":map.get("wz").toString());
             tool.setTimepoke(map.get("timepoke")==null?"":map.get("timepoke").toString());
             tool.setJyzt("借出");
             list.add(tool);
@@ -192,7 +223,7 @@ public class ToolsDao {
 
     public void initBX(){
         List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg,t.epc,t.wz,t.jyzt,t.wxzt, p.code,p.name,t.bxtimepoke  from tools t left join person p on t.personid=p.id where  t.wxzt="+ Record.BAOXIU;
+        String sql="select t.mc,t.gg,t.epc,t.wz,t.jyzt,t.wxzt, p.code,p.name,t.bxtimepoke  from tools t left join person p on t.bxpersonid=p.id where  t.wxzt="+ Record.BAOXIU;
         List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss");
         for(HashMap map : listmap){
@@ -202,6 +233,7 @@ public class ToolsDao {
             tool.setEpc(map.get("epc")==null?"":map.get("epc").toString());
             tool.setCode(map.get("code")==null?"":map.get("code").toString());
             tool.setName(map.get("name")==null?"":map.get("name").toString());
+            tool.setWz(map.get("wz")==null?"":map.get("wz").toString());
 //            String time ="";
 //            try{
 //                time=sdf.format(new Date(Long.valueOf(map.get("bxtimepoke")==null?"":map.get("bxtimepoke").toString())));
@@ -227,6 +259,7 @@ public class ToolsDao {
             tool.setEpc(map.get("epc")==null?"":map.get("epc").toString());
             tool.setCode(map.get("code")==null?"":map.get("code").toString());
             tool.setName(map.get("name")==null?"":map.get("name").toString());
+            tool.setWz(map.get("wz")==null?"":map.get("wz").toString());
 //            String time ="";
 //            try{
 //                time=sdf.format(new Date(Long.valueOf(map.get("wxtimepoke")==null?"":map.get("wxtimepoke").toString())));

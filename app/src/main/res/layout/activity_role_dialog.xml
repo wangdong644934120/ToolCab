@@ -37,6 +37,9 @@
                 android:id="@+id/btnJY"
                 android:layout_width="200px"
                 android:layout_height="200px"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp"
                 android:layout_weight="1"
                 android:text="借还" />
             <View
@@ -47,6 +50,9 @@
                 android:id="@+id/btnWX"
                 android:layout_width="200px"
                 android:layout_height="200px"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp"
                 android:layout_weight="1"
                 android:text="维修" />
         </LinearLayout>

@@ -27,21 +27,21 @@
                     android:id="@+id/appname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="550px"
+                    android:layout_marginLeft="580px"
                     android:layout_marginTop="10px"
                     android:text="智能工具柜"
                     android:textColor="#062af9"
                     android:textSize="50px"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/appcode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="30px"
-                    android:layout_marginLeft="820px"
-                    android:layout_marginTop="30px"
-                    android:text="01号柜" />
+                <!--<TextView-->
+                    <!--android:id="@+id/appcode"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textSize="30px"-->
+                    <!--android:layout_marginLeft="820px"-->
+                    <!--android:layout_marginTop="30px"-->
+                    <!--android:text="01号柜" />-->
 
                 <ImageButton
                     android:id="@+id/menu"
@@ -197,6 +197,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/mylayoutdevice"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20px">
@@ -229,7 +230,7 @@
                     <ImageButton
                         android:id="@+id/pandian"
                         android:layout_width="200px"
-                        android:layout_height="70px"
+                        android:layout_height="67px"
                         android:layout_marginLeft="10px"
                         android:layout_marginTop="560px"
                         android:background="@drawable/pandian"
@@ -238,7 +239,7 @@
                     <ImageButton
                         android:id="@+id/erweima"
                         android:layout_width="200px"
-                        android:layout_height="64px"
+                        android:layout_height="67px"
                         android:layout_marginLeft="210px"
                         android:layout_marginTop="560px"
                         android:background="@drawable/shouchipandian"

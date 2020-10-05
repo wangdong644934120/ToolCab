@@ -128,39 +128,12 @@ public class AccessConActivity extends Activity {
                     }
                     if(bundle.getString("ui")!=null && bundle.getString("ui").toString().equals("close")){
                         pressOK();
-                        /*Cache.operatorCode="";
-                        CacheSick.sickChoose="";
-                        Cache.myHandleAccess=null;
-                        AccessConActivity.this.finish();*/
                     }
 
 
                 }
             };
-//            myHandler= new Handler() {
-//                @Override
-//                public void handleMessage(Message msg) {
-//                    super.handleMessage(msg);
-//                    Bundle bundle = msg.getData(); // 用来获取消息里面的bundle数据
-//                    //提示信息
-//                    if (bundle.getString("close") != null) {
-//                        logger.info("超时30秒未返回数据，自动关闭耗材确认界面");
-//                        /*Cache.myHandleAccess=null;
-//                        AccessConActivity.this.finish();*/
-//                        /*if(Cache.lockScreen.equals("1") && Cache.mztcgq!=1){
-//                            Message message = Message.obtain(Cache.myHandle);
-//                            Bundle bund = new Bundle();
-//                            bund.putString("ui","lock");
-//                            message.setData(bund);
-//                            Cache.myHandle.sendMessage(message);
-//                        }*/
-//                    }
-//                    if(bundle.getString("uitime")!=null){
-//                        btnOK.setText("确认("+bundle.getString("uitime")+"秒)");
-//
-//                    }
-//                }};
-            //new CloseActivityThread().start();
+
             logger.info("耗材确认界面初始化完成");
         }catch (Exception e){
             logger.error("初始化view出错",e);
@@ -515,14 +488,31 @@ public class AccessConActivity extends Activity {
                     try{
                         logger.info("工具确认点击正确");
                         if(!Cache.listOperaSave.isEmpty()){
-                            //进行存操作
-                            toolsDao.updateSave();
+                            if(Cache.operatortype==0){
+                                //进行存操作
+                                toolsDao.updateSave();
+                            }else if(Cache.operatortype==1){
+                                //报修或维修状态修改为正常状态
+                                toolsDao.updateZTToZC();
+                            }
+
                         }
                         if(!Cache.listOperaOut.isEmpty()){
-                            //进行取出操作
-                            toolsDao.updateOut();
+                            if(Cache.operatortype==0){
+                                //进行取出操作
+                                toolsDao.updateOut();
+                            }else if(Cache.operatortype==1){
+                                //报修状态修改为维修
+                                toolsDao.updateZTToWX();
+                            }
                         }
                         MyTextToSpeech.getInstance().speak("操作完成");
+                        Message message = Message.obtain(Cache.mainHandle);
+                        Bundle data = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
+
+                        data.putString("initTotal","1");
+                        message.setData(data);
+                        Cache.mainHandle.sendMessage(message);
                         AccessConActivity.this.finish();
 
                     }catch (Exception e){

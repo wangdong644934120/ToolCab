@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -52,6 +53,7 @@ public class MainActivity extends Activity {
     private ImageButton btnPD;
     private ImageButton btnMenu;
     private RelativeLayout rl;
+    private RelativeLayout mylayoutdevice;
     private LinearLayout lljc;
     private LinearLayout llbx;
     private LinearLayout llwx;
@@ -63,7 +65,16 @@ public class MainActivity extends Activity {
     private TextView tvwxgs;
     private TextView tvczy;
     private TextView tvappname;
-    private TextView tvappcode;
+    //private TextView tvappcode;
+
+    private ImageView ceng1;
+    private ImageView ceng2;
+    private ImageView ceng3;
+    private ImageView ceng4;
+    private ImageView ceng5;
+    private ImageView ceng6;
+    private ImageView ceng7;
+
     private LinearLayout.LayoutParams params=null;
     private SmartTable table;
     Column<String> columnmc = new Column<String>("名称", "mc");
@@ -75,6 +86,7 @@ public class MainActivity extends Activity {
 
 
     private ImageButton btnLoginOut;
+    private ImageButton btnChaZhao;
 
     private Logger logger = Logger.getLogger(this.getClass());
 
@@ -117,7 +129,7 @@ public class MainActivity extends Activity {
     }
 
     private void initView(){
-
+        mylayoutdevice=(RelativeLayout)findViewById(R.id.mylayoutdevice);
         rl=(RelativeLayout)findViewById(R.id.mylayout);
         btnPD=(ImageButton)findViewById(R.id.pandian);
         btnPD.setOnClickListener(new onClickListener());
@@ -132,7 +144,7 @@ public class MainActivity extends Activity {
         tvbxxx=(TextView)findViewById(R.id.bxxx);
         tvwxxx=(TextView)findViewById(R.id.wxxx);
         tvappname=(TextView)findViewById(R.id.appname);
-        tvappcode=(TextView)findViewById(R.id.appcode);
+        //tvappcode=(TextView)findViewById(R.id.appcode);
         lljc.setOnClickListener(new onClickListener());
         llbx.setOnClickListener(new onClickListener());
         llwx.setOnClickListener(new onClickListener());
@@ -151,17 +163,6 @@ public class MainActivity extends Activity {
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                SelectDialog.Builder builder = new SelectDialog.Builder(MainActivity.this);
-//                AlertDialog selectDialog =  builder.create();
-//                selectDialog.show();
-//                WindowManager.LayoutParams  lp= selectDialog.getWindow().getAttributes();
-//                lp.width=200;//定义宽度
-//                lp.height=500;//定义高度
-//                lp.x = 580;//设置x坐标
-//                lp.y = -50;//设置y坐标
-//
-//                selectDialog.getWindow().setAttributes(lp);
-
                 SelectDialog selectDialog = new SelectDialog(MainActivity.this,R.style.dialog);//创建Dialog并设置样式主题
                 Window win = selectDialog.getWindow();
                 WindowManager.LayoutParams params = new WindowManager.LayoutParams();
@@ -170,40 +171,6 @@ public class MainActivity extends Activity {
                 win.setAttributes(params);
                 selectDialog.setCanceledOnTouchOutside(true);//设置点击Dialog外部任意区域关闭Dialog
                 selectDialog.show();
-//
-//               final String[] items = {"item 1", "item 2", "item 3", "item 4", "item 5", "item 6"};
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                View viewd = View.inflate(MainActivity.this,R.layout.slt_cnt_type, null);
-//                builder.setView(viewd);
-////                Button btnry=(Button)findViewById(R.id.btnRY);
-////                btnry.setOnClickListener(new View.OnClickListener() {
-////                    @Override
-////                    public void onClick(View view) {
-////                        Toast.makeText(MainActivity.this, "你点击的内容为：1 " , Toast.LENGTH_LONG).show();
-////                    }
-////                });
-//                //builder.setTitle("");
-//                builder.setItems(items, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                Toast.makeText(MainActivity.this, "你点击的内容为： " + items[i], Toast.LENGTH_LONG).show();
-//
-//                            }
-//                        });
-//
-//
-//
-//                AlertDialog alertDialog =builder.create();
-//                alertDialog.show();
-//                WindowManager.LayoutParams  lp= alertDialog.getWindow().getAttributes();
-//                lp.width=200;//定义宽度
-//                lp.height=500;//定义高度
-//                lp.x = 580;//设置x坐标
-//                lp.y = -50;//设置y坐标
-//
-//                alertDialog.getWindow().setAttributes(lp);
-
             }
         });
 
@@ -215,7 +182,118 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+        btnChaZhao=(ImageButton)findViewById(R.id.chazhao);
+        btnChaZhao.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //打开维修列表界面
+                FindDialog findDialog = new FindDialog(MainActivity.this,R.style.roledialog);//创建Dialog并设置样式主题
+                Window win = findDialog.getWindow();
+                WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+                params.x = 20;//设置x坐标
+                params.y = -50;//设置y坐标
+                win.setAttributes(params);
+                findDialog.setCanceledOnTouchOutside(true);//设置点击Dialog外部任意区域关闭Dialog
+                findDialog.setTitle("工具查找");
+                findDialog.show();
+            }
+        });
+        initDevice();
 
+    }
+    private void initDevice(){
+        RelativeLayout.LayoutParams params ;
+        params = new RelativeLayout.LayoutParams(247, 43);
+        params.setMargins(94, 100, 0, 0);
+        ceng1 = new ImageView(this);
+        ceng1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HCProtocol.ST_OpenDoor();
+                ceng1.setImageResource(R.drawable.ceng1kai);
+            }
+        });
+        ceng1.setImageResource(R.drawable.ceng1guan);
+        ceng1.setLayoutParams(params);
+        mylayoutdevice.addView(ceng1);
+
+        params = new RelativeLayout.LayoutParams(247, 43);
+        params.setMargins(94, 152, 0, 0);
+        ceng2 = new ImageView(this);
+        ceng2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HCProtocol.ST_OpenDoor();
+            }
+        });
+        ceng2.setImageResource(R.drawable.ceng2guan);
+        ceng2.setLayoutParams(params);
+        mylayoutdevice.addView(ceng2);
+
+        params = new RelativeLayout.LayoutParams(247, 43);
+        params.setMargins(94, 204, 0, 0);
+        ceng3 = new ImageView(this);
+        ceng3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HCProtocol.ST_OpenDoor();
+            }
+        });
+        ceng3.setImageResource(R.drawable.ceng3guan);
+        ceng3.setLayoutParams(params);
+        mylayoutdevice.addView(ceng3);
+
+        params = new RelativeLayout.LayoutParams(247, 43);
+        params.setMargins(94, 256, 0, 0);
+        ceng4 = new ImageView(this);
+        ceng4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HCProtocol.ST_OpenDoor();
+            }
+        });
+        ceng4.setImageResource(R.drawable.ceng4guan);
+        ceng4.setLayoutParams(params);
+        mylayoutdevice.addView(ceng4);
+
+        params = new RelativeLayout.LayoutParams(247, 43);
+        params.setMargins(94, 308, 0, 0);
+        ceng5 = new ImageView(this);
+        ceng5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HCProtocol.ST_OpenDoor();
+            }
+        });
+        ceng5.setImageResource(R.drawable.ceng5guan);
+        ceng5.setLayoutParams(params);
+        mylayoutdevice.addView(ceng5);
+
+        params = new RelativeLayout.LayoutParams(247, 43);
+        params.setMargins(94, 360, 0, 0);
+        ceng6 = new ImageView(this);
+        ceng6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HCProtocol.ST_OpenDoor();
+            }
+        });
+        ceng6.setImageResource(R.drawable.ceng6guan);
+        ceng6.setLayoutParams(params);
+        mylayoutdevice.addView(ceng6);
+
+        params = new RelativeLayout.LayoutParams(247, 43);
+        params.setMargins(94, 412, 0, 0);
+        ceng7 = new ImageView(this);
+        ceng7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HCProtocol.ST_OpenDoor();
+            }
+        });
+        ceng7.setImageResource(R.drawable.ceng7guan);
+        ceng7.setLayoutParams(params);
+        mylayoutdevice.addView(ceng7);
     }
 
 //    private void requestPermission() {
@@ -244,8 +322,8 @@ public class MainActivity extends Activity {
     private void initPZ(){
         PZDao PZDao = new PZDao();
         Cache.peiZhi = PZDao.getPZ();
-        tvappcode.setText(Cache.peiZhi==null?"":Cache.peiZhi.getAppcode());
-        tvappname.setText(Cache.peiZhi==null?"":Cache.peiZhi.getAppname());
+        //tvappcode.setText(Cache.peiZhi==null?"":Cache.peiZhi.getAppcode());
+        //tvappname.setText(Cache.peiZhi==null?"":Cache.peiZhi.getAppname());
     }
 
     private void initJC(){
@@ -273,12 +351,10 @@ public class MainActivity extends Activity {
             //表格数据 datas是需要填充的数据
             TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listBX, columnmc, columngg, columnry, columnbxsj);
             table.setTableData(tableData);
-            int a=1;
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("渲染表格出错",e);
 
         }
-        int b=1;
     }
 
     private void initWX(){
@@ -357,7 +433,6 @@ public class MainActivity extends Activity {
                     tvwxxx.setBackgroundColor(Color.argb(255,115,113,113));
                     tvwxgs.setBackgroundColor(Color.argb(255,115,113,113));
                     initBX();
-
                     break;
                 case R.id.llwx:
                     params = new LinearLayout.LayoutParams(60,140);
@@ -383,6 +458,7 @@ public class MainActivity extends Activity {
                     tvbxgs.setBackgroundColor(Color.argb(255,115,113,113));
                     initWX();
                     break;
+
 
                 default:
                     break;
@@ -500,7 +576,7 @@ public class MainActivity extends Activity {
                         }
                         if(bundle.getString("appname")!=null){
                             tvappname.setText(Cache.peiZhi==null?"智能工具柜":Cache.peiZhi.getAppname());
-                            tvappcode.setText(Cache.peiZhi==null?"01号柜":Cache.peiZhi.getAppcode());
+                            //tvappcode.setText(Cache.peiZhi==null?"01号柜":Cache.peiZhi.getAppcode());
                         }
                     } catch (Exception ex) {
                         logger.error("获取handler消息出错",ex);

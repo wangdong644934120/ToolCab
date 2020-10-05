@@ -7,39 +7,66 @@
     android:background="@drawable/loginbg"
     tools:context="com.stit.toolcab.activity.LoginActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/appname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="智能工具柜"
+            android:textColor="#062af9"
+            android:textAlignment="center"
+            android:textSize="50px"
+            android:layout_marginTop="30px"
+            android:textStyle="bold" />
+        <!--android:layout_marginLeft="550px"-->
+        <!--android:layout_marginTop="10px"-->
+        <TextView
+            android:id="@+id/appcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#062af9"
+            android:textAlignment="center"
+            android:textSize="30px"
+            android:text="01号柜" />
+        <!--android:layout_marginLeft="820px"-->
+        <!--android:layout_marginTop="30px"-->
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
+
+
         <EditText
             android:id="@+id/username"
-            android:layout_width="390px"
-            android:layout_height="wrap_content"
-            android:background="@drawable/loginedit_bg"
-            android:drawableLeft="@drawable/zhanghao"
+            android:layout_width="330px"
+            android:layout_height="54px"
             android:hint="输入用户名"
             android:text="cc"
             android:singleLine="true"
             android:textSize="30px"
-            android:layout_marginLeft="500px"
-            android:layout_marginTop="200px"/>
+            android:layout_marginLeft="564px"
+            android:layout_marginTop="224px"/>
 
-
+        <!--android:background="@drawable/loginedit_bg"-->
+        <!--android:drawableLeft="@drawable/zhanghao"-->
         <EditText
             android:id="@+id/password"
-            android:layout_width="390px"
-            android:layout_height="wrap_content"
-            android:background="@drawable/loginedit_bg"
-            android:drawableLeft="@drawable/mima"
+            android:layout_width="330px"
+            android:layout_height="54px"
             android:hint="请输入登录密码"
             android:text="dd"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textSize="30px"
-            android:layout_marginLeft="500px"
-            android:layout_marginTop="290px"
+            android:layout_marginLeft="564px"
+            android:layout_marginTop="301px"
             />
 
 
