@@ -90,7 +90,7 @@ public class BXDialog  extends AlertDialog {
     private void initData(){
         Column<String> columnmc = new Column<String>("名称", "mc");
         Column<String> columngg = new Column<String>("规格", "gg");
-        Column<String> columnry = new Column<String>("报修人员", "name");
+        Column<String> columnry = new Column<String>("报修人员", "bxname");
         Column<String> columnbxsj = new Column<String>("报修时间", "bxtimepoke");
         Column<String> columnwz=new Column<String>("位置","wz");
 

@@ -30,22 +30,74 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="450px"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/ceng1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="第一层" />
+
+                <Button
+                    android:id="@+id/ceng2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="第二层" />
+
+                <Button
+                    android:id="@+id/ceng3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="第三层" />
+
+                <Button
+                    android:id="@+id/ceng4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="第四层" />
+
+                <Button
+                    android:id="@+id/ceng5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="第五层" />
+
+                <Button
+                    android:id="@+id/ceng6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="第六层" />
+
+                <Button
+                    android:id="@+id/ceng7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="第七层" />
+            </LinearLayout>
 
             <com.bin.david.form.core.SmartTable
                 android:id="@+id/findtable"
                 android:layout_width="match_parent"
-                android:layout_height="450px"
-                android:layout_marginLeft="20px"
-                android:layout_marginRight="20px"
+                android:layout_height="550px"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px"
                 android:layout_marginTop="10px" />
 
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:background="@drawable/guizichazhao">-->
 
-            <!--</RelativeLayout>-->
 
         </LinearLayout>
 
@@ -53,6 +105,9 @@
             android:id="@+id/findclose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginBottom="10px"
             android:text="关闭" />
     </LinearLayout>
 

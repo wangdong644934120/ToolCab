@@ -79,10 +79,12 @@ public class MainActivity extends Activity {
     private SmartTable table;
     Column<String> columnmc = new Column<String>("名称", "mc");
     Column<String> columngg = new Column<String>("规格", "gg");
-    Column<String> columnry = new Column<String>("人员", "name");
-    Column<String> columnsj = new Column<String>("时间", "timepoke");
-    Column<String> columnbxsj = new Column<String>("时间", "bxtimepoke");
-    Column<String> columnwxsj = new Column<String>("时间", "wxtimepoke");
+    Column<String> columnjyry = new Column<String>("借用人员", "jyname");
+    Column<String> columnbxry = new Column<String>("报修人员", "bxname");
+    Column<String> columnwxry = new Column<String>("维修人员", "wxname");
+    Column<String> columnjysj = new Column<String>("借用时间", "jytimepoke");
+    Column<String> columnbxsj = new Column<String>("报修时间", "bxtimepoke");
+    Column<String> columnwxsj = new Column<String>("维修时间", "wxtimepoke");
 
 
     private ImageButton btnLoginOut;
@@ -311,6 +313,7 @@ public class MainActivity extends Activity {
 //    }
 
     private void initTJ(){
+        logger.info("开始统计借用维修报修信息");
         ToolsDao toolsDao =new ToolsDao();
         toolsDao.initJYBXWX();
         tvjcgs.setText("（"+Cache.listJY.size()+"）");
@@ -335,7 +338,7 @@ public class MainActivity extends Activity {
 //            List<Tools> listTest = new ArrayList<Tools>();
 //            listTest.add(tools);
 
-            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listJY, columnmc, columngg, columnry,columnsj);
+            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listJY, columnmc, columngg, columnjyry,columnjysj);
             //设置数据
             table.setTableData(tableData);
 
@@ -349,7 +352,7 @@ public class MainActivity extends Activity {
     private void initBX(){
         try{
             //表格数据 datas是需要填充的数据
-            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listBX, columnmc, columngg, columnry, columnbxsj);
+            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listBX, columnmc, columngg, columnbxry, columnbxsj);
             table.setTableData(tableData);
         }catch (Exception e){
             logger.error("渲染表格出错",e);
@@ -360,7 +363,7 @@ public class MainActivity extends Activity {
     private void initWX(){
         try{
             //表格数据 datas是需要填充的数据
-            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listWX, columnmc, columngg, columnry, columnwxsj);
+            TableData<ToolZT> tableData = new TableData<ToolZT>("", Cache.listWX, columnmc, columngg, columnwxry, columnwxsj);
             table.setTableData(tableData);
         }catch (Exception e){
             e.printStackTrace();
@@ -485,6 +488,10 @@ public class MainActivity extends Activity {
                         //菜单栏
                         if (bundle.getString("ui") != null) {
 
+                            if (bundle.getString("ui").toString().equals("logout")) {
+                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            }
                             if (bundle.getString("ui").toString().equals("ry")) {
                                 Intent intent = new Intent(MainActivity.this, PersonActivity.class);
                                 startActivity(intent);
@@ -556,6 +563,9 @@ public class MainActivity extends Activity {
                         }
                         if(bundle.getString("initTotal")!=null){
                             initTJ();
+                            //打开系统登录界面
+//                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                            startActivity(intent);
                         }
                         //更新界面操作员
                         if(bundle.getString("czy")!=null){

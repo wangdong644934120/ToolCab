@@ -7,6 +7,7 @@ import android.os.Message;
 import com.stit.toolcab.dao.PersonDao;
 import com.stit.toolcab.dao.ToolsDao;
 import com.stit.toolcab.entity.Person;
+import com.stit.toolcab.entity.Record;
 import com.stit.toolcab.entity.Tools;
 import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.MyTextToSpeech;
@@ -646,55 +647,55 @@ public class DataThread extends Thread {
 //           }
             //Cache.sdpdcs="0";
             Cache.cfpdcs.clear();
-           Set<String> dealKeys=mapDeal.keySet();
+           Set<String> dealKeys=mapDeal.keySet();//设备上报
            HashMap<String,String> mapSave=new HashMap<String,String>();
            if(Cache.operatortype==0){
                for(Tools toolsdb : list){
-                   //取出标签
-                   if( !dealKeys.contains(toolsdb.getEpc()) && toolsdb.getPersonid().equals("")){
+                   //取出标签(设备未读到,数据库是在柜，维修状态是正常)
+                   if( !dealKeys.contains(toolsdb.getEpc()) && toolsdb.getJyzt().equals(Record.JYZAIGUI) ){
                        //标签被取出
                        //mapSave.put(map.get("card").toString(),"0");
                        Cache.listOperaOut.add(toolsdb);
 
                    }
-                   //存放标签
-                   if(dealKeys.contains(toolsdb.getEpc()) && !toolsdb.getPersonid().equals("")){
+                   //存放标签(设备读到，数据库里是借用状态)
+                   if(dealKeys.contains(toolsdb.getEpc()) && toolsdb.getJyzt().equals(Record.JYJIEYONG)){
                        //标签被存放
                        Cache.listOperaSave.add(toolsdb);
                    }
                    //标签未动
-                   if(dealKeys.contains(toolsdb.getEpc()) && toolsdb.getPersonid().equals("")){
+                   //if(dealKeys.contains(toolsdb.getEpc()) && toolsdb.getJyzt().equals(Record.JYZAIGUI)){
 //                   if(!mapDeal.get(toolsdb.getEpc()).equals(toolsdb.getWz())){
 //                       //标签位置更换
 //                      // mapSave.put(map.get("card").toString(),mapDeal.get(map.get("card").toString()));
 //                       //Cache.listOperaOut.add(toolsdb);
 //                       //Cache.listOperaSave.add(getProduct(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"存放",mapDeal.get(map.get("card").toString()).toString()));
 //                   }
-                   }
+                   //}
                }
            }else if(Cache.operatortype==1){
                for(Tools toolsdb : list){
                    //取出标签
-                   if( !dealKeys.contains(toolsdb.getEpc()) && toolsdb.getWxpersonid().equals("")){
+                   if( !dealKeys.contains(toolsdb.getEpc())  && toolsdb.getJyzt().equals(Record.JYZAIGUI) ){
                        //标签被取出
                        //mapSave.put(map.get("card").toString(),"0");
                        Cache.listOperaOut.add(toolsdb);
 
                    }
                    //存放标签
-                   if(dealKeys.contains(toolsdb.getEpc()) && !toolsdb.getWxpersonid().equals("")){
+                   if(dealKeys.contains(toolsdb.getEpc()) && (toolsdb.getJyzt().equals(Record.JYJIEYONG) || toolsdb.getWxzt().equals(Record.WXWEIXIU))){
                        //标签被存放
                        Cache.listOperaSave.add(toolsdb);
                    }
                    //标签未动
-                   if(dealKeys.contains(toolsdb.getEpc()) && toolsdb.getWxpersonid().equals("")){
+                   //if(dealKeys.contains(toolsdb.getEpc()) && toolsdb.getWxpersonid().equals("")){
 //                   if(!mapDeal.get(toolsdb.getEpc()).equals(toolsdb.getWz())){
 //                       //标签位置更换
 //                      // mapSave.put(map.get("card").toString(),mapDeal.get(map.get("card").toString()));
 //                       //Cache.listOperaOut.add(toolsdb);
 //                       //Cache.listOperaSave.add(getProduct(map.get("pp").toString(),map.get("zl").toString(),map.get("gg").toString(),"存放",mapDeal.get(map.get("card").toString()).toString()));
 //                   }
-                   }
+                   //}
                }
            }
 

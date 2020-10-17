@@ -8,12 +8,14 @@ package com.stit.toolcab.entity;
 
 public class Record {
     public static String BAOXIAO="0";//报销状态
-    public static String ZAIGUI="1"; //在柜状态
-    public static String JIEYONG="2";//借用状态
+    public static String JYZAIGUI="1"; //借用--在柜状态
+    public static String JYJIEYONG="2";//借用--借用状态
 
-    public static String ZHENGCHANG="3";//正常状态
-    public static String BAOXIU="4";//报修状态
-    public static String WEIXIU="5";//维修状态
+    public static String BXZHENGCHANG="3";//报修--正常状态
+    public static String BXBAOXIU="4";//报修--报修状态
+
+    public static String WXZHENGCHANG="5";//维修--正常状态
+    public static String WXWEIXIU="6";//维修--维修状态
 
     private String id;
     private String name;

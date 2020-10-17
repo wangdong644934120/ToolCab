@@ -20,11 +20,13 @@ public class Tools {
 
     private String jyzt;
 
+    private String bxzt;
+
     private String wxzt;
 
-    private String personid;
+    private String jypersonid;
 
-    private String timepoke;
+    private String jytimepoke;
 
     private String bxpersonid;
 
@@ -91,20 +93,28 @@ public class Tools {
         this.wxzt = wxzt;
     }
 
-    public String getPersonid() {
-        return personid;
+    public String getBxzt() {
+        return bxzt;
     }
 
-    public void setPersonid(String personid) {
-        this.personid = personid;
+    public void setBxzt(String bxzt) {
+        this.bxzt = bxzt;
     }
 
-    public String getTimepoke() {
-        return timepoke;
+    public String getJypersonid() {
+        return jypersonid;
     }
 
-    public void setTimepoke(String timepoke) {
-        this.timepoke = timepoke;
+    public void setJypersonid(String jypersonid) {
+        this.jypersonid = jypersonid;
+    }
+
+    public String getJytimepoke() {
+        return jytimepoke;
+    }
+
+    public void setJytimepoke(String jytimepoke) {
+        this.jytimepoke = jytimepoke;
     }
 
     public String getBxpersonid() {

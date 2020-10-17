@@ -23,6 +23,7 @@ import com.bin.david.form.core.TableConfig;
 import com.bin.david.form.data.CellInfo;
 import com.bin.david.form.data.Column;
 import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat;
+import com.bin.david.form.data.format.bg.ICellBackgroundFormat;
 import com.bin.david.form.data.format.draw.ImageResDrawFormat;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.table.TableData;
@@ -157,27 +158,8 @@ public class AccessConActivity extends Activity {
     private void initSave() {
        try{
             Column<String> column1 = new Column<>("名称", "mc");
-            column1.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
-                @Override
-                public void onClick(Column<String> column, String s, String s2, int i) {
-                    //updateOutUI(i);
-                }
-            });
             Column<String> column2 = new Column<>("规格", "gg");
-            column2.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
-                @Override
-                public void onClick(Column<String> column, String s, String s2, int i) {
-                    //updateOutUI(i);
-                }
-            });
-
             Column<String> column3 = new Column<>("位置", "wz");
-            column3.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
-                @Override
-                public void onClick(Column<String> column, String s, String s2, int i) {
-                    //updateOutUI(i);
-                }
-            });
             Column<String> baoxiu=new Column<String>("报修", "id", new ImageResDrawFormat<String>(32,32) {
                 @Override
                 protected Context getContext() {
@@ -207,8 +189,14 @@ public class AccessConActivity extends Activity {
                             toolsDao.updateBX(sbx);
                             System.out.println(sbx+"报修");
                             toolsDao.initBX();
+                            initSave();
+                            //toolsDao.initBX();
+                            //sendTotal();
+
+
+
                             //Cache.initBXGJ();//重新初始化报修工具
-                            updateSaveUI(ii);
+                            //updateSaveUI(ii);
                         }
                     });
                     builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -274,6 +262,7 @@ public class AccessConActivity extends Activity {
             tableSave.getConfig().setColumnTitleStyle(new FontStyle(20,Color.WHITE));
             tableSave.getConfig().setContentStyle(new FontStyle(18,Color.BLACK));
             tableSave.getConfig().setMinTableWidth(100);
+
             tableSave.getConfig().setContentBackgroundFormat(new BaseCellBackgroundFormat<CellInfo>() {     //设置隔行变色
                 @Override
                 public int getBackGroundColor(CellInfo cellInfo) {
@@ -301,25 +290,26 @@ public class AccessConActivity extends Activity {
         }
     }
 
-    private void updateSaveUI(int i){
-        try{
-            tableSave.refreshDrawableState();
-            tableSave.invalidate();
-        }catch (Exception e){
-            logger.error("更新存放缓存出错",e);
-        }
-
-    }
-
-    private void updateOutUI(int i){
-        try{
-            tableOut.refreshDrawableState();
-            tableOut.invalidate();
-        }catch (Exception e){
-            logger.error("更新取出缓存出错",e);
-        }
-
-    }
+//
+//    private void updateSaveUI(int i){
+//        try{
+//            tableSave.refreshDrawableState();
+//            tableSave.invalidate();
+//        }catch (Exception e){
+//            logger.error("更新存放缓存出错",e);
+//        }
+//
+//    }
+//
+//    private void updateOutUI(int i){
+//        try{
+//            tableOut.refreshDrawableState();
+//            tableOut.invalidate();
+//        }catch (Exception e){
+//            logger.error("更新取出缓存出错",e);
+//        }
+//
+//    }
     /**
      * 初始化取操作耗材
      */
@@ -376,10 +366,16 @@ public class AccessConActivity extends Activity {
                             toolsDao.updateBX(sbx);
                             System.out.println(sbx+"报修");
                             toolsDao.initBX();
+                            initOut();
+
+                                //xrcell();
+                            //toolsDao.initBX();
+                            //sendTotal();
                             //Cache.initBXGJ();//重新初始化报修工具
-                            updateOutUI(ii);
+                            //updateOutUI(ii);
                         }
                     });
+
                     builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -492,8 +488,8 @@ public class AccessConActivity extends Activity {
                                 //进行存操作
                                 toolsDao.updateSave();
                             }else if(Cache.operatortype==1){
-                                //报修或维修状态修改为正常状态
-                                toolsDao.updateZTToZC();
+                                //维修状态修改为正常状态
+                                toolsDao.updateWXToZC();
                             }
 
                         }
@@ -507,12 +503,8 @@ public class AccessConActivity extends Activity {
                             }
                         }
                         MyTextToSpeech.getInstance().speak("操作完成");
-                        Message message = Message.obtain(Cache.mainHandle);
-                        Bundle data = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
-
-                        data.putString("initTotal","1");
-                        message.setData(data);
-                        Cache.mainHandle.sendMessage(message);
+                        initTotal();
+                        logout();
                         AccessConActivity.this.finish();
 
                     }catch (Exception e){
@@ -521,10 +513,13 @@ public class AccessConActivity extends Activity {
 
                     break;
                 case R.id.btnyw:
+                    initTotal();
+                    //logout();
                     AccessConActivity.this.finish();
                     break;
                 case R.id.fh:
                     try{
+                        initTotal();
                         AccessConActivity.this.finish();
 
                     }catch (Exception e){
@@ -674,5 +669,21 @@ public class AccessConActivity extends Activity {
                 timer.cancel();
             }
         }, cnt );
+    }
+
+    private  void initTotal(){
+        Message message = Message.obtain(Cache.mainHandle);
+        Bundle data = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
+        data.putString("initTotal","1");
+        message.setData(data);
+        Cache.mainHandle.sendMessage(message);
+    }
+
+    private void logout(){
+        Message message = Message.obtain(Cache.mainHandle);
+        Bundle data = new Bundle();  //message也可以携带复杂一点的数据比如：bundle对象。
+        data.putString("ui","logout");
+        message.setData(data);
+        Cache.mainHandle.sendMessage(message);
     }
 }
