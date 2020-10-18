@@ -122,7 +122,7 @@ public class ToolsDao {
         StringBuilder sb = new StringBuilder();
         sb.append("update tools set jyzt='").append(Record.JYZAIGUI).append("',");
         sb.append("jypersonid='',");
-        sb.append("jytimepoke='").append(sdf.format(new Date())).append("'");
+        sb.append("jytimepoke='").append("'");
         sb.append(" where id in (");
         for(Tools tools : Cache.listOperaSave){
             sb.append("'").append(tools.getId()).append("',");
@@ -141,7 +141,7 @@ public class ToolsDao {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         StringBuilder sb = new StringBuilder();
         sb.append("update tools set jyzt='").append(Record.JYZAIGUI).append("',");
-        sb.append("jypersonid='',bxpersonid='',wxpersonid='',");
+        sb.append("jypersonid='',jytimepoke='',bxpersonid='',bxtimepoke='',wxpersonid='',wxtimepoke='',");
         sb.append("bxzt='").append(Record.BXZHENGCHANG).append("',");
         sb.append("wxzt='").append(Record.WXZHENGCHANG).append("' ");
         sb.append(" where id in (");
@@ -278,8 +278,10 @@ public class ToolsDao {
      */
     public  List<ToolZT> findTools(String ceng){
         List<ToolZT> list = new ArrayList<ToolZT>();
-        String sql="select t.mc,t.gg, t.wz,t.jyzt,jy.name as jyname,t.jytimepoke,t.bxzt,bx.name as bxname,t.bxtimepoke,t.wxzt,wx.name as wxname,t.wxtimepoke  from tools t left join person jy on t.jypersonid=jy.id " +
-                "left join person bx on t.bxpersonid=bx.id left join person wx on t.wxpersonid = wx.id  where  t.wz="+ceng;
+        String sql="select t.mc,t.gg, t.wz,t.jyzt,jy.name as jyname,t.jytimepoke,t.bxzt,bx.name as bxname,t.bxtimepoke,t.wxzt,wx.name as wxname,t.wxtimepoke  " +
+                "from tools t left join person jy on t.jypersonid=jy.id " +
+                "left join person bx on t.bxpersonid=bx.id left join person wx on t.wxpersonid = wx.id  " +
+                "where  t.wz="+ceng;
         List<HashMap<String,String>> listmap =DataBaseExec.execQueryForMap(sql,null);
 
         for(HashMap map : listmap){
@@ -292,17 +294,14 @@ public class ToolsDao {
             tool.setJyname(map.get("jyname")==null?"":map.get("jyname").toString());
             tool.setJytimepoke(map.get("jytimepoke")==null?"":map.get("jytimepoke").toString());
 
-            tool.setBxzt((map.get("bxzt")==null || map.get("bxzt").equals(Record.JYZAIGUI))?"正常":"报修");
+            tool.setBxzt((map.get("bxzt")==null || map.get("bxzt").equals(Record.BXZHENGCHANG))?"正常":"报修");
             tool.setBxname(map.get("bxname")==null?"":map.get("bxname").toString());
             tool.setBxtimepoke(map.get("bxtimepoke")==null?"":map.get("bxtimepoke").toString());
 
-            tool.setWxzt((map.get("wxzt")==null || map.get("wxzt").equals(Record.JYZAIGUI))?"正常":"维修");
+            tool.setWxzt((map.get("wxzt")==null || map.get("wxzt").equals(Record.WXZHENGCHANG))?"正常":"维修");
             tool.setWxname(map.get("wxname")==null?"":map.get("wxname").toString());
             tool.setWxtimepoke(map.get("wxtimepoke")==null?"":map.get("wxtimepoke").toString());
 
-
-            tool.setBxtimepoke(map.get("bxtimepoke")==null?"":map.get("bxtimepoke").toString());
-            tool.setWxzt("报修");
             list.add(tool);
         }
         return list;

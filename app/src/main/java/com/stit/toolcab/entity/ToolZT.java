@@ -21,6 +21,8 @@ public class ToolZT extends Tools{
     private String jyzt;
     //工具维修状态
     private String wxzt;
+    //工具报修状态
+    private String bxzt;
     //工具借用人员id
     private String jypersonid;
     //借用人员姓名
@@ -193,5 +195,15 @@ public class ToolZT extends Tools{
     @Override
     public void setWxtimepoke(String wxtimepoke) {
         this.wxtimepoke = wxtimepoke;
+    }
+
+    @Override
+    public String getBxzt() {
+        return bxzt;
+    }
+
+    @Override
+    public void setBxzt(String bxzt) {
+        this.bxzt = bxzt;
     }
 }

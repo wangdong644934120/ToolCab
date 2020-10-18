@@ -42,7 +42,7 @@ public class FindDialog extends AlertDialog {
     Column<String> columnjyzt = new Column<String>("借用状态", "jyzt");
     Column<String> columnjyry = new Column<String>("借用人员", "jyname");
     Column<String> columnjysj = new Column<String>("借用时间", "jytimepoke");
-    //Column<String> columnbxzt = new Column<String>("报修状态", "bxzt");
+    Column<String> columnbxzt = new Column<String>("报修状态", "bxzt");
     Column<String> columnbxry = new Column<String>("报修人员", "bxname");
     Column<String> columnbxsj = new Column<String>("报修时间", "bxtimepoke");
     Column<String> columnwxzt = new Column<String>("维修状态", "wxzt");
@@ -106,7 +106,7 @@ public class FindDialog extends AlertDialog {
     private void initData(){
 
         list= toolsDao.findTools("1");
-        tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
+        tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxzt,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
         findtable.setTableData(tableData);
     }
 
@@ -127,37 +127,37 @@ public class FindDialog extends AlertDialog {
                     findtable.setTableData(null);
 
                     list= toolsDao.findTools("1");
-                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
+                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxzt,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
                     findtable.setTableData(tableData);
                     break;
                 case R.id.ceng2:
                     findtable.setTableData(null);
                     list= toolsDao.findTools("2");
-                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
+                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxzt,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
                     findtable.setTableData(tableData);
                     break;
                 case R.id.ceng3:
                     findtable.setTableData(null);
                     list= toolsDao.findTools("3");
-                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
+                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxzt,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
                     findtable.setTableData(tableData);
                     break;
                 case R.id.ceng4:
                     findtable.setTableData(null);
                     list= toolsDao.findTools("4");
-                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
+                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxzt,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
                     findtable.setTableData(tableData);
                     break;
                 case R.id.ceng5:
                     findtable.setTableData(null);
                     list= toolsDao.findTools("5");
-                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
+                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxzt,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
                     findtable.setTableData(tableData);
                     break;
                 case R.id.ceng6:
                     findtable.setTableData(null);
                     list= toolsDao.findTools("6");
-                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
+                    tableData = new TableData<ToolZT>("", list, columnmc, columngg,columnwz, columnjyzt, columnjyry,columnjysj,columnbxzt,columnbxry,columnbxsj,columnwxzt,columnwxry,columnwxsj);
                     findtable.setTableData(tableData);
                     break;
                 case R.id.ceng7:
