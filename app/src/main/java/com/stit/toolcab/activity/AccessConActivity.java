@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,12 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.core.TableConfig;
 import com.bin.david.form.data.CellInfo;
 import com.bin.david.form.data.Column;
 import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat;
-import com.bin.david.form.data.format.bg.ICellBackgroundFormat;
 import com.bin.david.form.data.format.draw.ImageResDrawFormat;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.data.table.TableData;
@@ -34,8 +34,11 @@ import com.stit.toolcab.entity.ToolZT;
 import com.stit.toolcab.entity.Tools;
 import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.MyTextToSpeech;
+import com.stit.toolcab.view.RecycleAdapterOut;
+import com.stit.toolcab.view.RecycleAdapterSave;
 
 import org.apache.log4j.Logger;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,8 +47,8 @@ public class AccessConActivity extends Activity {
 
     private TextView tvfh;
     private TextView tvtitle;
-    private SmartTable tableSave;
-    private SmartTable tableOut;
+    //private SmartTable tableSave;
+    //private SmartTable tableOut;
     private TextView tvSaveCount;
     private TextView tvOutCount;
     private ImageView ivGif;
@@ -61,6 +64,14 @@ public class AccessConActivity extends Activity {
     private boolean isFHSJ=false; //是否返回数据
     private int pressFlag=0;//按钮按下标志，0-未点击，1-点击确认，2-点击取消
     ToolsDao toolsDao = new ToolsDao();
+
+
+    private RecyclerView recyclerViewSave;//声明RecyclerView
+    private RecycleAdapterSave adapterSave;//声明适配器
+
+    private RecyclerView recyclerViewOut;
+    private RecycleAdapterOut adapterOut;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +97,9 @@ public class AccessConActivity extends Activity {
             tvfh.setOnClickListener(new onClickListener());
             tvtitle=(TextView)findViewById(R.id.title);
             tvtitle.setText("存取确认");
+
+            recyclerViewSave = (RecyclerView) findViewById(R.id.recycler_viewsave);
+            recyclerViewOut = (RecyclerView) findViewById(R.id.recycler_viewout);
 
             tvSaveCount=(TextView)findViewById(R.id.savecount);
             tvOutCount=(TextView)findViewById(R.id.outcount);
@@ -130,6 +144,12 @@ public class AccessConActivity extends Activity {
                     if(bundle.getString("ui")!=null && bundle.getString("ui").toString().equals("close")){
                         pressOK();
                     }
+                    if(bundle.getString("youwu")!=null && bundle.getString("youwu").toString().equals("save")){
+                        initSave();
+                    }
+                    if(bundle.getString("youwu")!=null && bundle.getString("youwu").toString().equals("out")){
+                        initOut();
+                    }
 
 
                 }
@@ -143,6 +163,7 @@ public class AccessConActivity extends Activity {
 
     private void initData(){
         toolsDao.initBX();
+
     }
 
     private void showData(){
@@ -156,314 +177,176 @@ public class AccessConActivity extends Activity {
      * 初始化存操作耗材
      */
     private void initSave() {
-       try{
-            Column<String> column1 = new Column<>("名称", "mc");
-            Column<String> column2 = new Column<>("规格", "gg");
-            Column<String> column3 = new Column<>("位置", "wz");
-            Column<String> baoxiu=new Column<String>("报修", "id", new ImageResDrawFormat<String>(32,32) {
-                @Override
-                protected Context getContext() {
-                    return AccessConActivity.this;
-                }
+        tvSaveCount.setText("共存放"+Cache.listOperaSave.size()+"个");
+        adapterSave = new RecycleAdapterSave(AccessConActivity.this,Cache.listOperaSave);
+        LinearLayoutManager manager = new LinearLayoutManager(AccessConActivity.this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerViewSave.setLayoutManager(manager);
+        recyclerViewSave.setAdapter(adapterSave);
 
-                @Override
-                protected int getResourceID(String s, String s2, int i) {
-                    return R.drawable.baoxiuqr;
-                }
-            });
-            baoxiu.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
-                @Override
-                public void onClick(Column<String> column, String s, String s2, int i) {
-                    final String sbx=s;
-                    final int ii=i;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AccessConActivity.this);
-                    builder.setIcon(android.R.drawable.ic_dialog_info);
-                    builder.setTitle("提示");
-                    builder.setMessage("确认报修？");
-                    builder.setCancelable(true);
-
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            logger.info("点击确认报修");
-                            toolsDao.updateBX(sbx);
-                            System.out.println(sbx+"报修");
-                            toolsDao.initBX();
-                            initSave();
-                            //toolsDao.initBX();
-                            //sendTotal();
-
-
-
-                            //Cache.initBXGJ();//重新初始化报修工具
-                            //updateSaveUI(ii);
-                        }
-                    });
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    builder.create().show();
-                }
-            });
-            Column<String> youwu=new Column<String>("有误", "id", new ImageResDrawFormat<String>(32,32) {
-                @Override
-                protected Context getContext() {
-                    return AccessConActivity.this;
-                }
-
-                @Override
-                protected int getResourceID(String s, String s2, int i) {
-                    return R.drawable.cuowuqr;
-                }
-            });
-            youwu.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
-                @Override
-                public void onClick(Column<String> column, String s, String s2, int i) {
-                    final String sbx=s;
-                    final int ii=i;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AccessConActivity.this);
-                    builder.setIcon(android.R.drawable.ic_dialog_info);
-                    builder.setTitle("提示");
-                    builder.setMessage("确认有误？");
-                    builder.setCancelable(true);
-
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            logger.info("点击确认有误");
-                            Cache.listOperaOut.remove(ii);
-                            initOut();
-                            tvSaveCount.setText("共取出"+Cache.listOperaSave.size()+"个");
-                            System.out.println(sbx+"有误");
-                            //updateOutUI(ii);
-                        }
-                    });
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    builder.create().show();
-                }
-            });
-
-            //表格数据 datas是需要填充的数据
-            TableData<Tools> tableData = new TableData<Tools>("", Cache.listOperaSave, column1, column2, column3,baoxiu,youwu);
-
-            //设置数据
-            tableSave = findViewById(R.id.tablesave);
-            tableSave.setTableData(tableData);
-            tableSave.getConfig().setShowXSequence(false);
-            tableSave.getConfig().setShowYSequence(false);
-            tableSave.getConfig().setShowTableTitle(false);
-            tableSave.getConfig().setColumnTitleBackgroundColor(Color.BLUE);
-            tableSave.getConfig().setColumnTitleStyle(new FontStyle(20,Color.WHITE));
-            tableSave.getConfig().setContentStyle(new FontStyle(18,Color.BLACK));
-            tableSave.getConfig().setMinTableWidth(100);
-
-            tableSave.getConfig().setContentBackgroundFormat(new BaseCellBackgroundFormat<CellInfo>() {     //设置隔行变色
-                @Override
-                public int getBackGroundColor(CellInfo cellInfo) {
-                    try{
-                        int flagXR=0;//渲染标志
-                        for(ToolZT toolZT : Cache.listBX){
-                            if(toolZT.getEpc().equals(Cache.listOperaSave.get(cellInfo.position).getEpc())){
-                                flagXR=1;
-                                break;
-                            }
-                        }
-                        if (flagXR==1) {
-                            return ContextCompat.getColor(AccessConActivity.this, R.color.jxqyellow);
-                        } else {
-                            return TableConfig.INVALID_COLOR;
-                        }
-                    }catch (Exception e){
-                        logger.error("工具存取表格出错",e);
-                    }
-                    return TableConfig.INVALID_COLOR;
-                }
-            });
-        }catch (Exception e){
-            logger.error("初始化取操作耗材数据出错",e);
-        }
     }
 
-//
-//    private void updateSaveUI(int i){
-//        try{
-//            tableSave.refreshDrawableState();
-//            tableSave.invalidate();
-//        }catch (Exception e){
-//            logger.error("更新存放缓存出错",e);
-//        }
-//
-//    }
-//
-//    private void updateOutUI(int i){
-//        try{
-//            tableOut.refreshDrawableState();
-//            tableOut.invalidate();
-//        }catch (Exception e){
-//            logger.error("更新取出缓存出错",e);
-//        }
-//
-//    }
     /**
      * 初始化取操作耗材
      */
     private void initOut(){
-        try{
-            Column<String> column1 = new Column<>("名称", "mc");
-            column1.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
-                @Override
-                public void onClick(Column<String> column, String s, String s2, int i) {
-                    //updateOutUI(i);
-                }
-            });
-            Column<String> column2 = new Column<>("规格", "gg");
-            column2.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
-                @Override
-                public void onClick(Column<String> column, String s, String s2, int i) {
-                    //updateOutUI(i);
-                }
-            });
-
-            Column<String> column3 = new Column<>("位置", "wz");
-            column3.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
-                @Override
-                public void onClick(Column<String> column, String s, String s2, int i) {
-                    //updateOutUI(i);
-                }
-            });
-            Column<String> baoxiu=new Column<String>("报修", "id", new ImageResDrawFormat<String>(32,32) {
-                @Override
-                protected Context getContext() {
-                    return AccessConActivity.this;
-                }
-
-                @Override
-                protected int getResourceID(String s, String s2, int i) {
-                    return R.drawable.baoxiuqr;
-                }
-            });
-            baoxiu.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
-                @Override
-                public void onClick(Column<String> column, String s, String s2, int i) {
-                    final String sbx=s;
-                    final int ii=i;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AccessConActivity.this);
-                    builder.setIcon(android.R.drawable.ic_dialog_info);
-                    builder.setTitle("提示");
-                    builder.setMessage("确认报修？");
-                    builder.setCancelable(true);
-
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            logger.info("点击确认报修");
-                            toolsDao.updateBX(sbx);
-                            System.out.println(sbx+"报修");
-                            toolsDao.initBX();
-                            initOut();
-
-                                //xrcell();
-                            //toolsDao.initBX();
-                            //sendTotal();
-                            //Cache.initBXGJ();//重新初始化报修工具
-                            //updateOutUI(ii);
-                        }
-                    });
-
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    builder.create().show();
-                }
-            });
-            Column<String> youwu=new Column<String>("有误", "id", new ImageResDrawFormat<String>(32,32) {
-                @Override
-                protected Context getContext() {
-                    return AccessConActivity.this;
-                }
-
-                @Override
-                protected int getResourceID(String s, String s2, int i) {
-                    return R.drawable.cuowuqr;
-                }
-            });
-            youwu.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
-                @Override
-                public void onClick(Column<String> column, String s, String s2, int i) {
-                    final String sbx=s;
-                    final int ii=i;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AccessConActivity.this);
-                    builder.setIcon(android.R.drawable.ic_dialog_info);
-                    builder.setTitle("提示");
-                    builder.setMessage("确认有误？");
-                    builder.setCancelable(true);
-
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            logger.info("点击确认有误");
-                            Cache.listOperaOut.remove(ii);
-                            initOut();
-                            tvOutCount.setText("共取出"+Cache.listOperaOut.size()+"个");
-                            System.out.println(sbx+"有误");
-                            //updateOutUI(ii);
-                        }
-                    });
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    builder.create().show();
-                }
-            });
-
-            //表格数据 datas是需要填充的数据
-            TableData<Tools> tableData = new TableData<Tools>("", Cache.listOperaOut, column1, column2, column3,baoxiu,youwu);
-
-            //设置数据
-            tableOut = findViewById(R.id.tableout);
-            tableOut.setTableData(tableData);
-            tableOut.getConfig().setShowXSequence(false);
-            tableOut.getConfig().setShowYSequence(false);
-            tableOut.getConfig().setShowTableTitle(false);
-            tableOut.getConfig().setColumnTitleBackgroundColor(Color.BLUE);
-            tableOut.getConfig().setColumnTitleStyle(new FontStyle(20,Color.WHITE));
-            tableOut.getConfig().setContentStyle(new FontStyle(18,Color.BLACK));
-            tableOut.getConfig().setMinTableWidth(100);
-            tableOut.getConfig().setContentBackgroundFormat(new BaseCellBackgroundFormat<CellInfo>() {     //设置隔行变色
-                @Override
-                public int getBackGroundColor(CellInfo cellInfo) {
-                    try{
-                        int flagXR=0;//渲染标志
-                        for(ToolZT toolZT : Cache.listBX){
-                            if(toolZT.getEpc().equals(Cache.listOperaOut.get(cellInfo.position).getEpc())){
-                                flagXR=1;
-                                break;
-                            }
-                        }
-                        if (flagXR==1) {
-                            return ContextCompat.getColor(AccessConActivity.this, R.color.jxqyellow);
-                        } else {
-                            return TableConfig.INVALID_COLOR;
-                        }
-                    }catch (Exception e){
-                        logger.error("工具存取表格出错",e);
-                    }
-                    return TableConfig.INVALID_COLOR;
-                }
-            });
-        }catch (Exception e){
-            logger.error("初始化取操作耗材数据出错",e);
-        }
+        tvOutCount.setText("共取出"+Cache.listOperaOut.size()+"个");
+        adapterOut = new RecycleAdapterOut(AccessConActivity.this,Cache.listOperaOut);
+        LinearLayoutManager manager = new LinearLayoutManager(AccessConActivity.this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerViewOut.setLayoutManager(manager);
+        recyclerViewOut.setAdapter(adapterOut);
+//
+//        try{
+//            Column<String> column1 = new Column<>("名称", "mc");
+//            column1.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
+//                @Override
+//                public void onClick(Column<String> column, String s, String s2, int i) {
+//                    //updateOutUI(i);
+//                }
+//            });
+//            Column<String> column2 = new Column<>("规格", "gg");
+//            column2.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
+//                @Override
+//                public void onClick(Column<String> column, String s, String s2, int i) {
+//                    //updateOutUI(i);
+//                }
+//            });
+//
+//            Column<String> column3 = new Column<>("位置", "wz");
+//            column3.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
+//                @Override
+//                public void onClick(Column<String> column, String s, String s2, int i) {
+//                    //updateOutUI(i);
+//                }
+//            });
+//            Column<String> baoxiu=new Column<String>("报修", "id", new ImageResDrawFormat<String>(32,32) {
+//                @Override
+//                protected Context getContext() {
+//                    return AccessConActivity.this;
+//                }
+//
+//                @Override
+//                protected int getResourceID(String s, String s2, int i) {
+//                    return R.drawable.baoxiuqr;
+//                }
+//            });
+//            baoxiu.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
+//                @Override
+//                public void onClick(Column<String> column, String s, String s2, int i) {
+//                    final String sbx=s;
+//                    final int ii=i;
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(AccessConActivity.this);
+//                    builder.setIcon(android.R.drawable.ic_dialog_info);
+//                    builder.setTitle("提示");
+//                    builder.setMessage("确认报修？");
+//                    builder.setCancelable(true);
+//
+//                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            logger.info("点击确认报修");
+//                            toolsDao.updateBX(sbx);
+//                            System.out.println(sbx+"报修");
+//                            toolsDao.initBX();
+//                            initOut();
+//
+//                                //xrcell();
+//                            //toolsDao.initBX();
+//                            //sendTotal();
+//                            //Cache.initBXGJ();//重新初始化报修工具
+//                            //updateOutUI(ii);
+//                        }
+//                    });
+//
+//                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                        }
+//                    });
+//                    builder.create().show();
+//                }
+//            });
+//            Column<String> youwu=new Column<String>("有误", "id", new ImageResDrawFormat<String>(32,32) {
+//                @Override
+//                protected Context getContext() {
+//                    return AccessConActivity.this;
+//                }
+//
+//                @Override
+//                protected int getResourceID(String s, String s2, int i) {
+//                    return R.drawable.cuowuqr;
+//                }
+//            });
+//            youwu.setOnColumnItemClickListener(new OnColumnItemClickListener<String>() {
+//                @Override
+//                public void onClick(Column<String> column, String s, String s2, int i) {
+//                    final String sbx=s;
+//                    final int ii=i;
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(AccessConActivity.this);
+//                    builder.setIcon(android.R.drawable.ic_dialog_info);
+//                    builder.setTitle("提示");
+//                    builder.setMessage("确认有误？");
+//                    builder.setCancelable(true);
+//
+//                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            logger.info("点击确认有误");
+//                            Cache.listOperaOut.remove(ii);
+//                            initOut();
+//                            tvOutCount.setText("共取出"+Cache.listOperaOut.size()+"个");
+//                            System.out.println(sbx+"有误");
+//                            //updateOutUI(ii);
+//                        }
+//                    });
+//                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                        }
+//                    });
+//                    builder.create().show();
+//                }
+//            });
+//
+//            //表格数据 datas是需要填充的数据
+//            TableData<Tools> tableData = new TableData<Tools>("", Cache.listOperaOut, column1, column2, column3,baoxiu,youwu);
+//
+//            //设置数据
+//            tableOut = findViewById(R.id.tableout);
+//            tableOut.setTableData(tableData);
+//            tableOut.getConfig().setShowXSequence(false);
+//            tableOut.getConfig().setShowYSequence(false);
+//            tableOut.getConfig().setShowTableTitle(false);
+//            tableOut.getConfig().setColumnTitleBackgroundColor(Color.BLUE);
+//            tableOut.getConfig().setColumnTitleStyle(new FontStyle(20,Color.WHITE));
+//            tableOut.getConfig().setContentStyle(new FontStyle(18,Color.BLACK));
+//            tableOut.getConfig().setMinTableWidth(100);
+//            tableOut.getConfig().setContentBackgroundFormat(new BaseCellBackgroundFormat<CellInfo>() {     //设置隔行变色
+//                @Override
+//                public int getBackGroundColor(CellInfo cellInfo) {
+//                    try{
+//                        int flagXR=0;//渲染标志
+//                        for(ToolZT toolZT : Cache.listBX){
+//                            if(toolZT.getEpc().equals(Cache.listOperaOut.get(cellInfo.position).getEpc())){
+//                                flagXR=1;
+//                                break;
+//                            }
+//                        }
+//                        if (flagXR==1) {
+//                            return ContextCompat.getColor(AccessConActivity.this, R.color.jxqyellow);
+//                        } else {
+//                            return TableConfig.INVALID_COLOR;
+//                        }
+//                    }catch (Exception e){
+//                        logger.error("工具存取表格出错",e);
+//                    }
+//                    return TableConfig.INVALID_COLOR;
+//                }
+//            });
+//        }catch (Exception e){
+//            logger.error("初始化取操作耗材数据出错",e);
+//        }
 
     }
 

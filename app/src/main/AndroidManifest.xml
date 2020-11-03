@@ -74,7 +74,8 @@
         <activity android:name=".activity.AccessConActivity" />
         <activity android:name=".activity.RoleDialog" />
         <activity android:name=".activity.BXDialog" />
-        <activity android:name=".activity.FindDialog"></activity>
+        <activity android:name=".activity.FindDialog" />
+        <activity android:name=".activity.TestActivity"></activity>
     </application>
 
 </manifest>

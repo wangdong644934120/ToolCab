@@ -382,6 +382,11 @@ public class MainActivity extends Activity {
                 return;
             switch (v.getId()) {
                 case R.id.pandian:
+//                    Intent intent = new Intent(MainActivity.this, TestActivity.class);
+//                    startActivity(intent);
+//                    if(1==1){
+//                        return;
+//                    }
                     logger.info("点击盘点");
                     Cache.getHCCS=2;
                     if(HCProtocol.ST_GetAllCard()){

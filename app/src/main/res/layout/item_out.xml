@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="600px"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="10px"
+    android:background="@color/colorWhite">
+
+
+    <LinearLayout
+        android:id="@+id/llbxbackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageViewTU"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            app:srcCompat="@drawable/baoxiuqr" />
+
+        <LinearLayout
+            android:layout_width="430px"
+            android:layout_height="50px"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view"
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/text_view1"
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:layout_marginTop="10px"
+                android:gravity="left"
+                android:text=""
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageViewBX"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            app:srcCompat="@drawable/baoxiuqr" />
+
+        <ImageView
+            android:id="@+id/imageViewYW"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_marginLeft="20px"
+            app:srcCompat="@drawable/cuowuqr" />
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/viewge"
+        android:layout_width="595px"
+        android:layout_height="2px"
+        android:layout_marginTop="4px"
+        android:background="#a7aba9" />
+
+</LinearLayout>
