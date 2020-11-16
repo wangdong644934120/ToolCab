@@ -11,8 +11,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,6 +112,7 @@ public class FaceActivity extends Activity {
     private boolean timeFlag=true;
     private TextView tvJG;
     private boolean success=false;//识别成功标志
+    private Button btnTC;
     CWGLDisplay mVisGlDiaplay= new CWGLDisplay();
 
 
@@ -137,6 +140,17 @@ public class FaceActivity extends Activity {
         mTvResult.setText("");
         tvDJS=(TextView)findViewById(R.id.djs);
         tvJG=(TextView)findViewById(R.id.jieguo);
+        btnTC=(Button)findViewById(R.id.tc);
+        btnTC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Message message = Message.obtain(myHandlerFace);
+                Bundle data = new Bundle();
+                data.putString("close","close");
+                message.setData(data);
+                myHandlerFace.sendMessage(message);
+            }
+        });
         myHandlerFace = new Handler() {
             @Override
             public void handleMessage(Message msg) {

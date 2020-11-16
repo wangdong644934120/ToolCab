@@ -42,4 +42,6 @@ dependencies {
     implementation files('libs/poi-3.0.1-FINAL-20070705.jar')
     compile 'com.github.huangyanbin:SmartTable:1.7.1'
     implementation 'com.android.support:recyclerview-v7:27.0.0'
+    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 }

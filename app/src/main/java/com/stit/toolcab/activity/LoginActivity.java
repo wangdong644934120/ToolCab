@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.stit.toolcab.R;
@@ -27,6 +28,7 @@ public class LoginActivity extends Activity {
     private EditText txtPassword;
     private ImageButton btnLogin;
     private ImageButton btnFace;
+    private ImageView ivBJ;
     private Logger logger = Logger.getLogger(this.getClass());
 
 
@@ -41,6 +43,7 @@ public class LoginActivity extends Activity {
         initView();
         //closeBar();
         //showBar();
+        initBJ();
     }
 
 
@@ -51,6 +54,22 @@ public class LoginActivity extends Activity {
         btnLogin.setOnClickListener(new onClickListener());
         btnFace=(ImageButton)findViewById(R.id.face);
         btnFace.setOnClickListener(new onClickListener());
+        ivBJ=(ImageView)findViewById(R.id.ivbj);
+
+    }
+
+    private void initBJ(){
+        //1、借出未还红色报警
+        if(Cache.listJY!=null && !Cache.listJY.isEmpty()){
+            ivBJ.setImageResource(R.drawable.bj1);
+            return;
+        }
+        //2、报修黄色
+        if(Cache.listBX!=null && !Cache.listBX.isEmpty()){
+            ivBJ.setImageResource(R.drawable.bj2);
+            return;
+        }
+        ivBJ.setImageResource(R.drawable.bj3);
 
     }
 

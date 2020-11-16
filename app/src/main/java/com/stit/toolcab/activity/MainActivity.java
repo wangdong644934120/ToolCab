@@ -52,6 +52,7 @@ public class MainActivity extends Activity {
 
     private ImageButton btnPD;
     private ImageButton btnMenu;
+    private ImageButton btnQRCode;
     private RelativeLayout rl;
     private RelativeLayout mylayoutdevice;
     private LinearLayout lljc;
@@ -133,6 +134,8 @@ public class MainActivity extends Activity {
     private void initView(){
         mylayoutdevice=(RelativeLayout)findViewById(R.id.mylayoutdevice);
         rl=(RelativeLayout)findViewById(R.id.mylayout);
+        btnQRCode=(ImageButton)findViewById(R.id.erweima);
+        btnQRCode.setOnClickListener(new onClickListener());
         btnPD=(ImageButton)findViewById(R.id.pandian);
         btnPD.setOnClickListener(new onClickListener());
         btnMenu=(ImageButton)findViewById(R.id.menu);
@@ -169,7 +172,7 @@ public class MainActivity extends Activity {
                 Window win = selectDialog.getWindow();
                 WindowManager.LayoutParams params = new WindowManager.LayoutParams();
                 params.x = 580;//设置x坐标
-                params.y = -50;//设置y坐标
+                params.y = -130;//设置y坐标
                 win.setAttributes(params);
                 selectDialog.setCanceledOnTouchOutside(true);//设置点击Dialog外部任意区域关闭Dialog
                 selectDialog.show();
@@ -394,6 +397,17 @@ public class MainActivity extends Activity {
                         MyTextToSpeech.getInstance().speak("盘点失败");
                         Toast.makeText(MainActivity.this, "盘点失败", Toast.LENGTH_SHORT).show();
                     }
+                    break;
+                case R.id.erweima:
+                    QRCodeDialog qrCodeDialog = new QRCodeDialog(MainActivity.this,R.style.roledialog);//创建Dialog并设置样式主题
+                    Window win = qrCodeDialog.getWindow();
+                    WindowManager.LayoutParams paramscode = new WindowManager.LayoutParams();
+                    paramscode.x = 20;//设置x坐标
+                    paramscode.y = -50;//设置y坐标
+                    win.setAttributes(paramscode);
+                    qrCodeDialog.setCanceledOnTouchOutside(true);//设置点击Dialog外部任意区域关闭Dialog
+                    qrCodeDialog.setTitle("二维码扫描");
+                    qrCodeDialog.show();
                     break;
                 case R.id.lljc:
                     params = new LinearLayout.LayoutParams(60,140);

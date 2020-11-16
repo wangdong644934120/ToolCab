@@ -75,7 +75,9 @@
         <activity android:name=".activity.RoleDialog" />
         <activity android:name=".activity.BXDialog" />
         <activity android:name=".activity.FindDialog" />
-        <activity android:name=".activity.TestActivity"></activity>
+        <activity android:name=".activity.TestActivity" />
+        <activity android:name=".activity.QRCodeActivity" />
+        <activity android:name=".activity.QRCodeDialog"></activity>
     </application>
 
 </manifest>
