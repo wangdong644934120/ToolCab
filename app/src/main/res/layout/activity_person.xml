@@ -103,7 +103,7 @@
                     android:layout_weight="1"
                     android:text="姓    名:"
                     android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textSize="14dp" />
 
                 <EditText
                     android:id="@+id/name"
@@ -123,7 +123,7 @@
                     android:layout_marginLeft="6px"
                     android:text="工    号:"
                     android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textSize="14dp" />
 
                 <EditText
                     android:id="@+id/code"
@@ -151,7 +151,7 @@
                     android:layout_weight="1"
                     android:text="用户名:"
                     android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textSize="14dp" />
 
                 <EditText
                     android:id="@+id/username"
@@ -171,7 +171,7 @@
                     android:layout_weight="1"
                     android:text="密    码:"
                     android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textSize="14dp" />
 
                 <EditText
                     android:id="@+id/password"
@@ -208,7 +208,7 @@
                         android:layout_height="wrap_content"
                         android:text="指    纹:"
                         android:textColor="@color/black"
-                        android:textSize="20dp" />
+                        android:textSize="14dp" />
 
                     <Button
                         android:id="@+id/zhiwenluru"
@@ -235,7 +235,7 @@
                         android:layout_weight="1"
                         android:text="角    色:"
                         android:textColor="@color/black"
-                        android:textSize="20dp" />
+                        android:textSize="14dp" />
                     <RadioGroup
                         android:id="@+id/radiogroup"
                         android:layout_width="wrap_content"
@@ -246,7 +246,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:textSize="16dp"
+                            android:textSize="14dp"
                             android:checked="true"
                             android:textColor="@color/black"
                             android:text="普通工人"/>
@@ -256,7 +256,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textColor="@color/black"
-                            android:textSize="16dp"
+                            android:textSize="14dp"
                             android:text="维修工人"/>
                     </RadioGroup>
                     <!--<Button-->

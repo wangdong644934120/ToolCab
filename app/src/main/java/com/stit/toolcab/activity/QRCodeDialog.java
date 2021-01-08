@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.stit.toolcab.R;
+import com.stit.toolcab.entity.ToolZT;
+import com.stit.toolcab.utils.Cache;
 import com.stit.toolcab.utils.QRCodeManager;
 import com.stit.toolcab.utils.ZXUtils;
 
@@ -36,11 +38,28 @@ public class QRCodeDialog extends AlertDialog {
         setContentView(R.layout.activity_qrcode_dialog);
         System.out.println("a");
         ivQRCode=(ImageView)findViewById(R.id.ivqrcode);
-        String all="";
-        for(int i=0;i<140;i++){
-            all=all+"123456789abcdef-"+i;
+        Cache.listJY.clear();
+        for(int i=0;i<4;i++){
+            ToolZT toolZT = new ToolZT();
+            toolZT.setMc("name张三"+i);
+            toolZT.setGg("gg规格"+i);
+            toolZT.setEpc("epc111"+i);
+            Cache.listJY.add(toolZT);
         }
-        Bitmap bitmap = ZXUtils.createQRCode(all);
+        String all="[";
+        for(ToolZT toolZT : Cache.listJY){
+            all=all+"{\"mc:\""+toolZT.getMc()+"\",\"gg\":\""+toolZT.getGg()+"\",\"epc\":\""+toolZT.getEpc()+"\"},";
+            //all=all+"{\"epc\":\""+toolZT.getEpc()+"\"},";
+        }
+/*        for(int i=0;i<5;i++){
+            all=all+all;
+        }*/
+        if(Cache.listJY!=null && !Cache.listJY.isEmpty()){
+            all=all.substring(0,all.length()-1);
+        }
+        all=all+"]";
+        Bitmap bitmap=QRCodeManager. createQRCodeBitmap( all, 600, 600, "UTF-8", "L", "2", Color.BLACK, Color.WHITE );
+        //Bitmap bitmap = ZXUtils.createQRCode(all);
         if(bitmap!=null){
             ivQRCode.setImageBitmap(bitmap);
         }

@@ -1,9 +1,11 @@
 package com.stit.toolcab.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Handler;
@@ -108,6 +110,10 @@ public class MainActivity extends Activity {
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置全屏
         //读写控制
         //requestPermission();
+//        if(1==1){
+//            return;
+//        }
+        checkPermission();
         LogUtil.initLog();// 初始log
         logger = Logger.getLogger(this.getClass());
         logger.info("程序开始启动");
@@ -171,7 +177,7 @@ public class MainActivity extends Activity {
                 SelectDialog selectDialog = new SelectDialog(MainActivity.this,R.style.dialog);//创建Dialog并设置样式主题
                 Window win = selectDialog.getWindow();
                 WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-                params.x = 580;//设置x坐标
+                params.x = 550;//设置x坐标
                 params.y = -130;//设置y坐标
                 win.setAttributes(params);
                 selectDialog.setCanceledOnTouchOutside(true);//设置点击Dialog外部任意区域关闭Dialog
@@ -206,114 +212,63 @@ public class MainActivity extends Activity {
         initDevice();
 
     }
+
     private void initDevice(){
-        RelativeLayout.LayoutParams params ;
-        params = new RelativeLayout.LayoutParams(247, 43);
-        params.setMargins(94, 100, 0, 0);
-        ceng1 = new ImageView(this);
+
+        ceng1 = (ImageView)findViewById(R.id.ceng1);
         ceng1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HCProtocol.ST_OpenDoor();
-                ceng1.setImageResource(R.drawable.ceng1kai);
+                ceng1.setImageResource(R.drawable.opened);
             }
         });
-        ceng1.setImageResource(R.drawable.ceng1guan);
-        ceng1.setLayoutParams(params);
-        mylayoutdevice.addView(ceng1);
-
-        params = new RelativeLayout.LayoutParams(247, 43);
-        params.setMargins(94, 152, 0, 0);
-        ceng2 = new ImageView(this);
+        ceng2 = (ImageView)findViewById(R.id.ceng2);
         ceng2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HCProtocol.ST_OpenDoor();
             }
         });
-        ceng2.setImageResource(R.drawable.ceng2guan);
-        ceng2.setLayoutParams(params);
-        mylayoutdevice.addView(ceng2);
-
-        params = new RelativeLayout.LayoutParams(247, 43);
-        params.setMargins(94, 204, 0, 0);
-        ceng3 = new ImageView(this);
+        ceng3 = (ImageView)findViewById(R.id.ceng3);
         ceng3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HCProtocol.ST_OpenDoor();
             }
         });
-        ceng3.setImageResource(R.drawable.ceng3guan);
-        ceng3.setLayoutParams(params);
-        mylayoutdevice.addView(ceng3);
-
-        params = new RelativeLayout.LayoutParams(247, 43);
-        params.setMargins(94, 256, 0, 0);
-        ceng4 = new ImageView(this);
+        ceng4 = (ImageView)findViewById(R.id.ceng4);
         ceng4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HCProtocol.ST_OpenDoor();
+
             }
         });
-        ceng4.setImageResource(R.drawable.ceng4guan);
-        ceng4.setLayoutParams(params);
-        mylayoutdevice.addView(ceng4);
-
-        params = new RelativeLayout.LayoutParams(247, 43);
-        params.setMargins(94, 308, 0, 0);
-        ceng5 = new ImageView(this);
+        ceng5 = (ImageView)findViewById(R.id.ceng5);
         ceng5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HCProtocol.ST_OpenDoor();
             }
         });
-        ceng5.setImageResource(R.drawable.ceng5guan);
-        ceng5.setLayoutParams(params);
-        mylayoutdevice.addView(ceng5);
-
-        params = new RelativeLayout.LayoutParams(247, 43);
-        params.setMargins(94, 360, 0, 0);
-        ceng6 = new ImageView(this);
+        ceng6 = (ImageView)findViewById(R.id.ceng6);
         ceng6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HCProtocol.ST_OpenDoor();
             }
         });
-        ceng6.setImageResource(R.drawable.ceng6guan);
-        ceng6.setLayoutParams(params);
-        mylayoutdevice.addView(ceng6);
-
-        params = new RelativeLayout.LayoutParams(247, 43);
-        params.setMargins(94, 412, 0, 0);
-        ceng7 = new ImageView(this);
+        ceng7 = (ImageView)findViewById(R.id.ceng7);
         ceng7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HCProtocol.ST_OpenDoor();
             }
         });
-        ceng7.setImageResource(R.drawable.ceng7guan);
-        ceng7.setLayoutParams(params);
-        mylayoutdevice.addView(ceng7);
+
     }
 
-//    private void requestPermission() {
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-//                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            //如果应用之前请求过此权限但用户拒绝了请求，此方法将返回 true。
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
-//                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {//这里可以写个对话框之类的项向用户解释为什么要申请权限，并在对话框的确认键后续再次申请权限
-//            } else {
-//                //申请权限，字符串数组内是一个或多个要申请的权限，1是申请权限结果的返回参数，在onRequestPermissionsResult可以得知申请结果
-//                ActivityCompat.requestPermissions(this,
-//                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-//            }
-//        }
-//    }
 
     private void initTJ(){
         logger.info("开始统计借用维修报修信息");
@@ -664,5 +619,28 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void checkPermission() {
+        boolean isGranted = true;
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
+            if (this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                //如果没有写sd卡权限
+                isGranted = false;
+            }
+            if (this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                isGranted = false;
+            }
+
+            if (!isGranted) {
+                this.requestPermissions(
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission
+                                .ACCESS_FINE_LOCATION,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        102);
+            }
+        }
+
     }
 }

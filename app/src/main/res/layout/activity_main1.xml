@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main"
+    tools:context="com.stit.toolcab.activity.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--菜单栏-->
+        <LinearLayout
+            android:id="@+id/toplr"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/mylayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/appname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="580px"
+                    android:layout_marginTop="10px"
+                    android:text="智能工具柜"
+                    android:textColor="#062af9"
+                    android:textSize="50px"
+                    android:textStyle="bold" />
+
+                <!--<TextView-->
+                    <!--android:id="@+id/appcode"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textSize="30px"-->
+                    <!--android:layout_marginLeft="820px"-->
+                    <!--android:layout_marginTop="30px"-->
+                    <!--android:text="01号柜" />-->
+
+                <ImageButton
+                    android:id="@+id/menu"
+                    android:layout_width="93px"
+                    android:layout_height="65px"
+                    android:src="@drawable/menu"
+                    android:layout_marginLeft="1273px"
+                    android:layout_marginTop="0px"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10px"
+            android:orientation="horizontal">
+
+            <!--左侧统计部分-->
+            <LinearLayout
+                android:layout_width="800px"
+                android:layout_marginLeft="50px"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <!--左侧菜单部分-->
+                <LinearLayout
+                    android:layout_width="80px"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/lljc"
+                        android:layout_width="60px"
+                        android:layout_height="140px"
+                        android:background="@color/colorPrimary"
+                        android:layout_gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/jcxx"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100px"
+                            android:ems="1"
+                            android:layout_gravity="center_horizontal"
+                            android:text="借出信息"
+                            android:textSize="20px"
+                            android:textColor="@color/colorWhite"
+                            android:background="@color/colorPrimary"/>
+
+                        <TextView
+                            android:id="@+id/jcxxgs"
+                            android:layout_width="80px"
+                            android:layout_height="40px"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:textSize="22px"
+                            android:textColor="@color/colorWhite"
+                            android:background="@color/colorPrimary"
+                            android:text="(0)" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llbx"
+                        android:layout_width="50px"
+                        android:layout_height="140px"
+                        android:layout_marginTop="2px"
+                        android:layout_gravity="right"
+                        android:background="@color/gray"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/bxxx"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100px"
+                            android:ems="1"
+                            android:layout_gravity="center_horizontal"
+                            android:text="报修信息"
+                            android:textSize="20px"
+                            android:textColor="@color/colorWhite"
+                            android:background="@color/gray"/>
+
+                        <TextView
+                            android:id="@+id/bxxxgs"
+                            android:layout_width="80px"
+                            android:layout_height="40px"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:textSize="22px"
+                            android:textColor="@color/colorWhite"
+                            android:background="@color/gray"
+                            android:text="(0)" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llwx"
+                        android:layout_width="50px"
+                        android:layout_height="140px"
+                        android:layout_marginTop="2px"
+                        android:layout_gravity="right"
+                        android:background="@color/gray"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/wxxx"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100px"
+                            android:ems="1"
+                            android:layout_gravity="center_horizontal"
+                            android:text="维修信息"
+                            android:textSize="20px"
+                            android:textColor="@color/colorWhite"
+                            android:background="@color/gray"/>
+
+                        <TextView
+                            android:id="@+id/wxxxgs"
+                            android:layout_width="80px"
+                            android:layout_height="40px"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:textSize="22px"
+                            android:textColor="@color/colorWhite"
+                            android:background="@color/gray"
+                            android:text="(0)" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <!--右侧统计部分-->
+                <LinearLayout
+                    android:layout_width="700px"
+                    android:layout_height="500px"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+                    <com.bin.david.form.core.SmartTable
+                        android:id="@+id/table"
+                        android:layout_width="700px"
+                        android:layout_marginLeft="6px"
+                        android:layout_marginRight="6px"
+                        android:layout_marginTop="6px"
+                        android:layout_height="500px"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--右侧柜体部分-->
+            <LinearLayout
+                android:layout_marginLeft="50px"
+                android:layout_width="440px"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/mylayoutdevice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20px">
+                    <ImageButton
+                        android:id="@+id/chazhao"
+                        android:layout_width="97px"
+                        android:layout_height="51px"
+                        android:layout_marginLeft="250px"
+                        android:layout_marginTop="4px"
+                        android:src="@drawable/chazhao"/>
+
+                    <TextView
+                        android:id="@+id/czy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="180px"
+                        android:layout_marginTop="504px"
+                        android:textSize="30px"
+                        android:textColor="@color/colorPrimary"
+                        android:text="" />
+                    <ImageButton
+                        android:id="@+id/loginout"
+                        android:layout_width="98px"
+                        android:layout_height="53px"
+                        android:layout_marginLeft="302px"
+                        android:layout_marginTop="502px"
+                        android:src="@drawable/zhuxiao"
+                        android:text="注销"/>
+
+                    <ImageButton
+                        android:id="@+id/pandian"
+                        android:layout_width="200px"
+                        android:layout_height="67px"
+                        android:layout_marginLeft="10px"
+                        android:layout_marginTop="560px"
+                        android:background="@drawable/pandian"
+                        android:scaleType="centerInside" />
+
+                    <ImageButton
+                        android:id="@+id/erweima"
+                        android:layout_width="200px"
+                        android:layout_height="67px"
+                        android:layout_marginLeft="210px"
+                        android:layout_marginTop="560px"
+                        android:background="@drawable/shouchipandian"
+                        android:scaleType="centerInside" />
+
+
+
+                    <!--<Button-->
+                    <!--android:id="@+id/pandian"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="450px"-->
+                    <!--android:text="盘点" />-->
+
+                    <!--<Button-->
+                    <!--android:id="@+id/erweima"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="250px"-->
+                    <!--android:layout_marginTop="450px"-->
+                    <!--android:text="生成二维码" />-->
+                </RelativeLayout>
+
+                <!--<ScrollView-->
+                <!--android:layout_width="400px"-->
+                <!--android:layout_height="466px"-->
+                <!--android:layout_marginLeft="20px"-->
+                <!--android:background="@color/qmui_config_color_background">-->
+
+                <!--<com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView-->
+                <!--android:id="@+id/guiti"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+                <!--</ScrollView>-->
+
+                <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:background="#303F9F" />-->
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
